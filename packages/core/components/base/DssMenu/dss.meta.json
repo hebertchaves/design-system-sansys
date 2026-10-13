@@ -13,6 +13,7 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Overlay de Nível 2 (Composição de Primeiro Grau). Wrapper DSS governado sobre QMenu do Quasar. Orquestra DssList e DssItem (Nível 1) via slot. Teleporta para <body> via QMenu nativo.",
   "classification": "Visual",
+  "brandZone": "content",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],

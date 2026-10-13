@@ -11,6 +11,7 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra componentes de Nível 2 (DssList, DssMenu) e interage diretamente com o sistema de layout do Quasar (QLayout via provide/inject). Wrapper DSS governado sobre QDrawer.",
   "classification": "Visual",
+  "brandZone": "shell",
   "hasReservations": true,
   "reservations": [
     {

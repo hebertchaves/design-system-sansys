@@ -12,6 +12,7 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural não-interativo. Fornece layout horizontal flexbox e superfície de brand para composição de botões, ícones e texto. Bloco de construção base para DssHeader, DssFooter e barras de ação internas.",
   "classification": "Visual",
+  "brandZone": "shell",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],

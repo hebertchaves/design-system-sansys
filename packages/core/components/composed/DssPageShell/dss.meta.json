@@ -8,26 +8,50 @@
   "goldenContextJustification": "DssCard é o outro componente de SUPERFÍCIE estrutural do DSS — ambos dão fundo e respiro a conteúdo de terceiros sem decidir o que entra.",
   "category": "Casca da aplicação — miolo da página",
   "classification": "Visual",
+  "brandZone": "both",
   "classificationNote": "Container estrutural. O shell posiciona; quem age são os itens do rail.",
   "tagline": "O miolo da tela Sansys: rail de módulos, trilha de navegação e board.",
   "phase": 3,
   "phaseDescription": "Fase 3 — Composto. Fixa o arranjo rail + conteúdo; compõe DssIcon no subcomponente de item.",
   "previewGroup": "layout",
   "hasReservations": false,
-  "subcomponents": ["DssPageShellRailItem"],
+  "subcomponents": [
+    "DssPageShellRailItem"
+  ],
   "compositionRequirements": [],
   "compositionRecommendations": [
     "DssPageShellRailItem no slot rail",
     "DssBreadcrumbs no slot breadcrumb",
     "DssAppBar acima, dentro do mesmo DssLayout"
   ],
-  "propsExposed": ["board", "railAriaLabel"],
-  "propsBlocked": ["railWidth", "modules", "railBrand"],
+  "propsExposed": [
+    "board",
+    "railAriaLabel"
+  ],
+  "propsBlocked": [
+    "railWidth",
+    "modules",
+    "railBrand"
+  ],
   "propsBlockedJustification": "Não há largura de rail: 52px é a medida da casca Sansys e sai de --dss-touch-target-lg, porque o rail É feito de alvos de toque. Não há lista de módulos como dados — seria reimplementar slot, mal (§1.6). Não há marca própria: o rail consome os tokens de ação, que [data-brand] já remapeia.",
   "emitsExposed": [],
-  "slotsExposed": ["rail", "breadcrumb", "default"],
-  "statesApplicable": ["hover", "focus", "active", "disabled", "forced-colors", "reduced-motion", "print"],
-  "statesNotApplicable": ["loading"],
+  "slotsExposed": [
+    "rail",
+    "breadcrumb",
+    "default"
+  ],
+  "statesApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "forced-colors",
+    "reduced-motion",
+    "print"
+  ],
+  "statesNotApplicable": [
+    "loading"
+  ],
   "statesNotApplicableJustification": "O shell é arranjo; carregamento é estado do conteúdo que ele hospeda.",
   "accessibility": {
     "role": "navigation no rail; o shell em si é um container sem papel",
@@ -66,11 +90,20 @@
     ],
     "aria": {
       "role": "navigation",
-      "states": ["aria-label", "aria-current"]
+      "states": [
+        "aria-label",
+        "aria-current"
+      ]
     },
     "keyboard": [
-      { "key": "Tab", "action": "percorre os módulos do rail na ordem do DOM" },
-      { "key": "Enter / Espaço", "action": "aciona o módulo focado" }
+      {
+        "key": "Tab",
+        "action": "percorre os módulos do rail na ordem do DOM"
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "aciona o módulo focado"
+      }
     ]
   },
   "tokens": [
@@ -102,12 +135,37 @@
     "props": {},
     "demoSlots": {
       "rail": [
-        { "component": "DssPageShellRailItem", "props": { "icon": "dashboard", "label": "Painel", "active": true } },
-        { "component": "DssPageShellRailItem", "props": { "icon": "description", "label": "Solicitações" } },
-        { "component": "DssPageShellRailItem", "props": { "icon": "settings", "label": "Configurações" } }
+        {
+          "component": "DssPageShellRailItem",
+          "props": {
+            "icon": "dashboard",
+            "label": "Painel",
+            "active": true
+          }
+        },
+        {
+          "component": "DssPageShellRailItem",
+          "props": {
+            "icon": "description",
+            "label": "Solicitações"
+          }
+        },
+        {
+          "component": "DssPageShellRailItem",
+          "props": {
+            "icon": "settings",
+            "label": "Configurações"
+          }
+        }
       ],
       "default": [
-        { "component": "DssSectionTitle", "props": { "label": "Conteúdo da página", "size": "lg" } }
+        {
+          "component": "DssSectionTitle",
+          "props": {
+            "label": "Conteúdo da página",
+            "size": "lg"
+          }
+        }
       ]
     },
     "demoContent": "DssPageShell com rail de 3 módulos e o board",

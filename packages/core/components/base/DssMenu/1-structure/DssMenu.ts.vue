@@ -1,6 +1,7 @@
 <template>
   <q-menu
     :class="menuClasses"
+    data-brand-zone="content"
     :model-value="aberto"
     :fit="props.fit"
     :cover="props.cover"

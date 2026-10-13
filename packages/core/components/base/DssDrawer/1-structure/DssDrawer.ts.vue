@@ -132,6 +132,7 @@ function onUpdate(val: boolean): void {
   -->
   <q-drawer
     :class="drawerClasses"
+    data-brand-zone="shell"
     v-bind="drawerAttrs"
     :model-value="props.modelValue"
     :side="props.side"

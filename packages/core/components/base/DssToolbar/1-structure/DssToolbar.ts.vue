@@ -50,6 +50,7 @@ const brandAttr = computed(() => props.brand ? { 'data-brand': props.brand } : {
 <template>
   <q-toolbar
     :class="toolbarClasses"
+    data-brand-zone="shell"
     v-bind="{ ...$attrs, ...brandAttr }"
   >
     <slot />

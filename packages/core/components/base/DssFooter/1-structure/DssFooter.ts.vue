@@ -45,6 +45,7 @@ const { footerClasses } = useFooterClasses(props)
 <template>
   <q-footer
     :class="footerClasses"
+    data-brand-zone="shell"
     v-bind="$attrs"
   >
     <slot />

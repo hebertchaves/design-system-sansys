@@ -43,6 +43,20 @@
  *
  *     Delegação a um filho DSS é rota válida (DssAppBar → DssToolbar).
  *
+ * B4) BARREIRA INCOMPLETA — BLOQUEIA (sem baseline: tem que estar sempre em dia)
+ *     Todo token que `tokens/brand/*` remapeia e que NÃO é do eixo de identidade
+ *     precisa ser resetado por `semantic/_brand-barrier.scss`. Sem isto, criar um
+ *     token de marca novo abriria um furo MUDO na barreira: a zona de conteúdo
+ *     continuaria brandeada naquele token e ninguém saberia.
+ *     Há uma allowlist curta, com motivo declarado, para os que não precisam de
+ *     reset (já apontam para o semântico, ou derivam de quem já foi resetado).
+ *
+ * B5) META ≠ CÓDIGO — BLOQUEIA
+ *     `brandZone` no `dss.meta.json` e o `data-brand-zone` emitido no template
+ *     têm de concordar, nos dois sentidos. O meta é documentação DERIVADA
+ *     (Constituição #6: o código é a fonte); este gate impede que a derivada
+ *     minta — inclusive quando alguém remove o atributo e esquece o meta.
+ *
  * COMMENT-AWARE, como o hover-tokens. Sem strip, o próprio texto que explica por
  * que um primitivo saiu reprovaria o gate.
  *
@@ -66,6 +80,18 @@ const GATE = argv.includes('--gate');
 const UPDATE = argv.includes('--update-baseline');
 
 const MARCAS = 'hub|water|waste';
+const DIR_MARCA = path.join(ROOT, 'packages', 'core', 'tokens', 'brand');
+const BARREIRA = path.join(ROOT, 'packages', 'core', 'tokens', 'semantic', '_brand-barrier.scss');
+const FOCO = path.join(ROOT, 'packages', 'core', 'tokens', 'semantic', 'accessibility', '_focus.scss');
+
+/** Remapeados por marca que NAO precisam de reset — cada um com o motivo. */
+const B4_DISPENSADOS = {
+  '--dss-action-secondary': 'as 3 marcas ja apontam para var(--dss-secondary)',
+  '--dss-action-tertiary': 'as 3 marcas ja apontam para var(--dss-tertiary)',
+  '--dss-action-accent': 'as 3 marcas ja apontam para var(--dss-accent)',
+  '--dss-action-primary-text': 'marca=white, default=--dss-gray-50=#ffffff — mesmo valor',
+  '--dss-action-primary-bg': 'deriva de --dss-action-primary-surface, que re-resolve sozinho',
+};
 
 /** Zera comentários PRESERVANDO quebras de linha, para o nº da linha continuar certo. */
 function stripComments(src) {
@@ -138,10 +164,88 @@ function analisarProps() {
   return [...new Set(semRota)].sort();
 }
 
+// ---------------------------------------------------------------- B4
+/** Tokens declarados dentro de um bloco cujo seletor casa `re`. */
+function declaradosEm(arquivo, re) {
+  const src = stripComments(fs.readFileSync(arquivo, 'utf8'));
+  const out = new Set();
+  let dentro = false;
+  let prof = 0;
+  for (const linha of src.split('\n')) {
+    if (!dentro && re.test(linha) && linha.includes('{')) {
+      dentro = true;
+      prof = 1;
+      continue;
+    }
+    if (!dentro) continue;
+    prof += (linha.match(/\{/g) || []).length - (linha.match(/\}/g) || []).length;
+    const m = linha.match(/^\s*(--dss-[a-z0-9-]+)\s*:/);
+    if (m) out.add(m[1]);
+    if (prof <= 0) dentro = false;
+  }
+  return out;
+}
+
+const ehIdentidade = (t) => /^--dss-(brand-|.*-brand(-|$))/.test(t);
+
+function analisarBarreira() {
+  const remapeados = new Set();
+  for (const f of fs.readdirSync(DIR_MARCA).filter((x) => x.endsWith('.scss'))) {
+    for (const t of declaradosEm(path.join(DIR_MARCA, f), /\[data-brand=/)) remapeados.add(t);
+  }
+  for (const t of declaradosEm(FOCO, /\[data-brand=/)) remapeados.add(t);
+
+  const resetados = declaradosEm(BARREIRA, /\[data-brand-zone="content"\]/);
+
+  const faltando = [...remapeados]
+    .filter((t) => !ehIdentidade(t))
+    .filter((t) => !(t in B4_DISPENSADOS))
+    .filter((t) => !resetados.has(t))
+    .sort();
+
+  return { remapeados: remapeados.size, resetados: resetados.size, faltando };
+}
+
+// ---------------------------------------------------------------- B5
+function analisarZonas() {
+  const problemas = [];
+  for (const meta of walk(COMPONENTS, ['dss.meta.json'])) {
+    const comp = componenteDe(meta);
+    let declarada = null;
+    try {
+      declarada = JSON.parse(fs.readFileSync(meta, 'utf8')).brandZone ?? null;
+    } catch {
+      continue;
+    }
+
+    const estrutura = walk(path.join(COMPONENTS, comp, '1-structure'), ['.vue']);
+    const emitidas = new Set();
+    for (const f of estrutura) {
+      const vue = fs.readFileSync(f, 'utf8');
+      for (const m of vue.matchAll(/data-brand-zone="(shell|content)"/g)) emitidas.add(m[1]);
+    }
+
+    const esperadas = declarada === 'both' ? ['shell', 'content'] : declarada ? [declarada] : [];
+
+    if (declarada && esperadas.some((z) => !emitidas.has(z))) {
+      problemas.push({ comp, tipo: 'meta-sem-codigo', declarada, emitidas: [...emitidas] });
+    }
+    if (!declarada && emitidas.size) {
+      problemas.push({ comp, tipo: 'codigo-sem-meta', declarada, emitidas: [...emitidas] });
+    }
+    if (declarada && declarada !== 'both' && emitidas.size > esperadas.length) {
+      problemas.push({ comp, tipo: 'divergente', declarada, emitidas: [...emitidas] });
+    }
+  }
+  return problemas;
+}
+
 // ---------------------------------------------------------------- main
 function main() {
   const { b1, b2 } = analisarScss();
   const b3 = analisarProps();
+  const b4 = analisarBarreira();
+  const b5 = analisarZonas();
 
   const arquivosB1 = [...new Set(b1.map((a) => a.arquivo))].sort();
 
@@ -202,6 +306,24 @@ function main() {
     console.log('            Emita `:data-brand="brand || undefined"` no root, ou delegue a prop a um filho DSS.');
   }
 
+  console.log(
+    `\n   B4. Barreira x remapeamentos de marca: ${b4.remapeados} remapeado(s) · ` +
+      `${b4.resetados} resetado(s) · ${Object.keys(B4_DISPENSADOS).length} dispensado(s)`
+  );
+  for (const t of b4.faltando) {
+    console.log(`       ❌ FURO: ${t} é remapeado por marca e a barreira não o reseta`);
+    console.log('            Acrescente em tokens/semantic/_brand-barrier.scss, ou em');
+    console.log('            B4_DISPENSADOS deste gate COM O MOTIVO, se não precisar.');
+  }
+  if (!b4.faltando.length) console.log('       ✅ a barreira cobre tudo que a marca move');
+
+  console.log(`\n   B5. brandZone (meta) x data-brand-zone (código): ${b5.length} divergência(s)`);
+  for (const p of b5) {
+    const emit = p.emitidas.length ? p.emitidas.join('+') : 'nenhuma';
+    console.log(`       ❌ ${p.comp} — meta diz "${p.declarada ?? 'ausente'}", código emite ${emit}`);
+  }
+  if (!b5.length) console.log('       ✅ meta e código concordam');
+
   // A catraca: o baseline só pode encolher.
   const sumiuB1 = (base.primitivoDeMarca || []).filter((f) => !arquivosB1.includes(f));
   const sumiuB2 = (base.brandsSemRemap || []).filter((f) => !b2.includes(f));
@@ -211,7 +333,7 @@ function main() {
     console.log(`\n   🎉 ${migrados} item(ns) do baseline já corrigido(s). Rode --update-baseline para encolher a lista.`);
   }
 
-  const falhou = novoB1.length + novoB2.length + novoB3.length;
+  const falhou = novoB1.length + novoB2.length + novoB3.length + b4.faltando.length + b5.length;
   if (!falhou) {
     console.log('\n✅ Nenhum caso NOVO de forma de marca.');
     return;

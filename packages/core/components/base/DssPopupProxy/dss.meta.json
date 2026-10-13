@@ -12,6 +12,7 @@
   "goldenContext": "DssMenu",
   "goldenContextJustification": "DssMenu é o overlay de navegação mais próximo do DssPopupProxy: ambos teleportam para <body>, usam QMenu como motor (modo desktop do DssPopupProxy), aplicam os mesmos tokens de superfície (--dss-surface-default, --dss-elevation-3, --dss-radius-md), e seguem o padrão de CSS global (sem <style scoped>). A conformidade do DssPopupProxy é auditada em relação ao DssMenu como baseline específico.",
   "classification": "Visual",
+  "brandZone": "content",
   "motor": {
     "quasarComponent": "QPopupProxy",
     "desktopMode": "QMenu (viewport >= breakpoint)",

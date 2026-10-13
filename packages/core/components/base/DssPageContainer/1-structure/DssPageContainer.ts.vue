@@ -1,6 +1,7 @@
 <template>
   <q-page-container
     :class="pageContainerClasses"
+    data-brand-zone="content"
     v-bind="$attrs"
   >
     <slot />

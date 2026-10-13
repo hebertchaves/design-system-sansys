@@ -12,6 +12,7 @@
     "interactive": true,
     "note": "Interativo via v-model:open; interatividade interna pertence aos filhos (DssButton, DssList, DssItem)"
   },
+  "brandZone": "content",
   "phaseDescription": "Fase 2 — Nível 2 (Composição de Primeiro Grau). Overlay bottom sheet baseado em QDialog com position='bottom'. Fornece estrutura handle/header/body via slots para composição pelo consumidor. Depende de DssList e DssItem (já selados).",
   "quasarBase": "QDialog (position='bottom' + fullWidth)",
   "quasarNote": "QBottomSheet é um plugin Quasar ($q.bottomSheet({})), não um componente reutilizável. DssBottomSheet implementa o comportamento equivalente usando QDialog diretamente, que é o motor interno do plugin.",

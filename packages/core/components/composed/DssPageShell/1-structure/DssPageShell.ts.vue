@@ -4,6 +4,7 @@
     <nav
       v-if="$slots.rail"
       class="dss-page-shell__rail"
+      data-brand-zone="shell"
       :aria-label="railAriaLabel"
     >
       <ul class="dss-page-shell__rail-list">
@@ -17,7 +18,7 @@
         <slot name="breadcrumb" />
       </div>
 
-      <div class="dss-page-shell__board">
+      <div class="dss-page-shell__board" data-brand-zone="content">
         <slot />
       </div>
     </div>

@@ -11,6 +11,7 @@
     :transition-hide="props.transitionLeave ?? 'scale'"
     :no-esc-dismiss="props.disableEsc"
     :no-backdrop-dismiss="props.disableBackdropClick"
+    data-brand-zone="content"
     v-bind="$attrs"
     @update:model-value="emit('update:open', $event)"
     @show="emit('open')"

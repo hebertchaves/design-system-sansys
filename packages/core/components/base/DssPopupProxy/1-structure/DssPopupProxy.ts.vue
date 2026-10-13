@@ -2,6 +2,7 @@
   <q-popup-proxy
     ref="proxyRef"
     :class="popupProxyClasses"
+    data-brand-zone="content"
     :model-value="props.open"
     :breakpoint="props.breakpoint"
     :target="(props.target as QPopupProxyProps['target'])"

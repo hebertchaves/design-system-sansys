@@ -115,7 +115,31 @@ Funciona porque `--dss-primary` **não é remapeado por `[data-brand]`** — ver
 
 Por que um atributo e não uma classe: `data-*` é o canal que o DSS já usa para contexto visual em cascata (Cartão Composto — *"brand/contexto visual via `data-*` + cascata de CSS var"*), e um atributo é legível no DOM durante auditoria, o que uma classe utilitária não é.
 
-> **Nota sobre a ponte Quasar.** `--q-primary` é alimentada por `--dss-action-primary` e as utilitárias do Quasar vivem em `@layer quasar` com `!important`. A barreira precisa portanto re-declarar a ponte no mesmo escopo, senão o Quasar continua pintando com o valor brandeado e **vence**. Este é o risco técnico #1 da etapa 3 e tem teste e2e dedicado.
+### 6.1 Três coisas que a construção ensinou
+
+**A ponte Quasar era pré-requisito, não risco futuro.** `--q-primary` vive em `themes/_quasar-tokens-mapping.scss` sob `scopes.$marcas`, que não incluía a barreira. Sem isso ela sairia pela metade: o DSS iria ao semântico e as utilitárias do Quasar (`.bg-primary { … !important }` em `@layer quasar`, que vencem o CSS DSS unlayered) continuariam brandeadas — inconsistente, **pior que não ter barreira**. As duas zonas entraram em `$marcas`.
+
+**A lista de escopo não serve aqui — e o número disse por quê.** A primeira tentativa foi pôr a zona em `scopes.$primitivos`, como os temas fazem. Medido antes de aceitar: re-declararia **176 tokens para acertar ~9**, e **19 deles são sobrescritas do tema dark** — que voltariam ao valor claro dentro de qualquer zona de conteúdo no escuro. Seria uma regressão muda em todo componente desabilitado no escuro. Por isso a barreira é **explícita e pequena**, com a regra B4 garantindo que não fique para trás.
+
+**A barreira cobre exatamente o que a marca move.** Dos 62 tokens que `[data-brand]` remapeia, 50 são do eixo de identidade e permanecem; dos 12 restantes, `secondary`/`tertiary`/`accent` já apontam para o semântico nas três marcas. Sobra a rampa `--dss-action-primary*`, mais `--dss-focus-primary` e a ponte.
+
+### 6.2 Quem estabelece zona
+
+Doze componentes, com o campo `brandZone` no `dss.meta.json` e o atributo no template. O atributo vem **antes** do `v-bind="$attrs"`, então vale por omissão e o consumidor ainda pode sobrescrever sem API nova.
+
+| zona | componentes |
+|---|---|
+| `shell` | `DssToolbar` · `DssHeader` · `DssFooter` · `DssDrawer` |
+| `content` | `DssCard` · `DssPage` · `DssPageContainer` · `DssDialog` · `DssMenu` · `DssPopupProxy` · `DssBottomSheet` |
+| `both` | `DssPageShell` — o `rail` é casca, o `board` é conteúdo |
+
+`DssPageShell` é o caso exemplar: tem as duas zonas dentro de si, e é literalmente o print.
+
+`DssAppBar` **não** emite: delega a `DssHeader` e `DssToolbar`, que já emitem.
+
+Os quatro que **teleportam** (`DssDialog`, `DssMenu`, `DssPopupProxy`, `DssBottomSheet`) escapam da cascata — renderizam no `body`, fora da subárvore da página. Por isso declaram a zona eles próprios, em vez de herdá-la. A marca, nesses, continua chegando por `:data-brand` via `$attrs`.
+
+`DssExpansionItem` e `DssContextHeader` foram **deliberadamente deixados de fora**: o primeiro aparece dentro de drawers de navegação, onde marcá-lo como conteúdo quebraria a casca; o segundo herda bem de `DssPage`.
 
 ## 7. A prop `brand` passa a ser tri-estado
 
@@ -149,7 +173,11 @@ Reprova:
 |---|---|
 | **B1** | `var(--dss-{hub,water,waste}-NNN)` em `packages/core/components/**` — primitivo de marca fora de `tokens/brand/` |
 | **B2** | seletor `.dss-*--brand-{hub,water,waste}` que **pinta** (declara propriedade CSS) em vez de **remapear** (declara custom property) |
-| **B3** | prop `brand` em `*.types.ts` cuja implementação não usa a forma canônica do §7 |
+| **B3** | prop `brand` em `*.types.ts` cuja implementação não emite `data-brand` nem delega |
+| **B4** | token remapeado por marca que a barreira **não reseta** — sem baseline, com allowlist justificada |
+| **B5** | `brandZone` no meta ≠ `data-brand-zone` no template, nos dois sentidos |
+
+B4 e B5 **não têm baseline**: são invariantes, não dívida. B4 fecha o furo mudo de alguém criar um token de marca novo e a barreira não acompanhar. B5 impede que o meta — documentação **derivada** (Constituição #6) — minta sobre o código.
 
 O baseline congela as ocorrências de hoje: **nada novo passa**, e a dívida existente vira uma lista que só pode encolher. Isso inverte a dinâmica que produziu os 8 componentes novos entre a medição e agora.
 
@@ -160,9 +188,13 @@ A ordem importa — migrar antes de fixar o alvo é refazer depois.
 | etapa | o que | bloqueia |
 |---|---|---|
 | **1** | este doc + gate com baseline + fallback `:root` do eixo de identidade | — |
-| **2** | `brandZone` no `dss.meta.json` (`shell` \| `content`), derivada para o atributo | 1 |
-| **3** | barreira ligada nas superfícies de conteúdo + e2e da ponte `--q-*` | 1, 2 |
-| **4** | prop tri-estado + migração dos 95 `_brands.scss` que pintam, em ondas | 1, 3 |
+| **2 ✅** | `brandZone` no meta + emissão do atributo nos 12 estabelecedores + B4/B5 | 1 |
+| **3 ✅** | barreira ligada + ponte `--q-*` + e2e (11 testes, browser real) | 1, 2 |
+| **4** | prop tri-estado com `"none"` + migração dos 93 `_brands.scss` que pintam, em ondas | 1, 3 |
+
+As etapas 2 e 3 saíram juntas de propósito: separadas, produziriam um estado intermediário **inerte** — metadado que nada lê, ou atributo que nada consome. Inércia é a doença que esta frente inteira está tratando.
+
+**Verificado em browser real** (`apps/sandbox/tests/regression/e2e/brand-barrier.spec.ts`, 11/11), incluindo a tela do print: AppBar na marca, conteúdo semântico, e o rail reentrando a marca de dentro do conteúdo.
 
 Piloto da etapa 4, herdado de `DSS_FRENTE_MARCA_PRIMITIVOS.md` §6 — `DssBadge` (simples), `DssButton` (completo), `DssChip` (múltiplos passos da escala).
 

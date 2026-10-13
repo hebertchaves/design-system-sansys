@@ -2,6 +2,7 @@
   <div
     :class="cardClasses"
     :style="cardStyles"
+    data-brand-zone="content"
     v-bind="cardAttrs"
     @click="handleClick"
     @keydown.enter="handleKeydown"

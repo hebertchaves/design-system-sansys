@@ -1,5 +1,6 @@
 <template>
   <q-dialog
+    data-brand-zone="content"
     :model-value="props.open"
     position="bottom"
     full-width

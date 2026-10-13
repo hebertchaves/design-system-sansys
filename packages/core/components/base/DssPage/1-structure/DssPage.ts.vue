@@ -19,6 +19,7 @@
   <q-page
     :class="pageClasses"
     role="main"
+    data-brand-zone="content"
     :style-fn="props.styleFn"
     v-bind="$attrs"
   >

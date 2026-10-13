@@ -15,6 +15,7 @@
   "category": "Layout Global — Container de conteúdo principal com min-height dinâmica",
   "phase": 2,
   "classification": "Visual",
+  "brandZone": "content",
   "compositionLevel": "Nível 4",
   "family": "Layout Global",
   "quasarBase": "QPage",

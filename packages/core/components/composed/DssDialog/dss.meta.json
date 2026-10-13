@@ -7,6 +7,7 @@
   "goldenReference": "DssChip",
   "goldenContext": "DssCard",
   "classification": "Visual",
+  "brandZone": "content",
   "phaseDescription": "Fase 2 — Nível 1 (Independente). Overlay modal baseado em QDialog do Quasar. Fornece estrutura header/body/footer via slots para composição pelo consumidor.",
   "quasarBase": "QDialog",
   "dependencies": [],

@@ -188,3 +188,77 @@ test.describe('Barreira de marca — casca aninhada', () => {
     expect(cascaAninhada).toBe(hub)
   })
 })
+
+test.describe('Barreira de marca — a tela real do print', () => {
+  // Os testes acima medem probes sintéticos. Estes medem a página NFAg, que é
+  // exatamente a composição do print que originou o modelo:
+  //   DssLayout[data-brand=water]
+  //     └ DssAppBar → DssHeader[zone=shell] + DssToolbar[zone=shell]
+  //     └ DssPageContainer[zone=content] → DssPage[zone=content]
+  //         └ DssPageShell  (rail[zone=shell] · board[zone=content])
+  //             └ DssCard[zone=content] → DssButton
+  //
+  // Serve também para provar que o atributo ATRAVESSA os componentes
+  // Quasar-rooted (q-header, q-drawer, q-page, q-page-container, q-toolbar) —
+  // o Quasar podia tê-lo engolido, e isso não erraria, só ficaria errado.
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/?screen=nfag-parallel&scenario=apt')
+    // A tela monta de forma assíncrona a partir do query param; sem esperar,
+    // `querySelector` volta null e o erro aparece como falha da barreira.
+    await page.locator('.dss-page-shell__board').waitFor({ state: 'attached' })
+    await page.locator('.nf-panel').first().waitFor({ state: 'attached' })
+  })
+
+  test('as zonas chegam ao DOM atravessando os componentes Quasar-rooted', async ({ page }) => {
+    await expect(page.locator('.nf-layout')).toHaveAttribute('data-brand', 'water')
+
+    // casca
+    await expect(page.locator('.q-header[data-brand-zone="shell"]')).toHaveCount(1)
+    await expect(page.locator('.q-toolbar[data-brand-zone="shell"]')).toHaveCount(1)
+    await expect(page.locator('.dss-page-shell__rail[data-brand-zone="shell"]')).toHaveCount(1)
+
+    // conteúdo
+    await expect(page.locator('.q-page-container[data-brand-zone="content"]')).toHaveCount(1)
+    await expect(page.locator('.q-page[data-brand-zone="content"]')).toHaveCount(1)
+    await expect(page.locator('.dss-page-shell__board[data-brand-zone="content"]')).toHaveCount(1)
+    expect(
+      await page.locator('.nf-panel[data-brand-zone="content"]').count()
+    ).toBeGreaterThan(0)
+  })
+
+  test('a AppBar fica na marca e o conteúdo volta ao semântico', async ({ page }) => {
+    const { casca, conteudo, neutro } = await page.evaluate(() => {
+      const ler = (sel: string) =>
+        getComputedStyle(document.querySelector(sel)!)
+          .getPropertyValue('--dss-action-primary')
+          .trim()
+
+      const probe = document.createElement('div')
+      document.body.appendChild(probe)
+      const neutro = getComputedStyle(probe).getPropertyValue('--dss-action-primary').trim()
+      document.body.removeChild(probe)
+
+      return { casca: ler('.q-toolbar'), conteudo: ler('.nf-panel'), neutro }
+    })
+
+    // a casca segue a marca…
+    expect(casca).not.toBe(neutro)
+    // …e o conteúdo não.
+    expect(conteudo).toBe(neutro)
+  })
+
+  test('o rail segue a marca mesmo estando dentro do conteúdo', async ({ page }) => {
+    // O rail vive dentro de DssPage[zone=content]: é o caso de casca ANINHADA,
+    // e só funciona porque a barreira preserva o eixo de identidade.
+    const { rail, board } = await page.evaluate(() => {
+      const ler = (sel: string) =>
+        getComputedStyle(document.querySelector(sel)!)
+          .getPropertyValue('--dss-action-primary')
+          .trim()
+      return { rail: ler('.dss-page-shell__rail'), board: ler('.dss-page-shell__board') }
+    })
+
+    expect(rail).not.toBe(board)
+  })
+})

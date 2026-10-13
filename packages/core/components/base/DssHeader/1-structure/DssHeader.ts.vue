@@ -61,6 +61,7 @@ const { headerClasses } = useHeaderClasses(props)
 <template>
   <q-header
     :class="headerClasses"
+    data-brand-zone="shell"
     :model-value="modelValue"
     :reveal="reveal"
     :reveal-offset="revealOffset"

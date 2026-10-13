@@ -13,6 +13,7 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra DssToolbar (Nível 1). Wrapper DSS governado sobre QHeader. Bloco de construção base para DssLayout (futuro Nível 4).",
   "classification": "Visual",
+  "brandZone": "shell",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
