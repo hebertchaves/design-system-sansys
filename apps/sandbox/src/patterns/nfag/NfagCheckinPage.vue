@@ -114,21 +114,31 @@ let timer, generation=0
 function reset(){activeFeedback.value=null;expanded.value={};generation++;clearInterval(timer);running.value=false;completed.value=0;filter.value='all';history.value=[];rows.value=makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)}
 watch(()=>props.scenario,reset)
 function execute(){if(running.value)return;running.value=true;completed.value=0;expanded.value={};const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
-let previousTheme, previousBrand
+/* TEMA vai à raiz; MARCA não — e a distinção é deliberada.
+
+   Escurecer é preferência de PÁGINA: o documento inteiro acompanha, inclusive o
+   conteúdo teleportado. Marca é assunto do CONTEÚDO. Com `data-brand` no
+   `<html>`, todo o sandbox entrava no escopo da marca — o chrome, o menu e
+   qualquer componente de ação montado fora desta página. Medido: abrir esta
+   página fazia `--dss-action-primary` do `<html>` virar #0e88e4.
+
+   A marca desta demonstração mora no `DssLayout` (atributo no template) e, para
+   os diálogos, no `:data-brand` que cada `DssDialog` recebe — ele chega ao
+   `.q-dialog` teleportado por `$attrs` e passa a ser ancestral do conteúdo.
+   Verificado no DOM: a cadeia do `.dss-dialog` carrega `data-brand` sem
+   depender da raiz. */
+let previousTheme
 function applyContext(){
  document.documentElement.setAttribute('data-theme',theme.value)
- document.documentElement.setAttribute('data-brand',brand.value)
 }
-watch([theme,brand],applyContext)
+watch(theme,applyContext)
 onMounted(()=>{
  previousTheme=document.documentElement.getAttribute('data-theme')
- previousBrand=document.documentElement.getAttribute('data-brand')
  applyContext()
 })
 onBeforeUnmount(()=>{
  generation++;clearInterval(timer)
  if(previousTheme===null)document.documentElement.removeAttribute('data-theme');else if(previousTheme!==undefined)document.documentElement.setAttribute('data-theme',previousTheme)
- if(previousBrand===null)document.documentElement.removeAttribute('data-brand');else if(previousBrand!==undefined)document.documentElement.setAttribute('data-brand',previousBrand)
 })
 </script>
 <style scoped>
