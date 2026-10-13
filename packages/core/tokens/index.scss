@@ -13,6 +13,7 @@
 @use 'semantic/controls';   /* chrome de controle: trilho, manipulo, desabilitado */
 @use 'semantic/border-widths';
 @use 'semantic/feedback';
+@use 'semantic/brand-axis';     /* eixo de IDENTIDADE: default fora de [data-brand] */
 
 /* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
 @use 'semantic/accessibility';  /* Agrega: contrast, focus, sizing, typography */
@@ -42,3 +43,9 @@
 @use 'themes/hc/brands' as hc-brands;
 @use 'themes/hcdark/colors' as hcdark-colors;
 @use 'themes/hcdark/brands' as hcdark-brands;
+
+/* 8. Barreira de marca — onde o eixo de ACAO volta ao semantico.
+   Por ULTIMO de proposito: empata em especificidade com `[data-brand="x"]`,
+   e em empate vence quem vem depois.
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md */
+@use 'semantic/brand-barrier';

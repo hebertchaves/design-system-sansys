@@ -44,6 +44,51 @@
 $primitivos: ':root, [data-theme="hc"], [data-theme="hcdark"]';
 
 // -----------------------------------------------------------------------------
+// $zonas — $primitivos + a BARREIRA DE MARCA
+// -----------------------------------------------------------------------------
+//
+// Quarto caso, e o unico que usa o mecanismo em sentido INVERSO. `$primitivos`,
+// `$temas` e `$marcas` existem para PROPAGAR um contexto a uma subarvore. Este
+// existe para INTERROMPER um: `[data-brand-zone="content"]` re-resolve o eixo de
+// ACAO a partir de `--dss-primary` — que `[data-brand]` NAO remapeia (verificado:
+// zero ocorrencias de `--dss-primary:` em tokens/brand/). A marca para ali, e o
+// conteudo volta a falar primary/secondary/warning em vez de falar produto.
+//
+// Mesma fisica das listas acima: a expressao resolve de novo, agora no escopo
+// certo. Nenhum mecanismo novo.
+//
+// ⚠️ USE APENAS onde o arquivo declara o eixo de ACAO. NAO use onde ele declara
+// o eixo de IDENTIDADE (`_brand-axis.scss`, `_gradients.scss`): la o re-resolve
+// zeraria a marca dentro do conteudo, que e exatamente o que NAO queremos — a
+// identidade continua brandeada em toda parte, so a acao volta ao semantico.
+//
+// Auditado ao criar (out/2026): _actions, _focus e _borders declaram ZERO tokens
+// de identidade; _text declara 3 (`--dss-text-brand-{hub,water,waste}`), que sao
+// constantes por marca e nao dependem de contexto — re-resolvem no mesmo valor.
+//
+// 📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
+
+// Duas listas, porque os dois papeis sao diferentes:
+//
+//   $barreira — para quem declara o VALOR BASE do eixo de acao
+//               (`--dss-action-primary: var(--dss-primary)`). So a zona de
+//               CONTEUDO entra: e' ela que quer o neutro. A casca NAO entra,
+//               senao reentrar a marca seria impossivel.
+//
+//   $zonas    — para quem apenas DERIVA de `--dss-action-*`
+//               (`--dss-border-focus`, `--dss-text-action`, os shadows de foco).
+//               As DUAS zonas entram: a expressao so' precisa re-resolver no
+//               elemento, pegando o `--dss-action-primary` que valer ali — seja
+//               o neutro da barreira ou a marca reentrada pela casca.
+//
+// Sem essa separacao, uma casca ANINHADA dentro de conteudo (uma mini-toolbar
+// num card) ficaria com a acao brandeada e as bordas/textos derivados ainda
+// neutros, herdados da barreira acima. Meio reentrada.
+
+$barreira: '#{$primitivos}, [data-brand-zone="content"]';
+$zonas: '#{$barreira}, [data-brand-zone="shell"]';
+
+// -----------------------------------------------------------------------------
 // $temas — para SEMANTICO que deriva de SEMANTICO
 // -----------------------------------------------------------------------------
 //
@@ -88,4 +133,11 @@ $temas: ':root, [data-theme="dark"], [data-theme="hc"], [data-theme="hcdark"]';
 //
 // ⚠️ AO CRIAR UMA MARCA NOVA, acrescente-a a esta lista.
 
-$marcas: '#{$temas}, [data-brand="hub"], [data-brand="water"], [data-brand="waste"]';
+//
+// Inclui tambem a BARREIRA: sem isso a barreira sai pela metade. Ela reseta
+// `--dss-action-primary`, mas `--q-primary` ficaria com o valor brandeado
+// herdado — e as utilitarias do Quasar (`.bg-primary { … !important }` em
+// `@layer quasar`) VENCEM o CSS DSS unlayered. O resultado seria meio semantico,
+// meio brandeado: pior que nao ter barreira, porque inconsistente.
+
+$marcas: '#{$temas}, [data-brand="hub"], [data-brand="water"], [data-brand="waste"], [data-brand-zone="content"], [data-brand-zone="shell"]';

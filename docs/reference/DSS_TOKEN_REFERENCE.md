@@ -722,9 +722,12 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-primary-disable` | `var(--dss-primary-disable)` | — | — |
 | `--dss-action-primary-hover` | `var(--dss-primary-hover)` | — | — |
 | `--dss-action-primary-deep` | `var(--dss-primary-deep)` | — | — |
-| `--dss-action-primary-focus` | `var(--dss-primary-focus)` | — | — |
-| `--dss-action-primary-text` | `var(--dss-gray-50)` | — | — |
-| `--dss-action-primary-surface` | `color-mix(in srgb, var(--dss-action-primary)   8%, transparent)` | — | — |
+| `--dss-action-primary-disable` | `var(--dss-gray-600)` | — | — |
+| `--dss-action-primary` | `var(--dss-brand-primary)` | — | — |
+| `--dss-action-primary-light` | `var(--dss-brand-secondary)` | — | — |
+| `--dss-action-primary-disable` | `var(--dss-brand-disable)` | — | — |
+| `--dss-action-primary-hover` | `var(--dss-brand-tertiary)` | — | — |
+| `--dss-action-primary-deep` | `var(--dss-brand-deep)` | — | — |
 <!-- END:TOKEN-TABLE:actions-primary -->
 
 ## 3.2 Secondary Actions

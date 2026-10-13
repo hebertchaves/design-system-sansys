@@ -29,6 +29,15 @@
      fora da marca o `var()` cairia para vazio). */
   --dss-action-primary-text: var(--dss-gray-50);
 
+  /* Fundo sutil da acao primaria. So existia sob `[data-brand]` (hub/water/waste
+     o definem como o degrau -50 da marca), entao FORA de marca o `var()` caia
+     para vazio — mesmo defeito latente que `--dss-brand-*` tinha. Hoje nao
+     quebra nada porque tem ZERO consumidores; o default existe para que passe a
+     ser consumivel e para que a barreira tenha a que resetar.
+     O papel ja tinha token exato: `--dss-action-primary-surface` e a mistura a
+     8% da propria acao primaria. */
+  --dss-action-primary-bg: var(--dss-action-primary-surface);
+
 
   /* Secondary Action - Verde (#26A69A) */
   --dss-action-secondary: var(--dss-secondary);

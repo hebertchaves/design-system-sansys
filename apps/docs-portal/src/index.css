@@ -175,6 +175,14 @@
      `[data-brand]` (o que o gate `validate:scss-tokens` reprova, e com razão:
      fora da marca o `var()` cairia para vazio). */
   --dss-action-primary-text: var(--dss-gray-50);
+  /* Fundo sutil da acao primaria. So existia sob `[data-brand]` (hub/water/waste
+     o definem como o degrau -50 da marca), entao FORA de marca o `var()` caia
+     para vazio — mesmo defeito latente que `--dss-brand-*` tinha. Hoje nao
+     quebra nada porque tem ZERO consumidores; o default existe para que passe a
+     ser consumivel e para que a barreira tenha a que resetar.
+     O papel ja tinha token exato: `--dss-action-primary-surface` e a mistura a
+     8% da propria acao primaria. */
+  --dss-action-primary-bg: var(--dss-action-primary-surface);
   /* Secondary Action - Verde (#26A69A) */
   --dss-action-secondary: var(--dss-secondary);
   --dss-action-secondary-light: var(--dss-secondary-light);
@@ -820,6 +828,73 @@
   --dss-feedback-info-surface: color-mix(in srgb, var(--dss-feedback-info) 10%, transparent);
 }
 
+/* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+/* ==========================================================================
+   DSS - EIXO DE IDENTIDADE — DEFAULT FORA DE MARCA
+   ========================================================================== */
+/* POR QUE ESTE ARQUIVO EXISTE
+
+   O DSS tem DOIS eixos de cor, e eles respondem a perguntas diferentes:
+
+     --dss-action-*  "qual o peso desta ação?"      → semântico
+     --dss-brand-*   "de que produto é esta tela?"  → identidade
+
+   Colapsar os dois é a causa do defeito que originou o modelo: componentes
+   alcançavam `--dss-action-primary` sempre que queriam "a cor da marca", mesmo
+   quando o elemento NÃO era uma ação. A régua decorativa do DssSectionTitle é
+   o caso exemplar — ornamento de identidade pintado com token de ação.
+
+   O eixo de identidade já estava construído em `tokens/brand/_{hub,water,
+   waste}.scss`: 15 tokens por marca, completos. Faltava o default.
+
+   Sem este arquivo, `--dss-brand-*` só resolve DENTRO de `[data-brand]`. Fora
+   dele o `var()` cai para vazio, a declaração vira inválida e a propriedade
+   volta ao herdado — em silêncio. É exatamente o defeito que o
+   `validate:scss-tokens` reprova, e o mesmo que `_actions.scss` já documenta
+   para `--dss-action-primary-text`.
+
+   Com o default, o eixo passa a ser consumível em qualquer contexto: fora de
+   marca entrega o neutro, dentro de `[data-brand]` a marca sobrescreve.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md */
+/* Escopos: além de :root, os temas que re-apontam PRIMITIVOS — sem isso estes
+   tokens não recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
+  /* --- Rampa de hue -------------------------------------------------------
+     A marca usa uma rampa de um só matiz (water: 500/300/700/400). O neutro
+     equivalente é a rampa `--dss-primary-*`, nos degraus de mesmo papel. */
+  --dss-brand-primary: var(--dss-primary);
+  --dss-brand-secondary: var(--dss-primary-light);
+  --dss-brand-tertiary: var(--dss-primary-hover);
+  --dss-brand-accent: var(--dss-primary-light); /* ~400: sem degrau neutro exato */
+  --dss-brand-light: var(--dss-primary-disable); /* ~100: degrau neutro mais claro disponível */
+  --dss-brand-lighter: var(--dss-surface-subtle);
+  --dss-brand-dark: var(--dss-primary-deep);
+  --dss-brand-darker: var(--dss-primary-deep); /* ~900: não há neutro mais profundo */
+  /* --- Degraus de estado -------------------------------------------------- */
+  --dss-brand-hover: var(--dss-primary-hover);
+  --dss-brand-disable: var(--dss-primary-disable);
+  --dss-brand-deep: var(--dss-primary-deep);
+  /* --- Papéis de superfície e texto ---------------------------------------
+     Aqui o fallback é por PAPEL, não por degrau: fora de marca, "fundo de
+     identidade" é simplesmente o fundo sutil do tema. */
+  --dss-brand-background: var(--dss-surface-subtle);
+  --dss-brand-surface: var(--dss-surface-muted);
+  --dss-brand-border: var(--dss-border-subtle);
+  --dss-brand-text: var(--dss-text-primary);
+}
+
+/* ⚠️ TRÊS DEFAULTS SÃO APROXIMAÇÃO, não equivalência — estão marcados acima
+   (`-accent`, `-light`, `-darker`). A rampa neutra tem 6 degraus
+   (disable→light→base→focus→hover→deep) e a de marca tem 9 níveis de primitivo,
+   então nem todo degrau de marca tem contraparte exata. Como os consumidores
+   hoje são ZERO, nenhuma tela muda com estes valores; eles passam a importar
+   quando a etapa 4 da migração começar a mover ornamento para este eixo. Um
+   designer pode refiná-los sem risco de regressão até lá. */
+/* eixo de IDENTIDADE: default fora de [data-brand] */
 /* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
 /* ==========================================================================
    DSS - TOKENS DE AÇÃO
@@ -3903,6 +3978,109 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-hover: var(--dss-waste-300); /* 9.46:1 */
   --dss-action-primary-deep: var(--dss-waste-200); /* 11.49:1 */
   --dss-focus-primary: var(--dss-waste-400);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* 8. Barreira de marca — onde o eixo de ACAO volta ao semantico.
+   Por ULTIMO de proposito: empata em especificidade com `[data-brand="x"]`,
+   e em empate vence quem vem depois.
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md */
+/* ==========================================================================
+   DSS - BARREIRA DE MARCA — onde o eixo de AÇÃO volta ao semântico
+   ========================================================================== */
+/* O DSS tem dois eixos de cor. `--dss-brand-*` responde "de que produto é esta
+   tela?" e segue a marca EM TODA PARTE. `--dss-action-*` responde "qual o peso
+   desta ação?" e só deve seguir a marca na CASCA — no conteúdo, primary/
+   secondary/warning precisam significar peso e risco, não produto. Um botão de
+   excluir não pode mudar de cor porque o produto mudou.
+
+   A zona é decidida pela PÁGINA, não pelo componente: o mesmo DssButton aparece
+   nos dois lugares. Quem estabelece a zona carrega `data-brand-zone`.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
+
+   MECANISMO — não é novo.
+
+   Custom property substitui seu `var()` no elemento ONDE É DECLARADA. Declarar
+   `--dss-action-primary: var(--dss-primary)` no elemento da zona faz a expressão
+   resolver DE NOVO ali, agora fora do alcance do `[data-brand]` ancestral. É a
+   mesma recomputação já em produção em `_scopes.scss` — lá para PROPAGAR tema e
+   marca a subárvores, aqui para INTERROMPER a marca numa subárvore. Mesma
+   física, dois sentidos.
+
+   Funciona porque `--dss-primary` NÃO é remapeado por marca (verificado: zero
+   ocorrências de `--dss-primary:` em `tokens/brand/`). O neutro continua
+   disponível por baixo, intacto.
+
+   POR QUE A LISTA É EXATAMENTE ESTA
+
+   A barreira reseta o que a marca REMAPEIA, nada além. Medido em out/2026:
+   `[data-brand]` remapeia 62 tokens, dos quais 50 são do eixo de IDENTIDADE
+   (todos com "brand" no nome) e ficam brandeados; sobram 12, e destes
+   `-secondary`/`-tertiary`/`-accent` já apontam para o semântico nas três
+   marcas ("Mantém verde semântico"), então não há o que resetar.
+
+   O que a marca remapeia e esta lista cobre: a rampa `--dss-action-primary*`,
+   mais `--dss-focus-primary` (remapeado em `accessibility/_focus.scss`) e a
+   ponte `--q-*` (via `scopes.$marcas`, que inclui as zonas).
+
+   ⚠️ Tentei primeiro resolver isto pela lista de escopo (pôr a zona em
+   `$primitivos`, como os temas fazem). NÃO SERVE, e o número mostra por quê:
+   re-declararia 176 tokens para acertar ~9, e 19 deles são sobrescritas do tema
+   dark — que voltariam ao valor CLARO dentro de qualquer zona de conteúdo no
+   escuro. Barreira explícita e pequena, com gate de completude (B4), é o
+   caminho certo aqui. */
+/* --------------------------------------------------------------------------
+   ZONA DE CONTEÚDO — a ação volta ao semântico
+   -------------------------------------------------------------------------- */
+[data-brand-zone=content] {
+  --dss-action-primary: var(--dss-primary);
+  --dss-action-primary-light: var(--dss-primary-light);
+  --dss-action-primary-disable: var(--dss-primary-disable);
+  --dss-action-primary-hover: var(--dss-primary-hover);
+  --dss-action-primary-deep: var(--dss-primary-deep);
+  /* `-text` NÃO entra: as marcas o definem como `white` e o default é
+     `--dss-gray-50`, que vale `#ffffff`. Mesmo valor dos dois lados.
+     `-bg` NÃO entra: deriva de `--dss-action-primary-surface`, que já
+     re-resolve a partir do `--dss-action-primary` resetado acima. */
+  --dss-focus-primary: var(--dss-primary-focus);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* O tema escuro sobrescreve parte desta rampa. Sem este bloco, a barreira
+   devolveria o valor CLARO dentro do escuro — o defeito que derrubou a
+   abordagem por lista de escopo. Especificidade (0,2,0) vence o bloco acima. */
+[data-theme=dark] [data-brand-zone=content],
+[data-theme=hcdark] [data-brand-zone=content] {
+  --dss-action-primary-disable: var(--dss-gray-600);
+}
+
+/* --------------------------------------------------------------------------
+   ZONA DE CASCA — reentra a marca pelo eixo de IDENTIDADE
+   -------------------------------------------------------------------------- */
+/* No topo da árvore isto é no-op: sob `[data-brand]` a ação já está brandeada e
+   `--dss-brand-primary` vale o mesmo. Existe para o caso ANINHADO — uma
+   mini-toolbar dentro de um card — em que a casca precisa reentrar depois de a
+   barreira ter passado. Fora de marca, o eixo de identidade cai para o neutro
+   (`_brand-axis.scss`), então a casca também fica neutra. Correto.
+
+   O mapeamento foi conferido valor a valor nas três marcas: `brand-primary`,
+   `brand-secondary`, `brand-disable` e `brand-tertiary` batem EXATO com
+   `action-primary`, `-light`, `-disable` e `-hover`; e `brand-hover` bate exato
+   com o `--dss-focus-primary` de cada marca (hub-700 · water-600 · waste-700).
+
+   ⚠️ UMA APROXIMAÇÃO: `action-primary-deep` é hub-900/water-800/waste-900 e
+   `brand-deep` é 800 nas três — exato só no water. Usamos `brand-deep` porque a
+   correspondência é de PAPEL: o comentário dele em `tokens/brand/*` diz
+   literalmente "Estado active/pressionado", que é o papel de `-deep`. Falta um
+   degrau 900 no eixo de identidade; quando existir, trocar aqui. */
+[data-brand-zone=shell] {
+  --dss-action-primary: var(--dss-brand-primary);
+  --dss-action-primary-light: var(--dss-brand-secondary);
+  --dss-action-primary-disable: var(--dss-brand-disable);
+  --dss-action-primary-hover: var(--dss-brand-tertiary);
+  --dss-action-primary-deep: var(--dss-brand-deep);
+  --dss-focus-primary: var(--dss-brand-hover);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 }
