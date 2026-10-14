@@ -303,3 +303,22 @@ describe('DssBtnDropdown', () => {
     })
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 4.1.2 (dss.meta.json → a11y.wcag[].ariaAttrs)
+// aria-haspopup e aria-expanded vêm do QBtnDropdown. aria-expanded tem de
+// TRANSITAR ao abrir — constante, o leitor de tela nunca saberia que abriu.
+// ===========================================================================
+describe('Âncora a11y 4.1.2 — aria-haspopup e aria-expanded', () => {
+  it('o gatilho declara o popup e aria-expanded vira true ao abrir', async () => {
+    const wrapper = mount(DssBtnDropdown, { props: { label: 'Ações' }, attachTo: document.body })
+    const gatilho = () => wrapper.find('[aria-haspopup]')
+    expect(gatilho().exists()).toBe(true)
+    expect(gatilho().attributes('aria-haspopup')).toBe('true')
+    expect(gatilho().attributes('aria-expanded')).toBe('false')
+    await gatilho().trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(gatilho().attributes('aria-expanded')).toBe('true')
+    wrapper.unmount()
+  })
+})

@@ -179,8 +179,13 @@ positivo mais caro que o defeito.
 - **`declare module '*.vue'` no `env.d.ts` cega o type-check** para caminho `.vue` inexistente —
   foi o que escondeu os 8 imports quebrados do `DssDataCard` por meses. Um gate de resolução de
   import `.vue` fecharia isso; ainda não existe.
-- **`a11y.wcag[].verifiedBy: "test"`** verifica apenas que o arquivo `.test.js` **existe**, não
-  que ele cubra o critério. Escreva o teste pelo critério, não pela âncora.
+- **Âncoras a11y exigem ALVO (out/2026).** Até então `verifiedBy: "test"` passava se o `.test.js`
+  existia e `"aria"` se qualquer prop tivesse "aria" no nome — 127 de 219 claims "verificados" por
+  sinal sempre verdadeiro. Agora o claim aponta o caso (`test`: trecho do título do `it`, ou lista
+  quando o claim tem duas metades) ou os atributos (`ariaAttrs`, ligados no SFC ou verificados no
+  teste), e o emissor confere. Claim sem alvo só passa se estiver em
+  `scripts/a11y-anchor-baseline.json`, e o contrato o publica com `verified: false`. Ligue um
+  claim a um teste só quando o teste cobre o claim **inteiro**.
 - **O prober cobre o que tiver bloco `probe`.** Asserções relativas (px derivado de `em`/`vh`,
   `calc`) ainda não são expressáveis — hoje só igualdade.
 

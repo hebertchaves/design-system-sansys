@@ -32,15 +32,15 @@
         "type": "DssTableColumn[]",
         "controlHint": "text",
         "required": true,
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "rowKey",
         "type": "string",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "title",
@@ -64,15 +64,15 @@
           "local",
           "remote"
         ],
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "selection",
         "type": "DssTableSelection",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "modelValue",
@@ -85,15 +85,15 @@
         "name": "filter",
         "type": "string",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "pagination",
         "type": "DssTablePagination",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "loading",
@@ -106,8 +106,8 @@
         "name": "error",
         "type": "string | null",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "density",
@@ -120,36 +120,36 @@
         "name": "rowsPerPageOptions",
         "type": "number[]",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "actions",
         "type": "DssDataTableAction[]",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "rowActions",
         "type": "DssDataTableAction[]",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "expandable",
         "type": "boolean",
         "controlHint": "toggle",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "expandedKeys",
         "type": "Array<string | number>",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "disabled",
@@ -174,15 +174,15 @@
         "name": "noDataLabel",
         "type": "string",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "noResultsLabel",
         "type": "string",
         "controlHint": "text",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       }
     ],
     "emits": [
@@ -512,13 +512,23 @@
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Compõe a semântica tabular do DssTable e preserva cabeçalhos e células.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "compõe DssTable",
+          "renderiza cabeçalho e células"
+        ]
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "A raiz comunica busy/disabled e controles têm nomes contextuais.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "comunica loading e disabled na raiz e nos controles",
+          "nomeia os controles pelo contexto"
+        ]
       }
     ],
     "aria": {

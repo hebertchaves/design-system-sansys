@@ -154,3 +154,23 @@ describe('DssEmptyState', () => {
     })
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 1.4.1 (dss.meta.json → a11y.wcag[].test)
+// A informação vive no TÍTULO (texto), nunca só no ícone; o ícone é emitido
+// como decorativo. O stub declara `decorative` como prop para o teste ler o
+// que o componente PASSA — o aria-hidden que isso produz é contrato do DssIcon,
+// verificado nos testes dele.
+// ===========================================================================
+describe('Âncora a11y 1.4.1 — informação em texto, ícone decorativo', () => {
+  it('o título carrega a informação em texto e o ícone é decorativo', () => {
+    const w = mount(DssEmptyState, {
+      props: { icon: 'inbox', title: 'Nenhuma solicitação encontrada' },
+      global: { stubs: { DssIcon: { name: 'DssIcon', props: { name: String, decorative: Boolean }, template: '<i class="dss-icon" />' } } },
+    })
+    expect(w.text()).toContain('Nenhuma solicitação encontrada')
+    const icone = w.findComponent({ name: 'DssIcon' })
+    expect(icone.exists()).toBe(true)
+    expect(icone.props('decorative')).toBe(true)
+  })
+})

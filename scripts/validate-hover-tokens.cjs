@@ -51,6 +51,7 @@ const BASELINE = path.join(__dirname, 'hover-tokens-baseline.json');
 const argv = process.argv.slice(2);
 const GATE = argv.includes('--gate');
 const UPDATE = argv.includes('--update-baseline');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 const CORES = 'primary|secondary|tertiary|accent|positive|negative|warning|info';
 
@@ -75,6 +76,15 @@ function scss(dir) {
 }
 
 // ---------------------------------------------------------------------------
+// As regex dos detectores vivem em CONSTANTES, usadas pelo detector E pelo
+// autoteste da sentinela. Autoteste com cópia da regex prova só que a cópia
+// funciona: se a do detector cegar, a cópia continua verde (achado em out/2026,
+// cegando o B2 do validate-brand-form — a sentinela não acusou nada).
+const RE_PRIMITIVO_ESTADO = new RegExp(`var\\(--dss-(${CORES})-(hover|deep|light)`);
+const RE_BRIGHTNESS = /filter:\s*brightness/;
+const RE_ICONE_DESCENDENTE = /\[data-brand[^\]]*\]\s+\.dss-icon\b/g;
+let vistoDssButton = false;
+
 function varrer() {
   const achados = { primitivo: [], brightness: [], iconeDescendente: [] };
   const alvos = [path.join(CORE, 'components'), path.join(CORE, 'utils'), path.join(CORE, 'themes')];
@@ -83,25 +93,30 @@ function varrer() {
     if (!fs.existsSync(base)) continue;
     for (const f of scss(base)) {
       const rel = path.relative(CORE, f).replace(/\\/g, '/');
-      const linhas = stripComments(fs.readFileSync(f, 'utf8')).split('\n');
+      const texto = stripComments(fs.readFileSync(f, 'utf8'));
+      const linhas = texto.split('\n');
+      // C) descendente que sequestra o ícone — sobre o ARQUIVO, não por linha.
+      // Por linha, `[data-brand="hub"]\n  .dss-icon` (lista de seletores
+      // quebrada em linhas, o formato que o Prettier produz) não casava: foi
+      // exatamente essa forma que cegou o B4 do validate-brand-form.
+      for (const m of texto.matchAll(RE_ICONE_DESCENDENTE)) {
+        achados.iconeDescendente.push({ arquivo: rel, linha: texto.slice(0, m.index).split('\n').length });
+      }
+      if (rel === 'components/base/DssButton/2-composition/_base.scss') vistoDssButton = true;
 
       linhas.forEach((linha, i) => {
         const n = i + 1;
 
         // A) primitivo num degrau de estado
-        const mp = linha.match(new RegExp(`var\\(--dss-(${CORES})-(hover|deep|light)`));
+        const mp = linha.match(RE_PRIMITIVO_ESTADO);
         if (mp) achados.primitivo.push({ arquivo: rel, linha: n, token: `--dss-${mp[1]}-${mp[2]}` });
 
         // B) brightness — só quando o BLOCO é de estado (olha as 6 linhas acima)
-        if (/filter:\s*brightness/.test(linha)) {
+        if (RE_BRIGHTNESS.test(linha)) {
           const ctx = linhas.slice(Math.max(0, i - 6), i + 1).join('\n');
           if (/:hover|:active|:focus/.test(ctx)) achados.brightness.push({ arquivo: rel, linha: n });
         }
 
-        // C) descendente que sequestra o ícone
-        if (/\[data-brand[^\]]*\]\s+\.dss-icon/.test(linha)) {
-          achados.iconeDescendente.push({ arquivo: rel, linha: n });
-        }
       });
     }
   }
@@ -112,6 +127,15 @@ const chave = (a) => `${a.arquivo}`;
 
 function main() {
   const achados = varrer();
+  // As três regex rodam sobre casos que SÃO achado, e a varredura tem de ter
+  // lido o DssButton. Sem isso, "nenhum caso NOVO" pode ser regex cega.
+  const casa = (re, s) => { re.lastIndex = 0; const ok = re.test(s); re.lastIndex = 0; return ok; };
+  sentinela('validate-hover-tokens', [
+    [vistoDssButton, 'DssButton/2-composition/_base.scss na varredura'],
+    [RE_PRIMITIVO_ESTADO.test('background: var(--dss-primary-hover);'), 'autoteste A: primitivo de estado reconhecido'],
+    [RE_BRIGHTNESS.test('filter: brightness(0.9);'), 'autoteste B: brightness reconhecido'],
+    [casa(RE_ICONE_DESCENDENTE, '[data-brand="hub"]\n  .dss-icon { color: red; }'), 'autoteste C: seletor multi-linha reconhecido'],
+  ]);
 
   // Baseline por ARQUIVO (não por linha): linha muda a cada edição e geraria ruído.
   const atual = {
@@ -136,6 +160,20 @@ function main() {
   const novoPrim = atual.primitivo.filter((f) => !(base.primitivo || []).includes(f));
   const novoBri = atual.brightness.filter((f) => !(base.brightness || []).includes(f));
   const icones = achados.iconeDescendente;
+
+  // CATRACA (scripts/lib/catraca.cjs): o baseline do disco é comparado com o do
+  // HEAD. Cresceu → reprova (débito novo só com commit dedicado + --aceitar-debito);
+  // entrada já resolvida sobrando → reprova ("remova a linha"). Antes só se avisava
+  // ao encolher, e um --update-baseline absorvia o caso novo em silêncio.
+  {
+    const chaves = (j) => [...(j.primitivo || []).map((f) => `primitivo:${f}`), ...(j.brightness || []).map((f) => `brightness:${f}`)];
+    const r = require('./lib/catraca.cjs').catraca({
+      gate: 'validate-hover-tokens', baselineRel: 'scripts/hover-tokens-baseline.json',
+      noDisco: chaves(base), chavesDe: chaves, aindaPendentes: chaves(atual),
+      permitirCrescer: argv.includes('--aceitar-debito'),
+    });
+    if (r.falhou && GATE) process.exit(1);
+  }
 
   console.log('🔎 Estados interativos — token certo e técnica triada (§L/§M)\n');
 

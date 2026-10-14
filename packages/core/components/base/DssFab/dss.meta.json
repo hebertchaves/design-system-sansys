@@ -268,7 +268,8 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Nome via aria-label; estado de abertura via aria-expanded.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-label", "aria-expanded"]
       }
     ]
   }

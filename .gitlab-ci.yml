@@ -171,6 +171,11 @@ quality:api:
     - npm run validate:sandbox-tags
     - npm run validate:demo-registry
     - npm run validate:portal-pages
+    # Ligados em out/2026 — existiam e não rodavam em lugar nenhum.
+    - npm run validate:prop-categories:gate
+    - npm run validate:demo-seeds:gate
+    - npm run validate:mcp-docs:gate
+    - npm run validate:adequacao-status
 
 # --------------------------------------------------------------------------
 contracts:gate:
@@ -180,7 +185,9 @@ contracts:gate:
     - !reference [.dss-rules, rules]
   # GATE do contrato derivado (dss.contract.json): re-emite todos os componentes
   # que JÁ têm contrato e valida contra o schema + verifica âncoras a11y (css via
-  # token-math/CSS compilado, aria via prop, test via *.test.js). Bloqueia se um
+  # token-math/CSS compilado, aria pelos atributos nomeados em `ariaAttrs`, test
+  # pelo título do caso apontado em `test`). Claim sem alvo só passa se estiver em
+  # scripts/a11y-anchor-baseline.json, que só encolhe (catraca vs HEAD). Bloqueia se um
   # contrato ficar inválido ou uma âncora a11y reprovar. Rollout incremental: um
   # componente entra no gate quando ganha seu dss.contract.json. Ver
   # docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md (passo 2 + itens N/O).

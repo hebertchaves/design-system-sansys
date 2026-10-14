@@ -297,8 +297,10 @@ do dado:
 
 **Gate de verificação (a chave anti-ruído).** Para MUST-verificado o gate não checa *presença de
 texto* — checa **correspondência com a implementação**:
-- `a11y.wcag[].verifiedBy` é **obrigatório** e aponta para: `"aria"` (atributo no SFC/DOM),
-  `"css"` (token/regra no SCSS ou computed-style medível), ou `"test"` (caso no `*.test.js`).
+- `a11y.wcag[].verifiedBy` é **obrigatório** e aponta para: `"aria"` (os atributos nomeados em
+  `ariaAttrs`, ligados no SFC/composable ou verificados no teste), `"css"` (token/regra no SCSS ou
+  contraste medido), ou `"test"` (o caso apontado em `test`, conferido pelo título no `*.test.js`).
+  O contrato publica `verified` por claim; o débito sem alvo vive em `scripts/a11y-anchor-baseline.json`.
   Claim sem âncora → **falha**. Ferramenta automática (axe/lighthouse) cobre o estrutural; o MCP
   mede contraste/`::before` na instância renderizada.
 - `antiPatterns[]` deriva dos `bindingRules` aplicáveis (cada um com gate próprio: Token First,

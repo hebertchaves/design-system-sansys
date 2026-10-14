@@ -216,7 +216,8 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Nome acessível via label/aria-label; estado via aria-disabled.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-label", "aria-disabled"]
       }
     ]
   }

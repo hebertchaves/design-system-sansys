@@ -95,7 +95,8 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Rótulo acessível exposto via aria-label quando o conteúdo é apenas visual.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-label"]
       }
     ]
   }

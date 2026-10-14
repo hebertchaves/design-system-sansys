@@ -1,0 +1,19 @@
+// ==========================================================================
+//  DssDataTable - Claude Code · L4 Marca
+//
+//  EIXO DE IDENTIDADE, não de ação.
+//
+//  O bloco é superfície de CONTEÚDO: os botões dentro dele seguem o peso
+//  semântico da ação, não o produto. O que a marca pinta aqui é um só traço
+//  de identidade na borda do cartão — e ele usa `--dss-brand-primary`, o tier
+//  de INDICADOR (piso 3:1), porque é marca d'água, não texto nem superfície
+//  de leitura. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.4.
+//
+//  Nada é declarado sem ser consumido na linha seguinte: token local que
+//  ninguém lê é camada de marca inerte — ela parece atender à Constituição #5
+//  e não pinta nada.
+// ==========================================================================
+
+.dss-data-table-cc[data-brand] .dss-data-table-cc__card {
+  border-inline-start: var(--dss-spacing-1) solid var(--dss-brand-primary);
+}

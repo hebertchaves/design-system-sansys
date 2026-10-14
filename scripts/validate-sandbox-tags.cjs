@@ -28,6 +28,7 @@ const SANDBOX_SRC = path.join(ROOT, 'apps', 'sandbox', 'src');
 
 const argv = process.argv.slice(2);
 const GATE = argv.includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 const fileArgs = argv.filter(a => !a.startsWith('--'));
 
 function walk(dir, acc = []) {
@@ -89,6 +90,14 @@ function availableDssNames(scr) {
 const files = (fileArgs.length ? fileArgs.map(f => path.resolve(ROOT, f)) : walk(SANDBOX_SRC))
   .filter(f => f.endsWith('.vue') && fs.existsSync(f));
 
+// Autoteste: uma tag usada e não importada TEM de aparecer como faltante.
+{
+  const falta = [...usedDssTags('<DssChip label="x" />')].filter((n) => !availableDssNames("import DssButton from 'x'").has(n));
+  sentinela('validate-sandbox-tags', [
+    [falta.length === 1 && falta[0] === 'DssChip', 'autoteste: <DssChip> sem import é detectado'],
+    [fileArgs.length > 0 || files.some((f) => f.endsWith('TestButton.vue')), 'TestButton.vue na varredura do sandbox'],
+  ]);
+}
 const problems = [];
 let scanned = 0;
 

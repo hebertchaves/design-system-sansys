@@ -373,13 +373,15 @@
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Hierarquia de texto (header/caption/overline) preservada no conteúdo do item.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       }
     ],
     "aria": {

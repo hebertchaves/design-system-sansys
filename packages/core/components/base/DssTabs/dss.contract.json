@@ -3926,25 +3926,33 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Navegação entre abas operável por teclado (setas, Home/End).",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "4.1.2",
         "level": "A",
-        "implementation": "Lista de abas rotulada via aria-label; orientação via aria-orientation.",
-        "verifiedBy": "aria"
+        "implementation": "Lista de abas (role=tablist, do QTabs) rotulada via aria-label. A orientação horizontal é o valor implícito do tablist; o QTabs NÃO escreve aria-orientation, então abas verticais ficam sem a orientação anunciada (defeito conhecido, fora deste claim).",
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label",
+          "role=tablist"
+        ]
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

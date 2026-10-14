@@ -24,6 +24,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 const FIELD_FAMILY = ['DssInput', 'DssSelect', 'DssTextarea', 'DssFile', 'DssField'];
 
@@ -44,6 +45,9 @@ for (const comp of FIELD_FAMILY) {
 
   // 1. radius do outlined: não pode ser md.
   const radii = [...src.matchAll(/border-radius:[^;]*--dss-radius-([a-z]+)/g)].map((m) => m[1]);
+  // Todo _outlined.scss da família DECLARA o raio. Se a regex não acha nenhum,
+  // ela não está lendo o arquivo — e "não é radius-md" passaria sobre nada.
+  if (!radii.length) errors.push('DETECTOR: nenhum border-radius --dss-radius-* reconhecido (regex cega para este arquivo?)');
   if (radii.includes('md')) errors.push('radius-md no outlined (esperado radius-sm — paridade da família)');
 
   // 2. box-shadow dentro de um bloco `--focused { … }` (regras flat na família).

@@ -337,13 +337,16 @@
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Agrupa controles e título como barra de ferramentas (role=toolbar).",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "possui role=\"toolbar\" no elemento raiz"
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

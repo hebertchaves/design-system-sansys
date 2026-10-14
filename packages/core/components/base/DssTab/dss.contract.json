@@ -619,19 +619,22 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Seleção e navegação entre abas operáveis por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

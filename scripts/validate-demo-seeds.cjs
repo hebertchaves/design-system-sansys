@@ -33,6 +33,7 @@ const ROOT = path.resolve(__dirname, '..');
 const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 function listarContratos() {
   const out = [];
@@ -106,6 +107,7 @@ const contratos = listarContratos();
 const universo = construirUniverso(contratos);
 const achados = [];
 let comSemente = 0;
+const semeados = [];
 
 for (const { nome, caminho } of contratos) {
   let d;
@@ -113,9 +115,19 @@ for (const { nome, caminho } of contratos) {
   const semente = d.visual?.defaultPreview?.slots;
   if (!semente) continue;
   comSemente++;
+  semeados.push(nome);
   varrer(semente, nome, universo, achados);
 }
 
+// O DssStepper tem semente (sem ela o frame monta casca vazia). A checagem
+// olha o que O LAÇO ACIMA extraiu — reler o contrato aqui com a mesma
+// expressão provaria só que a sentinela enxerga, não que o gate enxerga. Se o
+// caminho `visual.defaultPreview.slots` mudar, ninguém tem semente e o gate
+// aprovaria "0 sementes citam só o que existe".
+sentinela('validate-demo-seeds', [
+  [semeados.includes('DssStepper'), 'semente do DssStepper extraída pelo gate'],
+  [universo.existe.has('DssButton') && universo.props.get('DssButton')?.has('label'), 'DssButton e sua prop label no universo citável'],
+]);
 console.log('🔎 Sementes do Preview Frame — o que a semente cita precisa existir\n');
 console.log(`   contratos: ${contratos.length} · com semente: ${comSemente} · universo citável: ${universo.existe.size}`);
 

@@ -157,7 +157,8 @@
         "criterion": "1.1.1",
         "level": "A",
         "implementation": "Imagem com alternativa textual via alt; decorativa via decorative→aria-hidden.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": ["uses provided alt text for non-decorative images", "sets alt=\"\" when decorative=true"]
       }
     ]
   }

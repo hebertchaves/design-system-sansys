@@ -1,6 +1,6 @@
 {
   "generated": "2026-10-14",
-  "total": 99,
+  "total": 101,
   "sealed": 89,
   "components": [
     {
@@ -366,6 +366,34 @@
       "previewGroup": "contextuais",
       "goldenReference": "DssChip",
       "goldenContext": "DssDataCard"
+    },
+    {
+      "component": "DssDataTable",
+      "dir": "packages/core/components/composed/DssDataTable",
+      "phase": 3,
+      "category": null,
+      "status": "candidate",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "contextuais",
+      "goldenReference": "DssTable",
+      "goldenContext": "DssDataCard"
+    },
+    {
+      "component": "DssDataTableClaudeCode",
+      "dir": "packages/core/components/composed/DssDataTableClaudeCode",
+      "phase": 3,
+      "category": null,
+      "status": "candidate",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "contextuais",
+      "goldenReference": "DssTable",
+      "goldenContext": "DssDataTable"
     },
     {
       "component": "DssDatePicker",

@@ -367,19 +367,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-600",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "_brands.scss"
         },
@@ -461,19 +449,7 @@
         },
         {
           "property": "outline-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "_brands.scss"
-        },
-        {
-          "property": "outline-color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "_brands.scss"
-        },
-        {
-          "property": "outline-color",
-          "token": "--dss-waste-600",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "_brands.scss"
         },
@@ -631,21 +607,7 @@
         ]
       },
       {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
+        "name": "--dss-brand-solid",
         "usedIn": [
           "default",
           "focus"
@@ -683,19 +645,22 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Ativação e navegação de rota operáveis por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

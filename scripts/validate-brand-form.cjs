@@ -100,12 +100,37 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 const BASELINE = path.join(__dirname, 'brand-form-baseline.json');
+const BASELINE_REL = 'scripts/brand-form-baseline.json';
+const { sentinela } = require('./lib/sentinela.cjs');
+const { catraca } = require('./lib/catraca.cjs');
 
 const argv = process.argv.slice(2);
 const GATE = argv.includes('--gate');
 const UPDATE = argv.includes('--update-baseline');
 
 const MARCAS = 'hub|water|waste';
+
+/* REGEXES DO DETECTOR — uma constante por regra, usada pelo detector E pelo
+   autoteste da sentinela.
+   A primeira versão deste gate tinha o autoteste reconstruindo a regex a partir
+   de `MARCAS`. Era CÓPIA: cegar o detector sem tocar na constante deixava o
+   autoteste verde, e a sentinela não acusava nada. Verificado — com o detector
+   do B1 cego, só a catraca reclamou, por via indireta. Detector e autoteste
+   agora compartilham o mesmo objeto. */
+const RE = {
+  B1_PRIMITIVO: () => new RegExp(`var\\(\\s*(--dss-(?:${MARCAS})-\\d+)`, 'g'),
+  B2_REMAPEIA: /^\s*--dss-[a-z0-9-]+\s*:/m,
+  B2_PRIMITIVO: () => new RegExp(`var\\(\\s*--dss-(?:${MARCAS})-\\d+`),
+  B2_PINTA: /^\s*(?!--)[a-z][a-z0-9-]*\s*:[^{]*$/m,
+  B3_PROP: /^\s*brand\?*\s*:/m,
+  B3_ATRIBUTO: /['"\s:[]data-brand['"\s\]=]/,
+  B3_DELEGA: /\bv-bind:brand\b|:brand\s*=|\bbrand\s*=\s*"/,
+  B5_ZONA: /data-brand-zone="(shell|content)"/g,
+  B6_SELETOR: /\.(dss-[a-z0-9-]+--[a-z0-9-]+)/g,
+  B6_LITERAL: /['"`](dss-[a-z0-9-]+--[a-z0-9-]+)['"`]/g,
+  B6_PREFIXO: /`(dss-[a-z0-9-]+--[a-z0-9-]*)\$\{/g,
+};
+const casa = (re, txt) => { const r = typeof re === 'function' ? re() : re; r.lastIndex = 0; const ok = r.test(txt); r.lastIndex = 0; return ok; };
 const DIR_MARCA = path.join(ROOT, 'packages', 'core', 'tokens', 'brand');
 const BARREIRA = path.join(ROOT, 'packages', 'core', 'tokens', 'semantic', '_brand-barrier.scss');
 const FOCO = path.join(ROOT, 'packages', 'core', 'tokens', 'semantic', 'accessibility', '_focus.scss');
@@ -164,7 +189,7 @@ function analisarScss() {
     const linhas = src.split('\n');
 
     // B1 — primitivo de marca
-    const re = new RegExp(`var\\(\\s*(--dss-(?:${MARCAS})-\\d+)`, 'g');
+    const re = RE.B1_PRIMITIVO();
     linhas.forEach((linha, i) => {
       let m;
       while ((m = re.exec(linha))) b1.push({ arquivo: rel(arquivo), linha: i + 1, token: m[1] });
@@ -181,12 +206,12 @@ function analisarScss() {
     // alguma. A primeira versão desta regra reprovava exatamente esse caso, o
     // que teria produzido 93 falsos positivos à medida que a migração andasse.
     if (/4-output\/_brands\.scss$/.test(rel(arquivo))) {
-      const remapeia = /^\s*--dss-[a-z0-9-]+\s*:/m.test(src);
-      const temPrimitivo = new RegExp(`var\\(\\s*--dss-(?:${MARCAS})-\\d+`).test(src);
+      const remapeia = RE.B2_REMAPEIA.test(src);
+      const temPrimitivo = RE.B2_PRIMITIVO().test(src);
       // Linha que ABRE declaracao de propriedade comum. Nao exige `;` na mesma
       // linha — valor multi-linha (`background: linear-gradient(\n …\n);`) tambem
       // conta. Exclui seletor: `&:hover {` contem `{`, `@media …` comeca com `@`.
-      const pinta = /^\s*(?!--)[a-z][a-z0-9-]*\s*:[^{]*$/m.test(src);
+      const pinta = RE.B2_PINTA.test(src);
       if (pinta && temPrimitivo && !remapeia) b2.push(rel(arquivo));
     }
   }
@@ -199,7 +224,7 @@ function analisarProps() {
 
   for (const tipos of walk(COMPONENTS, ['.types.ts'])) {
     const src = stripComments(fs.readFileSync(tipos, 'utf8'));
-    if (!/^\s*brand\?*\s*:/m.test(src)) continue;
+    if (!RE.B3_PROP.test(src)) continue;
 
     const comp = componenteDe(tipos);
     const dir = path.join(COMPONENTS, comp, '1-structure');
@@ -213,8 +238,8 @@ function analisarProps() {
       // engano e pior que gate nenhum — ele certifica o defeito.
       const vue = stripComments(fs.readFileSync(f, 'utf8'));
       return (
-        /['"\s:[]data-brand['"\s\]=]/.test(vue) || // emite o atributo
-        /\bv-bind:brand\b|:brand\s*=|\bbrand\s*=\s*"/.test(vue) // delega a um filho
+        RE.B3_ATRIBUTO.test(vue) || // emite o atributo
+        RE.B3_DELEGA.test(vue) // delega a um filho
       );
     });
     if (!rota && !(comp in B3_EXCECOES)) semRota.push(comp);
@@ -282,6 +307,7 @@ function analisarBarreira() {
 // ---------------------------------------------------------------- B5
 function analisarZonas() {
   const problemas = [];
+  const declaradas = new Set();
   for (const meta of walk(COMPONENTS, ['dss.meta.json'])) {
     const comp = componenteDe(meta);
     let declarada = null;
@@ -295,11 +321,12 @@ function analisarZonas() {
     const emitidas = new Set();
     for (const f of estrutura) {
       const vue = fs.readFileSync(f, 'utf8');
-      for (const m of vue.matchAll(/data-brand-zone="(shell|content)"/g)) emitidas.add(m[1]);
+      for (const m of vue.matchAll(RE.B5_ZONA)) emitidas.add(m[1]);
     }
 
     const esperadas = declarada === 'both' ? ['shell', 'content'] : declarada ? [declarada] : [];
 
+    if (declarada) declaradas.add(comp);
     if (declarada && esperadas.some((z) => !emitidas.has(z))) {
       problemas.push({ comp, tipo: 'meta-sem-codigo', declarada, emitidas: [...emitidas] });
     }
@@ -310,6 +337,7 @@ function analisarZonas() {
       problemas.push({ comp, tipo: 'divergente', declarada, emitidas: [...emitidas] });
     }
   }
+  problemas.zonasDeclaradas = declaradas;
   return problemas;
 }
 
@@ -332,14 +360,14 @@ function analisarClassesMortas() {
       if (f.endsWith('.test.js')) continue;
       const src = stripComments(fs.readFileSync(f, 'utf8'));
       if (f.endsWith('.scss')) {
-        for (const m of src.matchAll(/\.(dss-[a-z0-9-]+--[a-z0-9-]+)/g)) {
+        for (const m of src.matchAll(RE.B6_SELETOR)) {
           if (!noScss.has(m[1])) noScss.set(m[1], rel(f));
         }
       } else {
         // nome literal: 'dss-x--foo'
-        for (const m of src.matchAll(/['"`](dss-[a-z0-9-]+--[a-z0-9-]+)['"`]/g)) geradas.add(m[1]);
+        for (const m of src.matchAll(RE.B6_LITERAL)) geradas.add(m[1]);
         // template com variável: `dss-x--brand-${…}` → vira prefixo
-        for (const m of src.matchAll(/`(dss-[a-z0-9-]+--[a-z0-9-]*)\$\{/g)) prefixos.add(m[1]);
+        for (const m of src.matchAll(RE.B6_PREFIXO)) prefixos.add(m[1]);
       }
     }
 
@@ -358,6 +386,7 @@ function main() {
   const b3 = analisarProps();
   const b4 = analisarBarreira();
   const b5 = analisarZonas();
+  const b5zonas = b5.zonasDeclaradas;
   const b6 = analisarClassesMortas();
 
   const arquivosB1 = [...new Set(b1.map((a) => a.arquivo))].sort();
@@ -432,18 +461,40 @@ function main() {
   // quebrado — `tokens/brand/*` SEMPRE remapeia. Já aconteceu: uma lista de
   // seletores multi-linha fez o parser nunca entrar no bloco, e o B4 reportou ✅
   // tendo verificado zero. Um gate que não mede precisa gritar, não passar.
-  // Sentinelas: dois tokens que `tokens/brand/*` SEMPRE remapeia. Se o detector
-  // não os encontra, ele está quebrado — e um gate quebrado que reporta ✅ é pior
-  // que gate nenhum. Contar não serve de guarda: quando uma lista de seletores
-  // multi-linha cegou o parser, ele achou 2 de 65 e teria passado por um piso.
-  const SENTINELAS = ['--dss-action-primary', '--dss-brand-solid'];
-  const ausentes = SENTINELAS.filter((t) => !b4.vistos.has(t));
-  if (ausentes.length) {
-    console.log(`\n   ❌ B4 ESTÁ CEGO — não achou ${ausentes.join(', ')} em tokens/brand/*.`);
-    console.log('      Esses tokens são sempre remapeados por marca; não achá-los significa');
-    console.log('      que o DETECTOR quebrou, não que o código está certo.');
-    process.exitCode = 1;
-  }
+  // SENTINELA — antes de qualquer veredito. Substitui a guarda caseira que eu
+  // tinha só no B4 e que marcava `exitCode = 1` seguindo a impressão: o
+  // relatório podia terminar em "✅" depois de já ter falhado. O helper sai na
+  // hora, com exit 2 ("não consegui medir" ≠ "medi e achei violação"), e vale
+  // também sem --gate, porque relatório de detector cego mente igual.
+  //
+  // B1/B2/B3/B5/B6 não tinham guarda NENHUMA — se a regex deles cegasse,
+  // reportariam 0 e aprovariam, que foi exatamente o que o B4 fez.
+  // SENTINELA — autotestes usam AS MESMAS constantes do detector (RE.*), não
+  // cópias. A primeira versão reconstruía a regex a partir de `MARCAS`: cegar o
+  // detector sem tocar na constante deixava o autoteste verde. Verificado.
+  //
+  // E as checagens de invariante olham o que o DETECTOR EXTRAIU, não o disco:
+  // `existsSync(DssButton)` provava que o arquivo existe, não que o gate o viu.
+  sentinela('validate-brand-form', [
+    // invariantes sobre o RESULTADO do detector
+    [arquivosB1.includes('base/DssButton/4-output/_brands.scss') || arquivosB1.length > 10,
+     'B1 extraiu primitivos de marca do disco'],
+    [b2.length > 0, 'B2 extraiu _brands.scss que pintam primitivo'],
+    [b3.length + Object.keys(B3_EXCECOES).length > 5, 'B3 extraiu props brand'],
+    [b4.vistos.has('--dss-action-primary'), 'B4 vê --dss-action-primary em tokens/brand/*'],
+    [b4.vistos.has('--dss-brand-solid'), 'B4 vê --dss-brand-solid em tokens/brand/*'],
+    [b4.remapeados > 50, 'B4 lê lista de seletores multi-linha (foi ela que o cegou)'],
+    [b5zonas.size >= 10, 'B5 extraiu os componentes que declaram brandZone'],
+
+    // autotestes — a MESMA regex do detector contra uma string que É violação
+    [casa(RE.B1_PRIMITIVO, 'color: var(--dss-hub-600);'), 'B1: autoteste do detector'],
+    [casa(RE.B2_PINTA, '  background-color: red;'), 'B2: autoteste de pintura'],
+    [casa(RE.B2_PRIMITIVO, 'border: 1px solid var(--dss-water-500);'), 'B2: autoteste de primitivo'],
+    [casa(RE.B3_PROP, '  brand?: BrandName'), 'B3: autoteste de prop'],
+    [casa(RE.B3_ATRIBUTO, ':data-brand="brand || undefined"'), 'B3: autoteste de atributo'],
+    [casa(RE.B5_ZONA, 'data-brand-zone="shell"'), 'B5: autoteste de zona'],
+    [casa(RE.B6_SELETOR, '.dss-x--foo { color: red }'), 'B6: autoteste de seletor'],
+  ]);
 
   for (const t of b4.faltando) {
     console.log(`       ❌ FURO: ${t} é remapeado por marca e a barreira não o reseta`);
@@ -471,7 +522,39 @@ function main() {
   }
   if (!atualB6.length) console.log('       ✅ nenhuma regra órfã');
 
-  // A catraca: o baseline só pode encolher.
+  // CATRACA NAS QUATRO LISTAS. A minha versão só tinha a metade que ENCOLHE —
+  // avisava "item corrigido, rode --update-baseline". A outra metade faltava: o
+  // próprio `--update-baseline` congela o que estiver no disco, INCLUSIVE dívida
+  // nova. Dava para acrescentar débito e esverdear com um comando.
+  //
+  // O helper compara com a versão COMMITADA (HEAD): crescer exige
+  // `--aceitar-debito` num commit dedicado, visível no diff.
+  const ACEITA_DEBITO = argv.includes('--aceitar-debito');
+  let catracaFalhou = false;
+  for (const [campo, pendentes] of [
+    ['primitivoDeMarca', arquivosB1],
+    ['brandsSemRemap', b2],
+    ['propSemRota', b3],
+    ['classeMorta', atualB6],
+  ]) {
+    const r = catraca({
+      gate: `validate-brand-form ${campo}`,
+      baselineRel: BASELINE_REL,
+      noDisco: base[campo] || [],
+      chavesDe: (j) => j[campo] || [],
+      aindaPendentes: pendentes,
+      permitirCrescer: ACEITA_DEBITO || UPDATE,
+    });
+    if (r.falhou) {
+      catracaFalhou = true;
+      // Baseline que cresceu ou tem entrada morta é ESTADO INVÁLIDO do repo, não
+      // "achado" — reprova mesmo sem --gate, como a sentinela. Relatório que
+      // mostra adulteração e sai com 0 convida a ignorar.
+      process.exitCode = 1;
+    }
+  }
+
+  // A catraca antiga: o baseline só pode encolher.
   const sumiuB1 = (base.primitivoDeMarca || []).filter((f) => !arquivosB1.includes(f));
   const sumiuB2 = (base.brandsSemRemap || []).filter((f) => !b2.includes(f));
   const sumiuB3 = (base.propSemRota || []).filter((c) => !b3.includes(c));
@@ -480,8 +563,13 @@ function main() {
     console.log(`\n   🎉 ${migrados} item(ns) do baseline já corrigido(s). Rode --update-baseline para encolher a lista.`);
   }
 
+  // A catraca conta como falha do GATE, não só como exitCode. Antes ela marcava
+  // `exitCode = 1` e a execução seguia até imprimir "✅ Nenhum caso NOVO" —
+  // veredito positivo num gate que já havia reprovado. Quem lê o log acredita
+  // no ✅; quem lê o exit code acredita no 1. Os dois têm de dizer o mesmo.
   const falhou =
-    novoB1.length + novoB2.length + novoB3.length + b4.faltando.length + b5.length + novoB6.length;
+    novoB1.length + novoB2.length + novoB3.length + b4.faltando.length +
+    b5.length + novoB6.length + (catracaFalhou ? 1 : 0);
   if (!falhou) {
     console.log('\n✅ Nenhum caso NOVO de forma de marca.');
     return;

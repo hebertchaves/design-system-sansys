@@ -36,7 +36,8 @@
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "O título é um cabeçalho real (h1..h4), e o nível é independente do tamanho visual: level decide a tag, size decide a aparência. Sem essa separação, quem precisa de um h3 grande escreve h1, e a hierarquia de cabeçalhos do documento passa a mentir. Âncoras em DssSectionTitle.test.js: \"o tamanho NÃO muda a tag\" e \"a tag NÃO muda o tamanho\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": ["o tamanho NÃO muda a tag", "a tag NÃO muda o tamanho"]
       },
       {
         "criterion": "1.4.11",

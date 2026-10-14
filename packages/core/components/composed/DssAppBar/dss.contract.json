@@ -414,19 +414,31 @@
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "A estrutura é semântica e condicional: o nome do módulo é <h1> (é o título da tela), e o divisor — que é decoração — sai com aria-hidden. As regiões só existem quando há conteúdo: sem título não há divisor nem <h1> vazio, e sem slot actions não há container de ações. Âncoras em DssAppBar.test.js: \"o título é um <h1>\", \"sem título, não há divisor\" e \"as ações só existem quando o slot é fornecido\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "o título é um <h1>",
+          "sem título, não há divisor",
+          "as ações só existem quando o slot é fornecido",
+          "o divisor é decoração: sai com aria-hidden"
+        ]
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "O botão de menu é um controle com nome: menuAriaLabel tem padrão e vai ao aria-label do DssButton, que sem ele seria um botão só de ícone — sem nome acessível. Âncora em DssAppBar.test.js: \"emite menu ao clicar no botão de menu\" exercita o controle nomeado.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.4.11",
         "level": "AA",
         "implementation": "O divisor entre marca e título usa currentColor com --dss-opacity-brand-medium sobre o fundo da marca. Em forced-colors a opacidade não sobrevive, e 4-output/_states.scss troca por CanvasText com opacidade 1 — senão o traço sumiria contra o fundo do sistema.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

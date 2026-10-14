@@ -148,6 +148,51 @@ export const OVERRIDE = {
  * Comportamento; o do DssSpinner é a forma do indicador = Aparência).
  */
 export const EXCECOES = {
+  // ── DssContextHeader (Fase 3, sem âncora Quasar) ──────────────────────────
+  // Estava todo em "Outros" e o gate vermelho — sem ninguém ver, porque o
+  // validate:prop-categories não rodava no hook nem no CI (ligado em out/2026).
+  // Critério: o que o cabeçalho MOSTRA é Conteúdo (dados, rótulos, ícones,
+  // contagens); o que ele PERMITE fazer é Comportamento.
+  'DssContextHeader.identifier': 'Conteúdo', 'DssContextHeader.identifierLabel': 'Conteúdo',
+  'DssContextHeader.identityIcon': 'Conteúdo', 'DssContextHeader.groups': 'Conteúdo',
+  'DssContextHeader.summary': 'Conteúdo', 'DssContextHeader.recordsCount': 'Conteúdo',
+  'DssContextHeader.recordsLabel': 'Conteúdo', 'DssContextHeader.recordsAddLabel': 'Conteúdo',
+  'DssContextHeader.detailsLabel': 'Conteúdo', 'DssContextHeader.detailsIcon': 'Conteúdo',
+  'DssContextHeader.detailsTooltip': 'Conteúdo', 'DssContextHeader.openCount': 'Conteúdo',
+  'DssContextHeader.switchIcon': 'Conteúdo', 'DssContextHeader.switchLabel': 'Conteúdo',
+  'DssContextHeader.createIcon': 'Conteúdo', 'DssContextHeader.createLabel': 'Conteúdo',
+  'DssContextHeader.collapseLabel': 'Conteúdo', 'DssContextHeader.expandLabel': 'Conteúdo',
+  'DssContextHeader.collapsible': 'Comportamento', 'DssContextHeader.switchable': 'Comportamento',
+  'DssContextHeader.creatable': 'Comportamento',
+  // ── Blocos de dados (Fase 3, sem âncora Quasar) ───────────────────────────
+  // As duas leituras do `jtech-data-table` — DssDataTable e a versão
+  // "Claude Code" — compartilham o vocabulário de grade, que o api.json do
+  // Quasar não cobre porque QTable não é a âncora de nenhuma das duas (elas
+  // COMPÕEM o DssTable, não o estendem).
+  // Critério: o que a grade MOSTRA é Conteúdo; o que ela PERMITE é
+  // Comportamento; o que ela ESTÁ é Estado.
+  'DssDataTable.columns': 'Conteúdo', 'DssDataTable.actions': 'Conteúdo',
+  'DssDataTable.rowActions': 'Conteúdo', 'DssDataTable.noDataLabel': 'Conteúdo',
+  'DssDataTable.noResultsLabel': 'Conteúdo',
+  'DssDataTable.rowKey': 'Comportamento', 'DssDataTable.mode': 'Comportamento',
+  'DssDataTable.selection': 'Comportamento', 'DssDataTable.filter': 'Comportamento',
+  'DssDataTable.rowsPerPageOptions': 'Comportamento', 'DssDataTable.expandable': 'Comportamento',
+  'DssDataTable.pagination': 'Estado', 'DssDataTable.error': 'Estado',
+  'DssDataTable.expandedKeys': 'Estado',
+
+  'DssDataTableClaudeCode.rows': 'Conteúdo', 'DssDataTableClaudeCode.columns': 'Conteúdo',
+  'DssDataTableClaudeCode.actions': 'Conteúdo', 'DssDataTableClaudeCode.rowActions': 'Conteúdo',
+  'DssDataTableClaudeCode.total': 'Conteúdo', 'DssDataTableClaudeCode.countNoun': 'Conteúdo',
+  'DssDataTableClaudeCode.filterLabel': 'Conteúdo', 'DssDataTableClaudeCode.statusMap': 'Conteúdo',
+  'DssDataTableClaudeCode.emptyTitle': 'Conteúdo',
+  'DssDataTableClaudeCode.emptyDescription': 'Conteúdo',
+  'DssDataTableClaudeCode.rowKey': 'Comportamento', 'DssDataTableClaudeCode.mode': 'Comportamento',
+  'DssDataTableClaudeCode.selection': 'Comportamento',
+  'DssDataTableClaudeCode.rowsPerPageOptions': 'Comportamento',
+  'DssDataTableClaudeCode.expandable': 'Comportamento',
+  'DssDataTableClaudeCode.statusColumn': 'Comportamento',
+  'DssDataTableClaudeCode.pagination': 'Estado', 'DssDataTableClaudeCode.error': 'Estado',
+  'DssDataTableClaudeCode.expandedKeys': 'Estado',
   // ── Aparência ──────────────────────────────────────────────────────────────
   variant: 'Aparência', brand: 'Aparência', square: 'Aparência', align: 'Aparência',
   vertical: 'Aparência', horizontal: 'Aparência', size: 'Aparência', density: 'Aparência',

@@ -1363,25 +1363,33 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Alternância por Espaço com foco por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "2.5.5",
         "level": "AAA",
         "implementation": "Alvo de toque de 44px expandido via ::before (WCAG 2.5.5).",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Estado via aria-checked; nome via label/aria-label.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-checked",
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

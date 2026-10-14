@@ -32,6 +32,7 @@ import postcss from 'postcss'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const CORE = path.join(ROOT, 'packages', 'core')
@@ -49,6 +50,7 @@ const { css } = sass.compile(path.join(CORE, 'tokens', 'index.scss'), {
   silenceDeprecations: ['import', 'global-builtin', 'color-functions'],
 })
 const root = postcss.parse(css)
+const { sentinela } = createRequire(import.meta.url)('./lib/sentinela.cjs')
 
 const raiz = new Map()          // prop -> valor declarado em :root (sem at-rule)
 const porTema = new Map()       // tema -> Set(props declaradas)
@@ -81,6 +83,14 @@ for (const [prop, valor] of raiz) {
 }
 
 // ── 4. veredito ──────────────────────────────────────────────────────────────
+// Os três temas existem, e o hc RE-APONTA primitivo (é o caso que motivou o
+// gate). Se o seletor compilado mudar de forma — aspas, :root[...] — o regex
+// não acha tema nenhum e "todo tema recomputa" passa sobre zero temas.
+sentinela('validate-theme-scopes', [
+  [['dark', 'hc', 'hcdark'].every(t => porTema.has(t)), 'temas dark, hc e hcdark encontrados no CSS compilado'],
+  [[...(porTema.get('hc') || [])].some(p => PRIMITIVOS.has(p)), 'tema hc re-apontando ao menos um primitivo'],
+  [PRIMITIVOS.has('--dss-gray-50'), '--dss-gray-50 entre os primitivos de globals.scss'],
+])
 console.log('🔎 Escopos de tema — quem re-aponta primitivo precisa recomputar o semântico\n')
 console.log(`   primitivos: ${PRIMITIVOS.size} · semânticos dependentes: ${dependeDe.size} · temas: ${porTema.size}`)
 

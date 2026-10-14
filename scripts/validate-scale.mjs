@@ -47,6 +47,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as sass from 'sass'
+import { createRequire } from 'node:module'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -163,7 +164,7 @@ function analisa(compDir) {
       else if (vb < va) defeitos.push({ chave: `${nome}|${p}|${b}<${a}`, txt: `C · ${p}: '${b}' (${vb}px) MENOR que '${a}' (${va}px) — escala INVERTIDA` })
     }
   }
-  return { nome, api, defeitos, informativos }
+  return { nome, api, porSize, defeitos, informativos }
 }
 
 const dirs = []
@@ -175,7 +176,21 @@ for (const g of ['base', 'composed']) {
   }
 }
 
-const relatos = dirs.map(analisa).filter(r => r && (r.defeitos.length || r.informativos.length))
+const analisados = dirs.map(analisa)
+// A aferição acima prova o MAPA de tokens; esta prova a EXTRAÇÃO. A análise
+// por componente tem três pontos que viram `null` em silêncio — regex do tipo
+// Size, compilação Sass (`catch`), seletor `.dss-x--md` exato —, e componente
+// pulado não reporta defeito. O DssButton precisa sair MEDIDO, com altura por
+// tamanho em pelo menos três degraus.
+{
+  const { sentinela } = createRequire(import.meta.url)('./lib/sentinela.cjs')
+  const botao = analisados.find(r => r && r.nome === 'DssButton')
+  const medidos = botao ? Math.max(0, ...Object.values(botao.porSize).map(m => Object.keys(m).length)) : 0
+  sentinela('validate-scale', [
+    [medidos >= 3, `DssButton medido por tamanho (degraus medidos: ${medidos})`],
+  ])
+}
+const relatos = analisados.filter(r => r && (r.defeitos.length || r.informativos.length))
 const todos = relatos.flatMap(r => r.defeitos.map(d => ({ ...d, nome: r.nome })))
 
 if (UPDATE) {
@@ -191,6 +206,19 @@ if (UPDATE) {
 const base = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : { conhecidos: [] }
 const novos = todos.filter(d => !base.conhecidos.includes(d.chave))
 const ehNovo = (d) => novos.some(n => n.chave === d.chave)   // por CHAVE, não por referência
+
+// CATRACA (scripts/lib/catraca.cjs): o baseline do disco é comparado com o do
+// HEAD. Cresceu → reprova (débito novo só com commit dedicado + --aceitar-debito);
+// entrada já resolvida sobrando → reprova ("remova a linha"). Antes só se avisava
+// ao encolher, e um --update-baseline absorvia o caso novo em silêncio.
+{
+  const r = createRequire(import.meta.url)('./lib/catraca.cjs').catraca({
+    gate: 'validate-scale', baselineRel: 'scripts/scale-baseline.json',
+    noDisco: base.conhecidos || [], chavesDe: (j) => j.conhecidos || [],
+    aindaPendentes: todos.map(d => d.chave), permitirCrescer: argv.includes('--aceitar-debito'),
+  })
+  if (r.falhou && GATE) process.exit(1)
+}
 
 console.log('🔎 Escala dimensional por tamanho (empate / inversão)\n')
 for (const r of relatos) {

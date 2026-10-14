@@ -212,3 +212,22 @@ describe('DssOptionGroup', () => {
     })
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 4.1.2 (dss.meta.json → a11y.wcag[].ariaAttrs)
+// aria-checked é escrito pelo QRadio/QCheckbox internos. Exige que marque só a
+// opção do model e que se mova com ele.
+// ===========================================================================
+describe('Âncora a11y 4.1.2 — aria-checked', () => {
+  const marcados = (wrapper) => wrapper.findAll('[aria-checked="true"]').length
+
+  it('aria-checked marca só a opção selecionada e acompanha o modelValue', async () => {
+    const opts = [{ label: 'A', value: 'a' }, { label: 'B', value: 'b' }, { label: 'C', value: 'c' }]
+    const wrapper = mount(DssOptionGroup, { props: { options: opts, modelValue: 'b', type: 'radio' } })
+    const estado = () => wrapper.findAll('input[type="radio"]').map((i) => i.attributes('aria-checked'))
+    expect(estado()).toEqual(['false', 'true', 'false'])
+    expect(marcados(wrapper)).toBe(1)
+    await wrapper.setProps({ modelValue: 'c' })
+    expect(estado()).toEqual(['false', 'false', 'true'])
+  })
+})

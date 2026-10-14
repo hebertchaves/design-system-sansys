@@ -425,3 +425,25 @@ describe('DssContextHeader — dicas', () => {
     expect(visiveis).toHaveLength(1)
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 2.1.1 (dss.meta.json → a11y.wcag[].test)
+// O claim é que TODO controle é <button type="button"> nativo — é isso que dá
+// Enter e Espaço sem código próprio. O teste monta o cabeçalho com todos os
+// controles ligados e exige: nenhum botão sem type="button", nenhum controle
+// falso (role="button" num elemento que não é <button>), e uma contagem mínima
+// de botões — sem ela, um cabeçalho que não renderizasse controle nenhum
+// passaria por "nenhum controle errado".
+// ===========================================================================
+describe('Âncora a11y 2.1.1 — controles nativos', () => {
+  it('todo controle é <button type="button"> nativo', () => {
+    const w = mount(DssContextHeader, {
+      props: { identifier: '1-9', groups: GRUPOS, recordsCount: 3, collapsible: true, createLabel: 'Novo' },
+    })
+    const botoes = w.findAll('button')
+    expect(botoes.length).toBeGreaterThanOrEqual(3)
+    for (const b of botoes) expect(b.attributes('type')).toBe('button')
+    const falsos = w.findAll('[role="button"]').filter((e) => e.element.tagName !== 'BUTTON')
+    expect(falsos).toHaveLength(0)
+  })
+})

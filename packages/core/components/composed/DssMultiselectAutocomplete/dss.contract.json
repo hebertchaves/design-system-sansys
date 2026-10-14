@@ -601,13 +601,21 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Navegação e seleção por teclado herdadas do QSelect (base DssSelect): setas, Enter/Espaço, Escape.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "role=combobox + aria-multiselectable; estado de cada opção via aria-selected (fonte de verdade — o checkbox por opção é decorativo/aria-hidden).",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-multiselectable",
+          "aria-selected",
+          "aria-hidden",
+          "role=combobox"
+        ]
       }
     ],
     "aria": {

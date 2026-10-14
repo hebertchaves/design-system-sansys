@@ -25,6 +25,7 @@
 import fs   from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
@@ -223,6 +224,14 @@ function runValidate() {
       }
     }
   }
+
+  // DssButton declara visualProperties com token, e o catálogo tem o token mais
+  // usado do DS. Se `defaultPreview.visualProperties` mudar de lugar no meta ou
+  // o catálogo vier vazio, `checked` cai e "zero tokens inválidos" passa.
+  createRequire(import.meta.url)('./lib/sentinela.cjs').sentinela('sync-css-to-meta --validate', [
+    [catalog.has('--dss-action-primary'), '--dss-action-primary no catálogo de tokens'],
+    [compDirs.some(d => path.basename(d) === 'DssButton') && checked > 0, 'DssButton entre os componentes verificados'],
+  ])
 
   if (errors.length > 0) {
     console.error('\n❌ Tokens inexistentes detectados em meta.json:\n')

@@ -16,6 +16,7 @@ import { execFileSync } from 'node:child_process'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const entry = resolve(root, 'packages/core/tokens/index.scss')
@@ -30,6 +31,17 @@ const css = execFileSync(
   ['sass', entry, '--no-source-map', '--quiet-deps', '--style=expanded'],
   { cwd: root, encoding: 'utf-8', maxBuffer: 32 * 1024 * 1024 }
 )
+
+// SENTINELA antes da escrita (out/2026). O Sass compila sem erro mesmo quando o
+// index para de encaminhar uma camada — e o portal receberia um CSS mutilado,
+// que o hook põe no commit. Um token de cada camada que o portal precisa:
+// semântico, primitivo, tema escuro e marca.
+createRequire(import.meta.url)('./lib/sentinela.cjs').sentinela('sync-portal-tokens', [
+  [css.includes('--dss-action-primary:'), 'token semântico --dss-action-primary no CSS compilado'],
+  [css.includes('--dss-gray-50:'), 'primitivo --dss-gray-50 no CSS compilado'],
+  [/\[data-theme=["']?dark/.test(css), 'escopo de tema escuro [data-theme=dark] no CSS compilado'],
+  [/\[data-brand=["']?hub/.test(css), 'escopo de marca [data-brand=hub] no CSS compilado'],
+])
 
 const stamp = new Date().toISOString().slice(0, 10)
 const generated = [

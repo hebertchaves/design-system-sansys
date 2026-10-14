@@ -102,13 +102,15 @@
         "criterion": "1.1.1",
         "level": "A",
         "implementation": "Indicador não-textual com alternativa textual via aria-label.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-label"]
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Papel status e nome acessível expostos via aria-label.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-label"]
       }
     ]
   }

@@ -348,13 +348,16 @@
         "criterion": "1.4.10",
         "level": "AA",
         "implementation": "O trilho encolhe com o pai (width:100% + max-width) e o respiro dos dois degraus maiores cai para --dss-gutter-sm abaixo de 640px — conteúdo não exige rolagem horizontal em tela estreita. Âncora: regra de reflow em 4-output/_states.scss.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "A prop `tag` deixa o consumidor escolher o elemento semântico (main/section/article) em vez de impor uma div — a estrutura do documento não é decidida pelo componente. Âncora: DssContainer.test.js cobre a renderização por tag.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "preserva as classes ao trocar a tag"
       }
     ],
     "aria": {

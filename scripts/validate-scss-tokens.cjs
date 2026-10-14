@@ -28,6 +28,7 @@ const ROOT = path.resolve(__dirname, '..');
 const CORE = path.join(ROOT, 'packages', 'core');
 const COMPONENTS = path.join(CORE, 'components');
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // ESCOPOS VARRIDOS (ago/2026: eram só os componentes).
 // O catálogo de DEFINIÇÕES sempre varreu todo o packages/core, mas a leitura de
@@ -124,6 +125,19 @@ for (const f of walkScss(CORE)) {
 }
 
 // Fixtures/páginas de teste — fora do escopo de produção (decisão de governança).
+// Três invariantes: o token mais usado do DS está definido E definido fora de
+// escopo condicional; e o parser de escopo marca como condicional um token que
+// só existe dentro de [data-theme]. Se o parser de chaves quebrar, tudo vira
+// "incondicional" e a checagem de condicional-only passa sobre nada.
+{
+  const auto = definicoesComEscopo('[data-theme="dark"] {\n  --dss-auto-teste: 1px;\n}\n');
+  sentinela('validate-scss-tokens', [
+    [defined.has('--dss-action-primary'), '--dss-action-primary entre os tokens definidos'],
+    [temEscopoIncondicional.has('--dss-action-primary'), '--dss-action-primary definido fora de escopo condicional'],
+    [auto.length === 1 && RE_CONDICIONAL.test(auto[0].escopo), 'autoteste: definição dentro de [data-theme] lida como condicional'],
+  ]);
+}
+let refsLidas = 0;
 const FIXTURES = new Set(['DssTestPageComplexity', 'DssCadrisCard', 'DssDataCard']);
 
 // 2. Referências `var(--dss-x)` no SCSS dos escopos acima.
@@ -168,6 +182,7 @@ for (const f of walkScss(scopeRoot)) {
       // é fantasma. (A interpolação de MARCA é checada no loop abaixo.)
       if (code[m.index + m[0].length] === '#') continue;
       const tok = m[1];
+      refsLidas++;
       if (!defined.has(tok)) noteGhost(tok, i + 1);
       else if (!temEscopoIncondicional.has(tok)) noteCondicional(tok, i + 1);
     }
@@ -190,6 +205,9 @@ for (const f of walkScss(scopeRoot)) {
 // baseline de componente é vazio desde b49b6e0 e essa garantia não pode ser
 // diluída por causa da extensão de escopo. Por isso a lista é por escopo.
 // Formato legado (array plano) segue aceito e vale para TODOS os escopos.
+sentinela('validate-scss-tokens', [
+  [refsLidas > 0, 'referências var(--dss-*) lidas nos SCSS de componente'],
+]);
 const BASELINE_PATH = path.join(__dirname, 'scss-token-ghost-baseline.json');
 const UPDATE = process.argv.slice(2).includes('--update-baseline');
 const ghostNames = [...ghosts.keys()].sort();
@@ -238,6 +256,28 @@ for (const tok of byScope.condicional || [])
   if (!condicionais.has(tok)) staleBaseline.push(`condicional/${tok}`);
 for (const tok of legado) if (!ghosts.has(tok)) staleBaseline.push(tok);
 const totalRefs = [...ghosts.values()].reduce((a, v) => a + v.length, 0);
+
+// CATRACA (scripts/lib/catraca.cjs): o baseline do disco é comparado com o do
+// HEAD. Cresceu → reprova (débito novo só com commit dedicado + --aceitar-debito);
+// entrada já resolvida sobrando → reprova ("remova a linha"). Antes só se avisava
+// ao encolher, e um --update-baseline absorvia o caso novo em silêncio.
+{
+  const chaves = (j) => [
+    ...Object.entries(j.byScope || {}).flatMap(([s, l]) => l.map((t) => `${s}/${t}`)),
+    ...(Array.isArray(j.tokens) ? j.tokens : []),
+  ];
+  const atuais = [
+    ...pares.map(([t, s]) => `${s}/${t}`),
+    ...[...condicionais.keys()].map((t) => `condicional/${t}`),
+    ...legado.filter((t) => ghosts.has(t)),
+  ];
+  const r = require('./lib/catraca.cjs').catraca({
+    gate: 'validate-scss-tokens', baselineRel: 'scripts/scss-token-ghost-baseline.json',
+    noDisco: chaves(baseRaw), chavesDe: chaves, aindaPendentes: atuais,
+    permitirCrescer: process.argv.includes('--aceitar-debito'),
+  });
+  if (r.falhou && GATE) process.exit(1);
+}
 
 console.log(`🔎 Tokens SCSS — todo var(--dss-*) deve existir (${defined.size} definidos)\n`);
 

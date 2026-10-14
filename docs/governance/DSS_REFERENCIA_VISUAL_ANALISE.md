@@ -2206,6 +2206,8 @@ Em caso de conflito entre fontes de informação visual:
 | DssContainer | layout | size:md, padding:md, gap:md, centered | — | — |
 | DssContextHeader | layout | identifier:652701-9, recordsCount:2, openCount:2, summary:[…], groups:[…] | — | Cabeçalho de atendimento com identidade, três grupos de informação e o trilho de sessão |
 | DssDataCard | contextuais | — | — | — |
+| DssDataTable | contextuais | rows:[…], columns:[…], rowKey:id, title:Solicitações, density:compact | — | — |
+| DssDataTableClaudeCode | contextuais | rows:[…], columns:[…], rowKey:id, title:Solicitações, total:12, statusColumn:situacao, statusMap:{…}, density:compact | — | — |
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
 | DssDialog | contextuais | open | — | DssDialog aberto, com as três regiões: título e fechar no header, texto no corpo, ações no footer |
 | DssDrawer | layout | persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
@@ -2279,5 +2281,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-10-14T01:10:45.847Z_
+_Gerado em: 2026-10-14T19:37:45.600Z_
 <!-- END:AUTO-GENERATED -->

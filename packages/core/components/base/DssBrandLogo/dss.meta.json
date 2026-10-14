@@ -37,7 +37,8 @@
         "criterion": "1.1.1",
         "level": "A",
         "implementation": "Conteúdo não-textual com nome: o <svg> recebe role=\"img\" e aria-label com o nome da marca, que vem dos dados (assets/brand/logos.ts) e não de o consumidor lembrar de escrever. `decorative` tira o logo da árvore com aria-hidden, para o caso em que o nome do produto já está em texto ao lado. Âncoras em DssBrandLogo.test.js: \"nomeia o logo com o nome da marca por padrão\" e \"decorative tira o logo da árvore de acessibilidade\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": ["nomeia o logo com o nome da marca por padrão", "decorative tira o logo da árvore de acessibilidade"]
       },
       {
         "criterion": "1.4.3",

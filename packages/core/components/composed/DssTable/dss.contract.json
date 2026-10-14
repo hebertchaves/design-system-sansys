@@ -979,13 +979,19 @@
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto das células usa --dss-text-body sobre --dss-surface-default; a razão é calculada pelo emissor a partir dos tokens reais do componente.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "A semântica de tabela (thead/th/td e associação cabeçalho-célula) é a do QTable, não reimplementada. Âncora: DssTable.test.js cobre render, colunas e seleção.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "renderiza table element semanticamente correto",
+          "renderiza thead e tbody"
+        ]
       }
     ],
     "aria": {

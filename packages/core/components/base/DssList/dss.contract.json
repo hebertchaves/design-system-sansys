@@ -3855,25 +3855,34 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Lista rotulada via aria-label/aria-labelledby.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label",
+          "aria-labelledby"
+        ]
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Agrupa itens como lista semântica (role=list).",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "possui role=\"list\""
       }
     ],
     "aria": {

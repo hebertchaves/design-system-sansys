@@ -1016,19 +1016,30 @@
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Nome do arquivo (--dss-gray-800) sobre superfície clara atinge contraste AA (~15:1)",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Ações expõem nome acessível via aria-label (addAriaLabel/uploadAriaLabel/abortAriaLabel/clearAriaLabel); ícones de status com aria-label",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label"
+        ]
       },
       {
         "criterion": "4.1.3",
         "level": "AA",
         "implementation": "Mudanças de status anunciadas por região role=status aria-live=polite aria-atomic (função announce)",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-live",
+          "aria-atomic",
+          "role=status"
+        ]
       }
     ],
     "aria": {

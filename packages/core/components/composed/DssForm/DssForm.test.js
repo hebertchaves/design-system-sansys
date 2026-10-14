@@ -444,3 +444,22 @@ describe('DssForm — alcance da validação sobre os campos DSS', () => {
     wrapper.unmount()
   })
 })
+
+// ===========================================================================
+// ÂNCORAS a11y — WCAG 1.3.1 e 3.3.1 (dss.meta.json → a11y.wcag[].test)
+// Escritas depois da prova de mutação (out/2026): os testes acima usam
+// `find('form')`, que acha um <form> em QUALQUER profundidade — envolver o
+// QForm num <div> não os quebrava. E o de noErrorFocus lia a prop do próprio
+// DssForm, não o que chega ao QForm: passava sem repasse nenhum.
+// ===========================================================================
+describe('Âncoras a11y 1.3.1 e 3.3.1 — o <form> é a raiz e o motor recebe a config', () => {
+  it('o <form> é o nó raiz — nenhum wrapper DSS em volta', () => {
+    const wrapper = mountForm()
+    expect(wrapper.element.tagName).toBe('FORM')
+  })
+
+  it('noErrorFocus chega ao QForm, não só à prop do DssForm', () => {
+    const wrapper = mountForm({ noErrorFocus: true })
+    expect(wrapper.findComponent({ name: 'QForm' }).props('noErrorFocus')).toBe(true)
+  })
+})

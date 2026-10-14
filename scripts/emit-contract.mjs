@@ -26,6 +26,7 @@ import Ajv  from 'ajv'
 import fs   from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 import { extractStates, compiledCss } from './extract-css-states.mjs'
 import { contextTokensFromCss } from './context-tokens.mjs'
 import { checkContrast, hasCssRule, resolveToken } from './wcag-kit.mjs'
@@ -68,6 +69,21 @@ function findCompDir(name) {
 // trava; qualquer componente FORA do baseline e sem contrato reprova. Mesmo
 // mecanismo do validate-scss-tokens (scss-token-ghost-baseline.json).
 const BASELINE_SEM_CONTRATO = path.join(ROOT, 'scripts', 'contract-missing-baseline.json')
+
+// ── Débito de âncora a11y ────────────────────────────────────────────────────
+// Claim `test`/`aria` SEM ALVO apontado no meta. Até out/2026 a âncora `test`
+// passava se o *.test.js EXISTIA e a `aria` se QUALQUER prop tivesse "aria" no
+// nome — 127 de 219 claims "verificados" por um sinal sempre verdadeiro. Agora a
+// âncora exige alvo; o que ainda não tem fica neste baseline, e o contrato o
+// publica com `verified: false`. Fora do baseline, claim sem alvo reprova.
+const BASELINE_A11Y = path.join(ROOT, 'scripts', 'a11y-anchor-baseline.json')
+function lerBaselineA11y() {
+  try { return new Set(JSON.parse(fs.readFileSync(BASELINE_A11Y, 'utf8')).pendentes || []) }
+  catch { return new Set() }
+}
+const baselineA11y = lerBaselineA11y()
+// Chaves que ESTA execução de fato encontrou sem alvo — a catraca compara com elas.
+const pendentesVistos = new Set()
 
 function lerBaseline() {
   try { return new Set(JSON.parse(fs.readFileSync(BASELINE_SEM_CONTRATO, 'utf8')).semContrato || []) }
@@ -350,28 +366,93 @@ function buildTokens(states, meta) {
  * token em componentes que não o consomem.
  */
 function buildContextTokens(compDir) {
-  let css
-  try { css = compiledCss(compDir) } catch { return [] }
-  return contextTokensFromCss(css)
+  // SEM try/catch (out/2026). Havia um `catch { return [] }`: se o Sass falhasse,
+  // o contrato saía com contextTokens VAZIO e o Preview Frame perdia os controles
+  // de ambiente sem erro. Na ordem atual ele era inalcançável — o extractStates,
+  // chamado antes, compila o mesmo SCSS sem guarda e derruba a emissão —, mas é
+  // exatamente o tipo de silêncio que volta quando alguém reordena as chamadas.
+  // Falha de compilação é defeito do componente: tem de aparecer.
+  return contextTokensFromCss(compiledCss(compDir))
 }
 
 // ── a11y ← meta.a11y VERIFICADO (âncora css/aria/test) ───────────────────────
+/** Títulos de caso (`it(…)` / `test(…)`) do *.test.js — literal de aspas ou crase. */
+function titulosDeTeste(src) {
+  return [...src.matchAll(/\b(?:it|test)\(\s*(['"`])((?:\\.|(?!\1)[\s\S])*?)\1/g)].map(m => m[2])
+}
+
+/** Fonte onde um atributo ARIA pode estar LIGADO pelo DSS: SFC e composables. */
+function fontesDoComponente(compDir) {
+  return ['1-structure', 'composables'].flatMap((sub) => {
+    const d = path.join(compDir, sub)
+    return exists(d) ? fs.readdirSync(d).map(f => fs.readFileSync(path.join(d, f), 'utf8')) : []
+  }).join('\n')
+}
+
+/**
+ * Um alvo ARIA (`aria-expanded` ou `role=group`) está ancorado se o SFC/composable
+ * o liga OU se o teste o verifica no DOM renderizado. O segundo caminho existe
+ * porque parte dos atributos é escrita pelo Quasar (o `aria-pressed` do
+ * QBtnToggle), não pelo DSS — e aí a única prova possível é o teste.
+ */
+function alvoAriaPresente(alvo, texto) {
+  const [attr, valor] = alvo.split('=')
+  if (attr === 'role' && valor) return new RegExp(`role[^\\n]{0,12}${valor}\\b`).test(texto)
+  return texto.includes(attr)
+}
+
 function verifyA11y(meta, compDir, api, gaps) {
   const a = meta.a11y
   if (!a) { gaps.push('a11y: meta.a11y ausente (MUST-verificado) — backfill de claims necessário'); return null }
   const out = { wcag: [], aria: a.aria || { role: 'textbox' }, keyboard: a.keyboard || [] }
+  const nome = path.basename(compDir)
+  const testFile = path.join(compDir, `${nome}.test.js`)
+  const testSrc = exists(testFile) ? fs.readFileSync(testFile, 'utf8') : ''
   for (const c of a.wcag || []) {
-    let verified = false, note = ''
+    let verified = false, note = '', semAlvo = false
     if (c.verifiedBy === 'css') {
       if (c.contrast) { const r = checkContrast(c.contrast.fg, c.contrast.bg, c.contrast.opts || {}); verified = c.contrast.large ? r.AAlarge : r.AAnormal; note = `ratio ${r.ratio}` }
       else { const h = hasCssRule(compDir, c.cssRule || {}); verified = h.ok; note = `${h.matches} regra(s)` }
     } else if (c.verifiedBy === 'aria') {
-      verified = (api.props || []).some(p => /aria|required/i.test(p.name)); note = 'prop aria/required presente'
+      // O claim NOMEIA os atributos (`ariaAttrs`) e cada um tem de estar ligado
+      // no SFC ou verificado no teste. "Alguma prop tem aria no nome" não dizia
+      // nada sobre o claim — um DssSelect afirmava aria-expanded sem ninguém ligar
+      // nem testar o atributo, e passava.
+      const alvos = c.ariaAttrs || []
+      if (!alvos.length) { semAlvo = true; note = 'claim sem `ariaAttrs`' }
+      else {
+        const texto = fontesDoComponente(compDir) + '\n' + testSrc
+        const faltam = alvos.filter(x => !alvoAriaPresente(x, texto))
+        verified = !faltam.length
+        note = verified ? `${alvos.join(', ')} no SFC/teste` : `não ligado no SFC nem verificado no teste: ${faltam.join(', ')}`
+      }
     } else if (c.verifiedBy === 'test') {
-      verified = exists(path.join(compDir, `${path.basename(compDir)}.test.js`)); note = 'test.js presente'
+      // O claim aponta o CASO (`test`: trecho do título do it/test). Antes bastava
+      // o arquivo existir — "escreva o teste pelo critério, não pela âncora" era
+      // conselho, não verificação (DSS_ROTEIRO_FECHAMENTO_FASE3.md).
+      // Lista quando o claim tem duas metades (alt E decorativo; ArrowUp E
+      // ArrowDown): cada caso apontado tem de existir.
+      const casos = c.test == null ? [] : [].concat(c.test)
+      if (!casos.length) { semAlvo = true; note = 'claim sem `test`' }
+      else {
+        const titulos = titulosDeTeste(testSrc)
+        const faltam = casos.filter(x => !titulos.some(t => t.includes(x)))
+        verified = !faltam.length
+        note = verified ? `caso(s) ${casos.map(x => `"${x}"`).join(', ')}` : `nenhum caso com título contendo ${faltam.map(x => `"${x}"`).join(', ')} em ${nome}.test.js`
+      }
     }
-    if (!verified) gaps.push(`a11y ${c.criterion} (verifiedBy ${c.verifiedBy}): ÂNCORA REPROVADA — ${note}`)
-    out.wcag.push({ criterion: c.criterion, level: c.level, implementation: c.implementation, verifiedBy: c.verifiedBy })
+    if (semAlvo) {
+      const chave = `${nome}|${c.criterion}|${c.verifiedBy}`
+      pendentesVistos.add(chave)
+      if (baselineA11y.has(chave)) gaps.push(`a11y ${c.criterion} (verifiedBy ${c.verifiedBy}): PENDENTE (baseline) — ${note}`)
+      else gaps.push(`a11y ${c.criterion} (verifiedBy ${c.verifiedBy}): ÂNCORA REPROVADA — ${note}; aponte o alvo no dss.meta.json`)
+    } else if (!verified) {
+      gaps.push(`a11y ${c.criterion} (verifiedBy ${c.verifiedBy}): ÂNCORA REPROVADA — ${note}`)
+    }
+    const item = { criterion: c.criterion, level: c.level, implementation: c.implementation, verifiedBy: c.verifiedBy, verified }
+    if (c.test) item.test = c.test
+    if (c.ariaAttrs) item.ariaAttrs = c.ariaAttrs
+    out.wcag.push(item)
   }
   return out
 }
@@ -499,9 +580,12 @@ if (!names.length) {
 
 const validate = new Ajv({ allErrors: true, strict: false }).compile(SCHEMA)
 let anyFail = false
+let claimsDoButton = -1   // -1 = o laço nem chegou ao DssButton
 
 for (const name of names) {
   const { contract, gaps } = emit(name)
+  // O que a emissão de fato extraiu — a sentinela das catracas olha isto.
+  if (name === 'DssButton') claimsDoButton = contract.a11y?.wcag?.length ?? 0
   const valid = validate(contract)
   const anchorFail = gaps.some(g => /REPROVADA/.test(g))
   const fail = !valid || anchorFail
@@ -524,8 +608,40 @@ console.log(`\n${anyFail ? '❌' : '✅'} ${names.length} componente(s) processa
 // Só faz sentido no varrimento completo; num componente nomeado o usuário já
 // sabe o que pediu.
 if (all) {
+  // SENTINELA ANTES DAS CATRACAS (out/2026). A ordem é a proteção: se a leitura
+  // das afirmações ou a varredura de componentes cegasse, as catracas abaixo
+  // veriam o baseline inteiro "resolvido" e mandariam remover as linhas — e quem
+  // obedecesse com o débito apagado deixaria o gate cego aprovando para sempre.
+  // A sentinela sai com exit 2 antes de qualquer sugestão aparecer.
+  createRequire(import.meta.url)('./lib/sentinela.cjs').sentinela('emit-contract --all', [
+    [names.includes('DssButton') && claimsDoButton > 0, 'DssButton emitido, com afirmações a11y lidas do meta'],
+    [findAllComponentDirs().includes('DssButton'), 'DssButton na varredura de componentes (base do contrato ausente)'],
+  ])
+
+  // Catraca do débito a11y: só encolhe. Só no varrimento completo — com um
+  // componente nomeado, as entradas dos outros pareceriam "resolvidas".
+  const { catraca } = createRequire(import.meta.url)('./lib/catraca.cjs')
+  const r = catraca({
+    gate: 'âncoras a11y',
+    baselineRel: 'scripts/a11y-anchor-baseline.json',
+    noDisco: [...baselineA11y],
+    chavesDe: (j) => j.pendentes || [],
+    aindaPendentes: pendentesVistos,
+    permitirCrescer: argv.includes('--aceitar-debito'),
+  })
+  if (r.falhou) anyFail = true
   const baseline = lerBaseline()
   const novos = findContratosAusentesNovos()
+  // Catraca também no baseline de contrato ausente: ele só encolhe.
+  {
+    const semContrato = findAllComponentDirs().filter(n => !exists(path.join(findCompDir(n), 'dss.contract.json')))
+    const rc = catraca({
+      gate: 'contrato ausente', baselineRel: 'scripts/contract-missing-baseline.json',
+      noDisco: [...baseline], chavesDe: (j) => j.semContrato || [], aindaPendentes: semContrato,
+      permitirCrescer: argv.includes('--aceitar-debito'),
+    })
+    if (rc.falhou) anyFail = true
+  }
   const conhecidos = findAllComponentDirs()
     .filter(n => !exists(path.join(findCompDir(n), 'dss.contract.json')))
     .filter(n => baseline.has(n))

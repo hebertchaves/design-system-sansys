@@ -1,0 +1,32 @@
+// ==========================================================================
+//  DssDataTable - Claude Code · L4 Estados
+// ==========================================================================
+
+.dss-data-table-cc {
+  // Linha selecionada: tinte + borda de início. Cor sozinha não carrega o
+  // estado (WCAG 1.4.1) — o checkbox marcado é o sinal primário, o tinte é
+  // reforço de varredura, como no `.nf-kpi--selected`.
+  &__row--selected > td {
+    background-color: var(--dss-surface-selected);
+  }
+
+  &--disabled {
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    & * {
+      transition: none;
+    }
+  }
+
+  // Alto contraste: o tinte da linha selecionada desaparece (o sistema repinta
+  // os fundos). A borda sobrevive e passa a ser o único sinal — por isso ela
+  // é declarada aqui, e não só no tema claro.
+  @media (forced-colors: active) {
+    .dss-data-table-cc__row--selected > td {
+      border-block-end: var(--dss-border-width-md) solid Highlight;
+    }
+  }
+}

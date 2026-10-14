@@ -143,7 +143,8 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Estado via aria-checked; nome via label/aria-label.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-checked", "aria-label"]
       },
       {
         "criterion": "1.4.3",

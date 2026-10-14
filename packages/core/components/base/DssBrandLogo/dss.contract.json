@@ -207,19 +207,26 @@
         "criterion": "1.1.1",
         "level": "A",
         "implementation": "Conteúdo não-textual com nome: o <svg> recebe role=\"img\" e aria-label com o nome da marca, que vem dos dados (assets/brand/logos.ts) e não de o consumidor lembrar de escrever. `decorative` tira o logo da árvore com aria-hidden, para o caso em que o nome do produto já está em texto ao lado. Âncoras em DssBrandLogo.test.js: \"nomeia o logo com o nome da marca por padrão\" e \"decorative tira o logo da árvore de acessibilidade\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "nomeia o logo com o nome da marca por padrão",
+          "decorative tira o logo da árvore de acessibilidade"
+        ]
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "O componente NÃO declara cor: `fill: currentColor` em 2-composition/_base.scss faz o logo herdar a cor do host, e portanto o contraste é o do contexto — que é quem sabe qual é o fundo. Uma cor fixa aqui quebraria o contraste sobre fundo colorido.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.4.1",
         "level": "A",
         "implementation": "A marca não é transmitida só por cor: o DESENHO muda entre Water, Hub e Waste, não apenas o matiz. Em forced-colors o logo herda a cor do texto (4-output/_states.scss) em vez de forçar a cor da marca.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

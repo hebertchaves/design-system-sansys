@@ -1,0 +1,16 @@
+// ==========================================================================
+//  DssDataTable - Claude Code · L3 Variantes
+//
+//  Variação declarada pela API: modo de dados e densidade do cabeçalho.
+// ==========================================================================
+
+// Em modo remoto a contagem fala de UMA PÁGINA, não do conjunto. O itálico
+// é o sinal de que o número tem um recorte — o texto completo ("N de M")
+// continua sendo a informação.
+.dss-data-table-cc--remote .dss-data-table-cc__count {
+  font-style: italic;
+}
+
+.dss-data-table-cc--disabled {
+  color: var(--dss-text-disabled);
+}

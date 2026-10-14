@@ -4,11 +4,11 @@
      Regenerar: `npm run build:adequacao-status` (ou node scripts/build-adequacao-status.cjs)
      Fontes: docs/governance/CERTIFIED_COMPONENTS.md + apps/sandbox/src/TestSuite.vue -->
 
-> **Gerado do disco em 05/10/2026**, não de memória. Fase, categoria e selo saem do
+> **Gerado do disco em 14/10/2026**, não de memória. Fase, categoria e selo saem do
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **38** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **39** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -52,19 +52,20 @@ parte pelo `validate:demo-seeds`.
 
 | Fase | Componentes | Adequados | Casca | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|---|
-| **Fase 1 — Atômicos** | 20 | **15** | 0 | 0 | 1 | 4 |
+| **Fase 1 — Atômicos** | 20 | **16** | 0 | 0 | 0 | 4 |
 | **Fase 2 — Compostos** | 68 | **23** | 0 | 0 | 0 | 45 |
-| **Total** | **88** | **38** | 0 | 1 | 49 |
+| **Total** | **88** | **39** | 0 | 0 | 49 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
-`DssAvatar`.
+_nenhum_.
 
 _Nenhum componente na situação "só Preview Frame" — todo frame registrado tem página Playground._
 
-## Fase 1 — Componentes Atômicos (15/20)
+## Fase 1 — Componentes Atômicos (16/20)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
+| ✅ | `DssAvatar` | Visual/Identity | 02/02/2026 | sim | sim |
 | ✅ | `DssBadge` | Compact Control não-interativo | 27/01/2026 | sim | sim |
 | ✅ | `DssButton` | Ação primária interativa | 20/01/2026 | sim | sim |
 | ✅ | `DssCheckbox` | Compact Control interativo | 01/02/2026 | sim | sim |
@@ -80,7 +81,6 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ✅ | `DssTextarea` | Campo de texto multilinha | 19/03/2026 | sim | sim |
 | ✅ | `DssToggle` | Controle de estado binário | 05/02/2026 | sim | sim |
 | ✅ | `DssTooltip` | Dica contextual | 06/02/2026 | sim | sim |
-| 🟡 | `DssAvatar` | Visual/Identity | 02/02/2026 | sim | — |
 | ⬜ | `DssRange` | Controle de intervalo | 23/03/2026 | — | — |
 | ⬜ | `DssSlider` | Controle deslizante | 20/03/2026 | — | — |
 | ⬜ | `DssSpace` | Espaçador flexível | 18/03/2026 | — | — |
@@ -161,7 +161,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 
 ## Fora desta contagem
 
-- **Preview Frames sem componente de Fase 1/2 correspondente:** `actionmenu`, `appbar`, `brandlogo`, `container`, `pageshell`, `sectiontitle`, `suite` — tipicamente Fase 3 (ex.: `DssMultiselectAutocomplete`), que não entra neste placar.
+- **Preview Frames sem componente de Fase 1/2 correspondente:** `actionmenu`, `appbar`, `brandlogo`, `container`, `contextheader`, `datacard`, `pageshell`, `sectiontitle`, `suite` — tipicamente Fase 3 (ex.: `DssMultiselectAutocomplete`), que não entra neste placar.
 - `DssDataCard` (Fase 3), `DssCadrisCard` e `DssTestPageComplexity` — fixtures/stress test, fora
   do escopo por decisão de governança.
 

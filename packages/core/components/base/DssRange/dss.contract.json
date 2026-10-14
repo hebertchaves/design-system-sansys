@@ -906,19 +906,22 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Ajuste de ambas as alças operável por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "4.1.2",
         "level": "A",
-        "implementation": "Valores expostos via aria-valuenow; nome via aria-label.",
-        "verifiedBy": "aria"
+        "implementation": "DEFEITO CONHECIDO — esta afirmação NÃO se sustenta hoje: o QRange escreve aria-valuenow=\"min|max\" num único role=slider (quasar/src/components/range/QRange.js:432); aria-valuenow tem de ser número, e cada alça precisaria do próprio role=slider. Reprova a 4.1.2. O nome via aria-label funciona. Correção é estrutural no componente (out/2026).",
+        "verifiedBy": "aria",
+        "verified": false
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

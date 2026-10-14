@@ -328,3 +328,21 @@ describe('DssDialog — regiões que aparecem e somem em tempo de execução', (
     wrapper.unmount()
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 1.3.1 (dss.meta.json → a11y.wcag[].test)
+// "Apenas quando o slot é fornecido" tem duas metades. Os testes de header e
+// footer acima só provam a primeira (aparece COM o slot): tirar o v-if não os
+// quebrava (prova de mutação, out/2026). Este prova a segunda — sem slot, a
+// região não existe, e o leitor de tela não anuncia um cabeçalho vazio.
+// ===========================================================================
+describe('Âncora a11y 1.3.1 — região sem slot não existe', () => {
+  it('sem slot, não há header nem footer no DOM', async () => {
+    const wrapper = mount(DssDialog, { props: { open: true }, slots: { default: '<p>Corpo</p>' } })
+    await wrapper.vm.$nextTick()
+    expect(document.body.querySelector('.dss-dialog__body')).not.toBeNull()
+    expect(document.body.querySelector('.dss-dialog__header')).toBeNull()
+    expect(document.body.querySelector('.dss-dialog__footer')).toBeNull()
+    wrapper.unmount()
+  })
+})

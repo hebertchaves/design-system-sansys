@@ -231,3 +231,19 @@ describe('DssPagination — Teclado (WCAG 2.1.1)', () => {
     expect(wrapper.emitted('update:modelValue')[0]).toEqual([3])
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 4.1.2 (dss.meta.json → a11y.wcag[].ariaAttrs)
+// A página atual é anunciada por aria-current (escrito pelo QPagination). O
+// teste exige que ele marque EXATAMENTE a página do model, e que se mova junto.
+// ===========================================================================
+describe('Âncora a11y 4.1.2 — aria-current', () => {
+  const atual = (wrapper) => wrapper.findAll('[aria-current="true"]').map((b) => b.text().trim())
+
+  it('aria-current marca só a página atual e acompanha o modelValue', async () => {
+    const wrapper = mount(DssPagination, { props: { modelValue: 3, max: 5 } })
+    expect(atual(wrapper)).toEqual(['3'])
+    await wrapper.setProps({ modelValue: 5 })
+    expect(atual(wrapper)).toEqual(['5'])
+  })
+})

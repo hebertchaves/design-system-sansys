@@ -67,13 +67,25 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Cada item do rail é um botão COM NOME: o label obrigatório vira um <span> visualmente oculto e o title. Sem ele o botão teria apenas um DssIcon decorativo e não existiria para leitor de tela. Âncoras em DssPageShell.test.js: \"o label vira nome acessível E dica de mouse\" e \"o ícone é decorativo — quem nomeia é o label\".",
-        "verifiedBy": "aria"
+        "verifiedBy": "test",
+        "test": ["o label vira nome acessível E dica de mouse", "o ícone é decorativo — quem nomeia é o label"]
       },
       {
         "criterion": "1.4.1",
         "level": "A",
-        "implementation": "O módulo atual não é indicado só pela cor: `active` pinta o item E marca aria-current=\"page\". Em forced-colors, onde o fundo vira cor do sistema e a distinção pelo fundo some, 4-output/_states.scss acrescenta um outline. Âncora em DssPageShell.test.js: \"active marca aria-current=page\".",
-        "verifiedBy": "test"
+        "implementation": "O módulo atual não é indicado só pela cor: `active` pinta o item E marca aria-current=\"page\". Âncora em DssPageShell.test.js: \"active marca aria-current=page\". O reforço em forced-colors é claim própria (verifiedBy css).",
+        "verifiedBy": "test",
+        "test": "active marca aria-current="
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "Em forced-colors, onde o fundo vira cor do sistema e a distinção pelo fundo some, 4-output/_states.scss acrescenta um outline ao item ativo.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "rail-item--active",
+          "property": "outline"
+        }
       },
       {
         "criterion": "2.5.5",
@@ -85,7 +97,8 @@
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "O rail é um <nav> nomeado contendo uma <ul> de itens: a relação lista↔item é semântica, não visual. As regiões são condicionais — sem slot não há <nav> vazio nem container de trilha vazio. Âncoras em DssPageShell.test.js: \"o rail é um <nav> com nome\" e \"a trilha só existe quando o slot é fornecido\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": ["o rail é um <nav> com nome", "renderiza um <li> com <button> dentro"]
       }
     ],
     "aria": {

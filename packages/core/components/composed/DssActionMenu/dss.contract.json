@@ -390,20 +390,41 @@
       {
         "criterion": "2.1.1",
         "level": "A",
-        "implementation": "Toolbar navegável por setas com roving tabindex; sub-menu por ArrowUp/Down; Escape fecha.",
-        "verifiedBy": "test"
+        "implementation": "Toolbar navegável por setas com roving tabindex: ArrowRight/ArrowLeft movem o foco entre as ações, com volta circular. O sub-menu por teclado é claim própria — não tinha teste.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "ArrowRight move o foco para a próxima ação",
+          "ArrowLeft na primeira ação circula para a última"
+        ]
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Sub-menu operável por teclado: ArrowUp/ArrowDown navegam as sub-ações e Escape fecha. Separada (out/2026) da navegação da barra: PENDENTE até existir teste.",
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "role=toolbar com aria-label; gatilho com aria-haspopup=menu e aria-expanded; painel role=menu.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label",
+          "aria-haspopup",
+          "aria-expanded",
+          "role=toolbar",
+          "role=menu"
+        ]
       },
       {
         "criterion": "2.4.3",
         "level": "A",
         "implementation": "Ao fechar o sub-menu por qualquer via, o foco retorna ao gatilho que o abriu.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       }
     ],
     "aria": {

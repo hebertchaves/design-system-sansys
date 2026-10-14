@@ -192,7 +192,8 @@
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Barra de progresso global; indica atividade de requisições em andamento.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       }
     ],
     "aria": {

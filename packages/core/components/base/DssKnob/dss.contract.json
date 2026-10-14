@@ -548,13 +548,19 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Incremento/decremento do valor operáveis por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "ArrowUp incrementa o valor",
+          "ArrowDown decrementa o valor"
+        ]
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

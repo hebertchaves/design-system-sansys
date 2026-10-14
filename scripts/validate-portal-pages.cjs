@@ -25,6 +25,7 @@ const CATALOG = path.join(ROOT, 'packages', 'core', 'catalog.json');
 const PAGES_DIR = path.join(ROOT, 'apps', 'docs-portal', 'src', 'pages', 'components');
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // Páginas Dss* que legitimamente NÃO correspondem a um componente do catálogo
 // (fixtures/demos de composição). Mantidas à mão, com justificativa.
@@ -47,6 +48,12 @@ const pages = new Set(
     .map(f => f.replace(/Page\.tsx$/, ''))
 );
 
+// DssButton é selado (Golden Sample) e tem página: se o detector não vê os
+// dois, campo `sealed` ou padrão de nome de página mudou.
+sentinela('validate-portal-pages', [
+  [sealed.includes('DssButton'), 'DssButton entre os selados do catálogo'],
+  [pages.has('DssButton'), 'DssButtonPage.tsx entre as páginas do portal'],
+]);
 const sealedNoPage = sealed.filter(c => !pages.has(c));
 const orphanPages = [...pages].filter(
   p => p.startsWith('Dss') && !known.has(p) && !ORPHAN_ALLOWLIST.has(p)

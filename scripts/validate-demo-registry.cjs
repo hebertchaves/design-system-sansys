@@ -26,6 +26,7 @@ const CATALOG = path.join(ROOT, 'packages', 'core', 'catalog.json');
 const DEMO = path.join(ROOT, 'apps', 'sandbox', 'src', 'DemoRenderer.vue');
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // Exclusões deliberadas: componentes base que NÃO entram no registry do sandbox
 // por dependência indisponível. Manter sincronizado com o comentário no DemoRenderer.
@@ -50,6 +51,12 @@ for (const m of src.matchAll(/import\s*\{([^}]*)\}\s*from/g))
     if (t) registered.add(t[1]);
   }
 
+// `base` vem de um filtro sobre `dir` do catálogo; se o formato de `dir` mudar,
+// `base` esvazia e "nenhum ausente" vira verdade sobre nada.
+sentinela('validate-demo-registry', [
+  [base.includes('DssButton'), 'DssButton entre os componentes base do catálogo'],
+  [registered.has('DssButton'), 'import do DssButton reconhecido no DemoRenderer'],
+]);
 const missing = base.filter(c => !registered.has(c) && !EXCLUDED.has(c));
 
 console.log(`🔎 DemoRenderer: ${base.length} base no catálogo · ${registered.size} registrados · ${EXCLUDED.size} excluído(s) deliberadamente.`);

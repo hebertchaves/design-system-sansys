@@ -213,3 +213,19 @@ describe('DssAppBar — densidade e responsabilidade', () => {
     w.unmount()
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 1.3.1 (dss.meta.json → a11y.wcag[].test)
+// O divisor é decoração: existe para o olho e não pode virar um nó anunciado
+// entre a marca e o título. Os testes acima provam QUANDO ele existe; este,
+// que existindo ele sai da árvore de acessibilidade.
+// ===========================================================================
+describe('Âncora a11y 1.3.1 — divisor decorativo', () => {
+  it('o divisor é decoração: sai com aria-hidden', () => {
+    const w = montar({ title: 'Solicitações' })
+    const divisor = w.find('.dss-app-bar__divider')
+    expect(divisor.exists()).toBe(true)
+    expect(divisor.attributes('aria-hidden')).toBe('true')
+    w.unmount()
+  })
+})

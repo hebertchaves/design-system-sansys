@@ -119,6 +119,7 @@ import DssPopupProxy     from '@components/base/DssPopupProxy/DssPopupProxy.vue'
 import DssField          from '@components/base/DssField/DssField.vue'
 import DssResponsive     from '@components/base/DssResponsive/DssResponsive.vue'
 import DssDataTable      from '@components/composed/DssDataTable/DssDataTable.vue'
+import DssDataTableClaudeCode from '@components/composed/DssDataTableClaudeCode/DssDataTableClaudeCode.vue'
 
 /** Registry: nome do componente (string) → definição Vue */
 const REGISTRY = {
@@ -210,6 +211,7 @@ const REGISTRY = {
   DssField,
   DssResponsive,
   DssDataTable,
+  DssDataTableClaudeCode,
 }
 
 // ── Helpers de renderização ───────────────────────────────────────────────────

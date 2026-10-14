@@ -257,7 +257,12 @@
         "criterion": "1.1.1",
         "level": "A",
         "implementation": "Imagem de fundo com alternativa textual via alt; decorativa via decorative→aria-hidden.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "renderiza span.dss-sr-only quando alt é fornecido",
+          "não renderiza span.dss-sr-only quando decorative=true"
+        ]
       }
     ],
     "aria": {

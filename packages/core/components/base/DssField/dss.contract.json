@@ -1138,13 +1138,15 @@
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "3.3.2",
         "level": "A",
         "implementation": "Rótulo, dica e mensagem de erro associados ao controle interno.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       }
     ],
     "aria": {

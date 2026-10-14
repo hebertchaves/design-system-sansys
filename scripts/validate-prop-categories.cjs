@@ -31,6 +31,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 function contratos() {
   const out = [];
@@ -63,6 +64,11 @@ for (const { comp, f } of contratos()) {
   }
 }
 
+// Contrato ilegível é pulado em silêncio no laço acima; se TODOS ficarem
+// ilegíveis, `total` zera e "todas têm categoria" passa sobre nenhuma prop.
+sentinela('validate-prop-categories', [
+  [contratos().some(({ comp }) => comp === 'DssButton') && total > 0, 'contrato do DssButton e props lidas'],
+]);
 console.log('🔎 Categoria de papel das props — agrupamento do painel do Preview Frame\n');
 console.log(`   props: ${total}`);
 for (const [k, v] of Object.entries(porCategoria).sort((a, b) => b[1] - a[1])) {

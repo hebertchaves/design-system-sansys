@@ -215,13 +215,15 @@
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Navegação entre etapas operável por teclado quando habilitada.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       }
     ],
     "aria": {

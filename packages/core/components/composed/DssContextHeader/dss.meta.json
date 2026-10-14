@@ -96,13 +96,15 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Todo botão sem rótulo visível declara aria-label, e as contagens entram no nome porque os badges são aria-hidden: 'Ver {n} informações do imóvel', 'Alterar atendimento (2 em aberto)'. Âncoras em DssContextHeader.test.js: \"a contagem está no NOME do botão — o badge é aria-hidden\" e \"os três botões têm nome acessível\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": ["a contagem está no NOME do botão", "os três botões têm nome acessível"]
       },
       {
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Cada grupo é um <dl> e cada informação um par <dt>/<dd>: a relação rótulo↔valor é semântica, não um alinhamento. O leitor de tela anuncia 'Ligação água, Ativa' em vez de dois textos soltos. Âncora em DssContextHeader.test.js: \"cada grupo vira um <dl> e cada informação um par dt/dd\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": "cada grupo vira um <dl> e cada informação um par dt/dd"
       },
       {
         "criterion": "1.4.3",
@@ -132,13 +134,15 @@
         "criterion": "1.4.13",
         "level": "AA",
         "implementation": "As dicas abrem por mouseenter E focusin, e fecham por mouseleave/focusout — quem navega por teclado vê a mesma dica. O DssTooltip não governa a própria visibilidade: quem liga o gatilho é o host. Âncora em DssContextHeader.test.js: \"a dica também abre por foco — WCAG 1.4.13 vale para teclado\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": "a dica também abre por foco"
       },
       {
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Todos os controles são <button type=\"button\"> nativos: Enter e Espaço acionam sem código próprio, e não há handler de teclado customizado que pudesse engolir a tecla.",
-        "verifiedBy": "aria"
+        "verifiedBy": "test",
+        "test": "todo controle é <button type=\"button\"> nativo"
       },
       {
         "criterion": "2.3.3",

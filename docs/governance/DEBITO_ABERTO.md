@@ -215,6 +215,40 @@
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
     abrir a lista quando a decisão vier.
 
+- 🔴 **(f) Piloto WebComps → DSS: `jtech-data-table` tem DUAS leituras, nenhuma selada** (out/2026).
+  Do repositório [WebComps-to-DSS](https://github.com/hebertchaves/WebComps-to-DSS) saiu o
+  `jtech-data-table` (8 arquivos, `provide/inject` de estado mutável, Stylus, acesso a rede
+  dentro do componente). Ele virou **dois** compostos Fase 3, de propósito, para comparar
+  decisões sob a mesma governança:
+
+  | | `DssDataTable` | `DssDataTable - Claude Code` (`DssDataTableClaudeCode`) |
+  |---|---|---|
+  | origem | agente externo (Lovable) | esta frente |
+  | enquadramento | título e filtro no `#top` do QTable | cabeçalho fora do cartão (patterns NFAg + Solicitações) |
+  | ações em lote | `requiresSelection` + `multiple` | `mode: single/multi/any/none` — o contrato de 4 estados do Jtech |
+  | fronteira de dados | filtra internamente (`update:filter`) | a página filtra; o bloco recebe `rows` + `total` |
+  | claims a11y | 2 | 4 (inclui 1.4.1 e 4.1.3) |
+
+  **Os dois estão `status: candidate`** e nenhum passou por selo — *quem constrói não sela*.
+
+  **Follow-ups abertos no `DssDataTable` (Lovable), levantados na avaliação:**
+  - 🔴 **camada de marca inerte** — `4-output/_brands.scss` declara `--dss-data-table-action` e
+    `_states.scss` declara `--dss-data-table-focus-active`; **nenhum dos dois é consumido**.
+    Provado no CSS compilado. Parece atender à Constituição #5 e não pinta nada. Tratar
+    **antes** de qualquer selo.
+  - 🟡 **1 exemplo** no `*.example.vue` contra o mínimo de 3 do Cartão Base.
+  - 🟡 **`.lovable/` versionado** — diretório de ferramenta externa dentro do repo.
+
+  **Gate proposto e ainda não construído — B7: token local declarado e nunca consumido.**
+  Detector escrito e testado contra o caso conhecido; **0 ocorrências** nos demais 88
+  componentes, então nasce sem baseline. É a generalização do defeito acima, e o mesmo
+  padrão já apareceu seis vezes neste repo (`brand/index.scss`, `tokens/semantic/index.scss`,
+  `.dss-tab--brand-*`, metades de classe em Timeline/Carousel) — em quatro delas o que estava
+  morto era um bloco de **acessibilidade**.
+
+  Fonte: `packages/core/components/composed/DssDataTableClaudeCode/MIGRATION_JTECH_DATA_TABLE.md`
+  (mapa prop a prop, evento a evento) e os dois `README.md`.
+
 ## ✅ RESOLVIDO — o DS pedia Inter e nunca declarou a fonte (set/2026)
 
 O texto subia ~1,5px opticamente em fonte de 16px. Medido igual no `DssChip` (caixa 28px) e no

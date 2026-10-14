@@ -167,7 +167,7 @@
       {
         "criterion": "4.1.2",
         "level": "A",
-        "implementation": "Valores expostos via aria-valuenow; nome via aria-label.",
+        "implementation": "DEFEITO CONHECIDO — esta afirmação NÃO se sustenta hoje: o QRange escreve aria-valuenow=\"min|max\" num único role=slider (quasar/src/components/range/QRange.js:432); aria-valuenow tem de ser número, e cada alça precisaria do próprio role=slider. Reprova a 4.1.2. O nome via aria-label funciona. Correção é estrutural no componente (out/2026).",
         "verifiedBy": "aria"
       },
       {

@@ -1,0 +1,82 @@
+// ==========================================================================
+//  DssDataTable - Claude Code · L2 Composição
+//
+//  Estrutura do bloco. Só tokens genéricos — estado em 4-output, variação em
+//  3-variants. O cartão, o cabeçalho e a contagem são o enquadramento que os
+//  patterns "Solicitações" (.sol-card) e "Check-in NFAg" (.nf-panel)
+//  consolidaram; aqui eles deixam de ser CSS de página e viram componente.
+// ==========================================================================
+
+.dss-data-table-cc {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+  width: 100%;
+  color: var(--dss-text-body);
+  font-family: var(--dss-font-family-sans);
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--dss-spacing-3);
+  }
+
+  &__identity,
+  &__actions,
+  &__row-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--dss-spacing-2);
+    min-width: 0;
+  }
+
+  // Contagem viva. `tabular-nums` para o número não dançar a cada filtro.
+  &__count {
+    font-size: var(--dss-font-size-xs);
+    color: var(--dss-text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__error {
+    margin-block-end: var(--dss-spacing-1);
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--dss-spacing-2);
+    background: var(--dss-surface-default);
+  }
+
+  // Colunas de controle (seleção, expansão): largura do alvo de toque, não
+  // do ícone — WCAG 2.5.5 vale para a célula inteira.
+  &__control-cell {
+    width: var(--dss-touch-target-md);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  &__actions-cell {
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  &__cell--left { text-align: left; }
+  &__cell--center { text-align: center; }
+  &__cell--right { text-align: right; }
+
+  // Detalhe da linha expandida — mesma superfície do `.nf-detail`.
+  &__detail {
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    background-color: var(--dss-surface-subtle);
+    border-block-end: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  }
+
+  &__empty {
+    padding: var(--dss-spacing-6);
+  }
+}

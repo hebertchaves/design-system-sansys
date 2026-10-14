@@ -63,10 +63,13 @@ function physicalSeal(component) {
 // ── coleta ────────────────────────────────────────────────────────────────────
 const metaFiles = walk(COMPONENTS_DIR, f => path.basename(f) === 'dss.meta.json');
 const catalog = [];
+// Meta ilegível era `continue`: o componente SUMIA do catálogo, e os gates que
+// leem o catálogo (demo-registry, portal-pages) passavam a não vê-lo — sem erro.
+const metasIlegiveis = [];
 
 for (const mf of metaFiles) {
   let meta;
-  try { meta = JSON.parse(fs.readFileSync(mf, 'utf8')); } catch { continue; }
+  try { meta = JSON.parse(fs.readFileSync(mf, 'utf8')); } catch { metasIlegiveis.push(path.relative(ROOT, mf)); continue; }
   const component = meta.component || path.basename(path.dirname(mf));
   const sealFile = physicalSeal(component);
   catalog.push({
@@ -85,6 +88,10 @@ for (const mf of metaFiles) {
   });
 }
 catalog.sort((a, b) => a.component.localeCompare(b.component));
+require('./lib/sentinela.cjs').sentinela('build-catalog', [
+  [catalog.some(c => c.component === 'DssButton' && c.sealed), 'DssButton no catálogo, com selo físico'],
+  [!metasIlegiveis.length, `todo dss.meta.json legível (ilegíveis: ${metasIlegiveis.join(', ') || '—'})`],
+]);
 
 // ── drift / contradições ──────────────────────────────────────────────────────
 const drift = [];

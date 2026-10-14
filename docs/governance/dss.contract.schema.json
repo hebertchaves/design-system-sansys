@@ -471,7 +471,37 @@
                   "css",
                   "test"
                 ],
-                "description": "Âncora obrigatória: aria=atributo no SFC/DOM; css=token/regra no SCSS ou computed medível; test=caso no *.test.js."
+                "description": "Âncora obrigatória: aria=atributos nomeados em `ariaAttrs`, ligados no SFC/composable ou verificados no *.test.js; css=token/regra no SCSS ou contraste medido; test=caso do *.test.js cujo título contém `test`."
+              },
+              "verified": {
+                "type": "boolean",
+                "description": "A âncora foi CONFERIDA nesta emissão. false = claim sem alvo, registrado como débito em scripts/a11y-anchor-baseline.json — o contrato não afirma o que ninguém mediu."
+              },
+              "test": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 3
+                    }
+                  }
+                ],
+                "description": "verifiedBy=test: trecho do título do caso (it/test) no *.test.js que verifica o critério; lista quando o claim tem mais de uma metade — cada caso precisa existir."
+              },
+              "ariaAttrs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(aria-[a-z]+|role=[a-z]+)$"
+                },
+                "description": "verifiedBy=aria: atributos que sustentam o claim (`aria-expanded`, `role=group`)."
               }
             }
           }

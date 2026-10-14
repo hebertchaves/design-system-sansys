@@ -56,7 +56,7 @@ próprio retorno.
 
 | Tool | Quando usar | O que volta |
 |---|---|---|
-| `query_component` | Antes de mexer num componente, para saber estado real em vez de supor | `meta` completo, pré-prompt, documentação e um `summary` legível |
+| `query_component` | Antes de mexer num componente, para saber estado real em vez de supor | `meta` completo, `a11y` (as afirmações WCAG **como o contrato as publica**, com `verified`), pré-prompt, documentação e um `summary` legível que lista as afirmações a11y NÃO verificadas. Leia `a11y`, não `meta.a11y`: o meta é a fonte autorada, sem conferência |
 | `query_token` | Para citar um token pelo nome exato, ou varrer uma categoria | A(s) seção(ões) correspondente(s) do `DSS_TOKEN_REFERENCE.md` |
 | `suggest_token_replacement` | Achou valor hardcoded (hex, rgb, px, rem) e precisa do token equivalente | Melhor correspondência com confiança (`exact`/`close`/`approximate`) + até 3 alternativas |
 | `describe_grid_inspector` | Para operar o Grid Inspector sem abrir a documentação dele | Manual operacional completo: 5 frentes, arquitetura e painéis |

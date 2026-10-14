@@ -150,7 +150,8 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "role=combobox + aria-multiselectable; estado de cada opção via aria-selected (fonte de verdade — o checkbox por opção é decorativo/aria-hidden).",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-multiselectable", "aria-selected", "aria-hidden", "role=combobox"]
       }
     ]
   },

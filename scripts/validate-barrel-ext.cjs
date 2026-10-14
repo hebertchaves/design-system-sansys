@@ -24,7 +24,11 @@ const ROOT = path.resolve(__dirname, '..');
 const CORE = path.join(ROOT, 'packages', 'core');
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
+// O walk conta os index.ts que vê: se não vir o barrel do DssButton, não
+// varreu packages/core — e "nenhum index.js" seria verdade sobre nada.
+const barrelsTs = [];
 function walk(dir, acc = []) {
   let entries;
   try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return acc; }
@@ -32,6 +36,8 @@ function walk(dir, acc = []) {
     const full = path.join(dir, e.name);
     if (e.isDirectory()) {
       if (e.name !== 'node_modules' && e.name !== 'dist') walk(full, acc);
+    } else if (e.name === 'index.ts') {
+      barrelsTs.push(path.relative(ROOT, full).replace(/\\/g, '/'));
     } else if (e.name === 'index.js') {
       acc.push(path.relative(ROOT, full).replace(/\\/g, '/'));
     }
@@ -40,6 +46,9 @@ function walk(dir, acc = []) {
 }
 
 const offenders = walk(CORE);
+sentinela('validate-barrel-ext', [
+  [barrelsTs.includes('packages/core/components/base/DssButton/index.ts'), 'barrel index.ts do DssButton na varredura'],
+]);
 
 if (!offenders.length) {
   console.log('✅ Barrels: nenhum index.js em packages/core (convenção index.ts mantida).');

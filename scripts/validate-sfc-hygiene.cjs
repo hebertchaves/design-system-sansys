@@ -52,6 +52,7 @@ const ROOT = path.resolve(__dirname, '..');
 const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 /** Import que atravessa para o 1-structure de OUTRO componente (tem `../`). */
 const IMPORT_CRUZADO = /from\s+['"]([^'"]*\.\.\/[^'"]*1-structure\/[^'"]+)['"]/g;
@@ -76,6 +77,14 @@ function walk(dir, acc = []) {
 }
 
 const arquivos = walk(COMPONENTS);
+// Autoteste das duas regex sobre casos que SÃO violação, e a varredura tem de
+// ter passado pelo DssButton. Zero violações só vale se o detector enxerga.
+const casa = (re, s) => { re.lastIndex = 0; const ok = re.test(s); re.lastIndex = 0; return ok; };
+sentinela('validate-sfc-hygiene', [
+  [arquivos.some((f) => f.replace(/\\/g, '/').endsWith('/base/DssButton/1-structure/DssButton.ts.vue')), 'DssButton.ts.vue na varredura'],
+  [casa(IMPORT_CRUZADO, "import X from '../DssIcon/1-structure/DssIcon.ts.vue'"), 'regex A reconhece import cruzado (autoteste)'],
+  [casa(STYLE_DIMENSIONAL, '<div style="width: 12px">'), 'regex B reconhece style dimensional (autoteste)'],
+]);
 const violacoesA = [];
 const violacoesB = [];
 

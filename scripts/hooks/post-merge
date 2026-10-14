@@ -33,7 +33,12 @@ fi
 
 # O que de fato entra no bundle. `docs/`, `apps/` e `scripts/` ficam de fora:
 # não são compilados para o dist.
-PADRAO='^packages/core/(components|tokens|themes|utils)/|^packages/core/(index\.(ts|scss)|package\.json|vite\.config\.lib\.js)$'
+# `assets/` e `composables/` entraram em out/2026: os componentes importam os
+# composables da raiz (useInputModality, useTeleportedBrand…) e o DssBrandLogo
+# desenha a partir de assets/brand/logos.ts. Sem eles aqui, um pull que só
+# mudasse um logo ou um composable deixava o dist defasado sem aviso — o
+# silêncio que este hook existe para evitar.
+PADRAO='^packages/core/(components|tokens|themes|utils|assets|composables)/|^packages/core/(index\.(ts|scss)|package\.json|vite\.config\.lib\.js)$'
 
 if ! printf '%s\n' "$ALTERADOS" | grep -qE "$PADRAO"; then
   exit 0

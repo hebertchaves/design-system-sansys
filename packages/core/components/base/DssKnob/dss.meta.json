@@ -196,7 +196,8 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Incremento/decremento do valor operáveis por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": ["ArrowUp incrementa o valor", "ArrowDown decrementa o valor"]
       },
       {
         "criterion": "2.4.7",

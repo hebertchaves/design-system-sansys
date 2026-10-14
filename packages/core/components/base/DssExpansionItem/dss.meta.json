@@ -257,7 +257,8 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Expandir/recolher operável por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": "Enter no cabeçalho alterna a expansão"
       },
       {
         "criterion": "2.4.7",
@@ -273,7 +274,8 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Estado via aria-expanded; região via aria-controls.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "ariaAttrs": ["aria-expanded", "aria-controls"]
       },
       {
         "criterion": "1.4.3",

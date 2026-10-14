@@ -204,3 +204,19 @@ describe('DssSlider — Teclado (WCAG 2.1.1)', () => {
     expect(wrapper.emitted('update:modelValue')[0]).toEqual([49])
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 4.1.2 (dss.meta.json → a11y.wcag[].ariaAttrs)
+// Sem a guarda `if (slider.exists())` dos testes de min/max acima: com ela, um
+// slider que não renderiza passa calado. Aqui o valor tem de ACOMPANHAR o model.
+// ===========================================================================
+describe('Âncora a11y 4.1.2 — aria-valuenow', () => {
+  it('aria-valuenow acompanha o modelValue', async () => {
+    const wrapper = mount(DssSlider, { props: { modelValue: 30 } })
+    const slider = () => wrapper.find('[role="slider"]')
+    expect(slider().exists()).toBe(true)
+    expect(slider().attributes('aria-valuenow')).toBe('30')
+    await wrapper.setProps({ modelValue: 70 })
+    expect(slider().attributes('aria-valuenow')).toBe('70')
+  })
+})

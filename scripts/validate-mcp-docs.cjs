@@ -31,6 +31,7 @@ const RESOURCES = path.join(MCP, 'src', 'resources', 'index.ts');
 const README = path.join(MCP, 'README.md');
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // Os nomes de tool vivem em dois lugares: a maioria inline no array de schemas
 // de tools/index.ts, e algumas (validate_visual_contract) no próprio arquivo da
@@ -54,6 +55,12 @@ const readme = fs.readFileSync(README, 'utf8');
 const tools = collectToolNames();
 const resources = collectResourceNames();
 
+// A regex lê `name: "..."` entre aspas DUPLAS. Se o código mudar de aspas, a
+// lista esvazia e "README cobre os 0 primitivos" passa.
+sentinela('validate-mcp-docs', [
+  [tools.includes('query_component'), 'tool query_component no código do MCP'],
+  [resources.length > 0, 'ao menos um resource em src/resources/index.ts'],
+]);
 const missingTools = tools.filter((t) => !readme.includes(t));
 const missingResources = resources.filter((r) => !readme.includes(r));
 

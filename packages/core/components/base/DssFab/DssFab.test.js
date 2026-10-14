@@ -310,3 +310,19 @@ describe('DssFab', () => {
     })
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 4.1.2 (dss.meta.json → a11y.wcag[].ariaAttrs)
+// O estado aberto/fechado é exposto pelo QFab via aria-expanded no gatilho, e
+// tem de acompanhar o v-model.
+// ===========================================================================
+describe('Âncora a11y 4.1.2 — aria-expanded', () => {
+  it('aria-expanded acompanha o modelValue', async () => {
+    const wrapper = mount(DssFab, { props: { modelValue: false } })
+    const gatilho = () => wrapper.find('[aria-expanded]')
+    expect(gatilho().exists()).toBe(true)
+    expect(gatilho().attributes('aria-expanded')).toBe('false')
+    await wrapper.setProps({ modelValue: true })
+    expect(gatilho().attributes('aria-expanded')).toBe('true')
+  })
+})

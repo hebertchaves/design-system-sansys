@@ -24,8 +24,8 @@
         "type": "string",
         "controlHint": "text",
         "description": "Identificação do registro em atendimento (matrícula, protocolo, contrato).",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "identifierLabel",
@@ -33,8 +33,8 @@
         "controlHint": "text",
         "default": "Matrícula",
         "description": "Nome acessível do identificador, lido ANTES dele.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "identityIcon",
@@ -42,16 +42,16 @@
         "controlHint": "text",
         "default": "domain",
         "description": "Ícone da coluna de identidade. @default 'domain'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "recordsCount",
         "type": "number",
         "controlHint": "stepper",
         "description": "Quantas informações estão cadastradas no modal de registros.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "recordsAddLabel",
@@ -59,8 +59,8 @@
         "controlHint": "text",
         "default": "Adicionar informações do imóvel",
         "description": "Nome acessível do botão de registros, no estado SEM registros.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "recordsLabel",
@@ -68,8 +68,8 @@
         "controlHint": "text",
         "default": "Ver {n} informações do imóvel",
         "description": "Nome acessível do botão de registros, no estado COM registros.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "detailsLabel",
@@ -77,8 +77,8 @@
         "controlHint": "text",
         "default": "Detalhes",
         "description": "Rótulo do botão de detalhes.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "detailsIcon",
@@ -86,8 +86,8 @@
         "controlHint": "text",
         "default": "add",
         "description": "Ícone do botão de detalhes. @default 'add'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "detailsTooltip",
@@ -95,24 +95,24 @@
         "controlHint": "text",
         "default": "Ver detalhes do cadastro",
         "description": "Dica do botão de detalhes. @default 'Ver detalhes do cadastro'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "groups",
         "type": "ContextHeaderGroup[]",
         "controlHint": "text",
         "description": "As informações do registro, agrupadas em colunas.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "summary",
         "type": "string[]",
         "controlHint": "text",
         "description": "Quais informações continuam visíveis quando o cabeçalho RETRAI.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "collapsed",
@@ -129,16 +129,16 @@
         "controlHint": "toggle",
         "default": true,
         "description": "Mostra o gatilho de retrair/expandir. @default true",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "openCount",
         "type": "number",
         "controlHint": "stepper",
         "description": "Quantos atendimentos estão em aberto — badge do botão de alternar.",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "switchable",
@@ -146,8 +146,8 @@
         "controlHint": "toggle",
         "default": true,
         "description": "Mostra o botão de alternar atendimento. @default true",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "creatable",
@@ -155,8 +155,8 @@
         "controlHint": "toggle",
         "default": true,
         "description": "Mostra o botão de iniciar novo atendimento. @default true",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "switchIcon",
@@ -164,8 +164,8 @@
         "controlHint": "text",
         "default": "switch_account",
         "description": "Ícone do botão de alternar. @default 'switch_account'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "switchLabel",
@@ -173,8 +173,8 @@
         "controlHint": "text",
         "default": "Alterar atendimento",
         "description": "Dica do botão de alternar. @default 'Alterar atendimento'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "createIcon",
@@ -182,8 +182,8 @@
         "controlHint": "text",
         "default": "add",
         "description": "Ícone do botão de novo atendimento. @default 'add'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "createLabel",
@@ -191,8 +191,8 @@
         "controlHint": "text",
         "default": "Iniciar novo atendimento",
         "description": "Dica do botão de novo atendimento. @default 'Iniciar novo atendimento'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "collapseLabel",
@@ -200,8 +200,8 @@
         "controlHint": "text",
         "default": "Minimizar cabeçalho",
         "description": "Dica do gatilho quando EXPANDIDO. @default 'Minimizar cabeçalho'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "expandLabel",
@@ -209,8 +209,8 @@
         "controlHint": "text",
         "default": "Maximizar cabeçalho",
         "description": "Dica do gatilho quando RETRAÍDO. @default 'Maximizar cabeçalho'",
-        "category": "Outros",
-        "categorySource": "nenhuma"
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -1239,55 +1239,71 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Todo botão sem rótulo visível declara aria-label, e as contagens entram no nome porque os badges são aria-hidden: 'Ver {n} informações do imóvel', 'Alterar atendimento (2 em aberto)'. Âncoras em DssContextHeader.test.js: \"a contagem está no NOME do botão — o badge é aria-hidden\" e \"os três botões têm nome acessível\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "a contagem está no NOME do botão",
+          "os três botões têm nome acessível"
+        ]
       },
       {
         "criterion": "1.3.1",
         "level": "A",
         "implementation": "Cada grupo é um <dl> e cada informação um par <dt>/<dd>: a relação rótulo↔valor é semântica, não um alinhamento. O leitor de tela anuncia 'Ligação água, Ativa' em vez de dois textos soltos. Âncora em DssContextHeader.test.js: \"cada grupo vira um <dl> e cada informação um par dt/dd\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "cada grupo vira um <dl> e cada informação um par dt/dd"
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Os tons de status usam canais remapeados por tema — --dss-positive-deep / --dss-negative-hover / --dss-info-deep no claro (6,94:1 · 8,01:1 · 5,35:1 medidos sobre --dss-surface-default) e os níveis -light no escuro (11,75:1 · 7,83:1 · 11,80:1 sobre #262626). Os tokens de feedback puros reprovariam: --dss-positive dá 1,9:1 sobre branco. 2-composition/_base.scss e 4-output/_states.scss.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.4.1",
         "level": "A",
         "implementation": "O tom nunca é o único canal: --dss-font-weight-semibold acompanha a cor, então 'Ativa' e 'Inativa' continuam distinguíveis em escala de cinza. 2-composition/_base.scss, seletores .dss-context-header__value[data-tone].",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "2.5.5",
         "level": "AAA",
         "implementation": "O botão de registros e os ladrilhos do trilho declaram inline-size/block-size de var(--dss-touch-target-md) — 44px nos dois eixos, porque não estendem área por pseudo-elemento. A ação de linha tem 20px visuais e o alvo de 44px no ::before. 2-composition/_base.scss.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Todo controle tem anel em :focus-visible. O anel do trilho NÃO usa --dss-focus-primary: esse token é remapeado por marca com a premissa 'anel sobre fundo branco', e o ladrilho é pintado com a cor da marca — anel e fundo ficariam a 1,00:1, o mesmo defeito já medido no DssToolbar. Lá o anel é --dss-action-primary-text com deslocamento negativo. 4-output/_states.scss.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "1.4.13",
         "level": "AA",
         "implementation": "As dicas abrem por mouseenter E focusin, e fecham por mouseleave/focusout — quem navega por teclado vê a mesma dica. O DssTooltip não governa a própria visibilidade: quem liga o gatilho é o host. Âncora em DssContextHeader.test.js: \"a dica também abre por foco — WCAG 1.4.13 vale para teclado\".",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "a dica também abre por foco"
       },
       {
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Todos os controles são <button type=\"button\"> nativos: Enter e Espaço acionam sem código próprio, e não há handler de teclado customizado que pudesse engolir a tecla.",
-        "verifiedBy": "aria"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "todo controle é <button type=\"button\"> nativo"
       },
       {
         "criterion": "2.3.3",
         "level": "AAA",
         "implementation": "A animação de retração é desligada por `prefers-reduced-motion: reduce` em três frentes: o `useCollapseHeight` consulta a preferência e não trava altura nenhuma; `4-output/_states.scss` zera o esmaecimento do conteúdo e o giro do chevron. Nenhuma informação depende da animação — o estado também é anunciado por `aria-expanded`.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {

@@ -17,6 +17,7 @@
 import fs   from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
@@ -183,6 +184,7 @@ function main() {
   console.log(`Lendo ${metaFiles.length} arquivo(s) dss.meta.json…`)
 
   const metas = []
+  const ilegiveis = []
   for (const filePath of metaFiles) {
     try {
       const raw  = fs.readFileSync(filePath, 'utf-8')
@@ -190,8 +192,16 @@ function main() {
       metas.push(data)
     } catch (err) {
       console.warn(`  WARN: ${path.relative(ROOT, filePath)}: ${err.message}`)
+      ilegiveis.push(path.relative(ROOT, filePath))
     }
   }
+  // SENTINELA antes da escrita (out/2026). Meta ilegível era só WARN: o
+  // componente SUMIA da tabela do documento normativo, que o hook põe no commit.
+  // E varredura cega regravaria a tabela vazia.
+  createRequire(import.meta.url)('./lib/sentinela.cjs').sentinela('sync-visual-contract', [
+    [metas.some((m) => m.component === 'DssButton'), 'meta do DssButton lido'],
+    [!ilegiveis.length, `todo dss.meta.json legível (ilegíveis: ${ilegiveis.join(', ') || '—'})`],
+  ])
 
   // 2. Ler o documento existente
   if (!fs.existsSync(VISUAL_DOC)) {

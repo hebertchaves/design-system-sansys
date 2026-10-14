@@ -37,6 +37,7 @@ const SANDBOX_DIR = path.join(ROOT, 'apps/sandbox/src');
 
 const argv = process.argv.slice(2);
 const GATE = argv.includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 const FIX = argv.includes('--fix');
 const JSON_OUT = argv.includes('--json');
 const ONLY = (argv.find(a => a.startsWith('--only=')) || '').split('=')[1] || null;
@@ -327,6 +328,10 @@ function fixApiMd(result) {
 
 // ── execução ──────────────────────────────────────────────────────────────────
 const results = collect();
+// Sem escopo, o DssButton TEM de ter sido analisado, com props lidas dos types.
+if (!SCOPE.length) sentinela('validate-api-docs', [
+  [results.some(r => r.component === 'DssButton' && r.axes.length > 0), 'DssButton analisado, com eixos de API lidos'],
+]);
 const diverging = results.filter(r => r.axes.some(a => a.divergences.length));
 
 if (FIX) {

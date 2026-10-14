@@ -2,10 +2,27 @@ import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 import { COMPONENT_GROUPS } from "../lib/componentGroups.js";
 
+interface A11yClaim {
+  criterion: string;
+  level?: string;
+  implementation?: string;
+  verifiedBy?: string;
+  verified?: boolean;
+  test?: string | string[];
+  ariaAttrs?: string[];
+}
+
 interface ComponentQueryResult {
   component: string;
   found: boolean;
   meta: Record<string, unknown> | null;
+  /**
+   * Afirmações WCAG como o CONTRATO as publica — com `verified`, que só existe
+   * lá. O `meta.a11y` acima traz as mesmas afirmações cruas: lido sozinho, uma
+   * afirmação pendente parece tão válida quanto uma verificada. `null` quando o
+   * componente não tem dss.contract.json (nada foi verificado).
+   */
+  a11y: A11yClaim[] | null;
   prePrompt: string | null;
   documentation: string | null;
   summary: string;
@@ -55,6 +72,7 @@ export async function queryComponent(
       component: normalized,
       found: false,
       meta: null,
+      a11y: null,
       prePrompt: null,
       documentation: null,
       summary: `Component "${normalized}" not found in DSS components directory (${componentDir}). Verify the component name or check DSS_FASEAMENTO_COMPONENTES.md for the full list.`,
@@ -71,6 +89,19 @@ export async function queryComponent(
     }
   }
 
+  // Afirmações a11y do CONTRATO (derivado e verificado pelo emit-contract). É o
+  // único lugar onde existe `verified`; o meta é a fonte autorada, sem conferência.
+  let a11y: A11yClaim[] | null = null;
+  const contractPath = resolve(componentDir, "dss.contract.json");
+  if (existsSync(contractPath)) {
+    try {
+      const contract = JSON.parse(readFileSync(contractPath, "utf-8"));
+      a11y = Array.isArray(contract?.a11y?.wcag) ? contract.a11y.wcag : null;
+    } catch {
+      a11y = null;
+    }
+  }
+
   // Read pre-prompt (optional)
   let prePrompt: string | null = null;
   if (existsSync(prePromptPath)) {
@@ -84,12 +115,13 @@ export async function queryComponent(
   }
 
   // Build summary
-  const summary = buildSummary(normalized, meta, prePrompt !== null, documentation !== null);
+  const summary = buildSummary(normalized, meta, prePrompt !== null, documentation !== null, a11y);
 
   return {
     component: normalized,
     found: true,
     meta,
+    a11y,
     prePrompt,
     documentation,
     summary,
@@ -132,7 +164,8 @@ function buildSummary(
   component: string,
   meta: Record<string, unknown> | null,
   hasPrePrompt: boolean,
-  hasDoc: boolean
+  hasDoc: boolean,
+  a11y: A11yClaim[] | null = null
 ): string {
   if (!meta) {
     return `${component}: component directory found but dss.meta.json is missing or invalid.`;
@@ -163,6 +196,21 @@ function buildSummary(
     };
     const z = String(meta.brandZone);
     lines.push(`- **Brand Zone:** \`${z}\` — ${explica[z] ?? "zona desconhecida"}`);
+  }
+
+  // Acessibilidade: o que o CONTRATO conferiu, não o que o meta afirma. Sem esta
+  // linha, o agente lia `meta.a11y` cru e tratava afirmação pendente (sem teste,
+  // ou com defeito conhecido) como conformidade. A âncora e o débito:
+  // scripts/emit-contract.mjs e scripts/a11y-anchor-baseline.json.
+  if (a11y === null) {
+    lines.push(`- **A11y:** sem dss.contract.json — nenhuma afirmação de meta.a11y foi verificada`);
+  } else {
+    const pendentes = a11y.filter((c) => c.verified !== true);
+    lines.push(`- **A11y (contrato):** ${a11y.length - pendentes.length} verificada(s) · ${pendentes.length} pendente(s)`);
+    for (const c of pendentes) {
+      const txt = String(c.implementation ?? "").replace(/\s+/g, " ");
+      lines.push(`  - ⚠️ ${c.criterion} (${c.verifiedBy}) NÃO verificada — não trate como conformidade: ${txt.length > 160 ? txt.slice(0, 157) + "..." : txt}`);
+    }
   }
 
   if (meta.hasReservations) {

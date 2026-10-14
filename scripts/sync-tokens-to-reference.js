@@ -25,6 +25,7 @@
 import fs   from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
@@ -329,6 +330,8 @@ function main() {
   let docContent   = fs.readFileSync(TOKEN_REF, 'utf-8')
   let totalUpdated = 0
   let totalSkipped = 0
+  // O que o parser LEU dos SCSS — a sentinela confere isto antes de gravar.
+  const lidos = new Set()
 
   // Processa arquivos SCSS na raiz de semantic/
   const entries = fs.readdirSync(TOKENS_DIR, { withFileTypes: true })
@@ -344,6 +347,7 @@ function main() {
         const content  = fs.readFileSync(filePath, 'utf-8')
         const sections = parseSections(content, basename)
         for (const section of sections) {
+          for (const t of section.tokens) lidos.add(t.name)
           processSection(section, docContent, (updated) => { docContent = updated; totalUpdated++ }, () => totalSkipped++)
         }
       }
@@ -358,10 +362,20 @@ function main() {
     const sections = parseSections(content, basename)
 
     for (const section of sections) {
+      for (const t of section.tokens) lidos.add(t.name)
       processSection(section, docContent, (updated) => { docContent = updated; totalUpdated++ }, () => totalSkipped++)
     }
   }
 
+  // SENTINELA antes da escrita (out/2026). Este script GRAVA e o hook dá `git add`:
+  // parser cego não aprova o nada, ele COMMITA o nada — tabela regenerada com
+  // menos tokens, ou documento que para de acompanhar o SCSS imprimindo
+  // "Documento atualizado". Tokens que sempre existem e ao menos uma tabela.
+  createRequire(import.meta.url)('./lib/sentinela.cjs').sentinela('sync-tokens-to-reference', [
+    [lidos.has('--dss-action-primary'), '--dss-action-primary lido dos SCSS de tokens'],
+    [lidos.has('--dss-spacing-4'), '--dss-spacing-4 lido dos SCSS de tokens'],
+    [totalUpdated > 0, 'ao menos uma tabela TOKEN-TABLE regenerada'],
+  ])
   fs.writeFileSync(TOKEN_REF, docContent, 'utf-8')
   console.log(`Documento atualizado: docs/reference/DSS_TOKEN_REFERENCE.md`)
   if (totalUpdated > 0) {

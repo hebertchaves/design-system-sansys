@@ -39,6 +39,7 @@ const ROOT = path.resolve(__dirname, '..');
 const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 const QUASAR_API = path.join(ROOT, 'node_modules', 'quasar', 'dist', 'api');
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // Componente DSS → componente Quasar que é a referência da variante outline(d).
 // A GRAFIA esperada NÃO está aqui — é derivada da api.json do Quasar (abaixo).
@@ -111,6 +112,10 @@ function scssSpelling(text) {
 // do contrato). Se colidir, um campo NAQUELE estado herda o visual daquela
 // variante (bug DssFile: `--filled` era estado hasValue E variante filled).
 // Retorna a lista de classes em colisão (vazia = ok).
+// Regex do detector de colisão em constante de módulo: o autoteste da sentinela
+// usa ESTA, não uma cópia (cópia verde não prova nada sobre o detector).
+const RE_INTERP = /`(dss-[a-z0-9-]+)--\$\{\s*props\.(\w+)(?:\s*\?\?\s*'([a-z0-9-]+)')?/;
+
 function detectCollision(dir) {
   const compos = readDir(path.join(dir, 'composables'), (n) => n.endsWith('.ts'));
   if (!compos) return [];
@@ -118,7 +123,7 @@ function detectCollision(dir) {
   // Interpolações de valor: `dss-<prefix>--${props.<enum>}` (com/sem `?? 'default'`).
   // Só bare (sem segmento namespaced tipo `--brand-${}`/`--align-${}`, que não colidem).
   const interp = [];
-  const reInterp = /`(dss-[a-z0-9-]+)--\$\{\s*props\.(\w+)(?:\s*\?\?\s*'([a-z0-9-]+)')?/g;
+  const reInterp = new RegExp(RE_INTERP.source, 'g');
   while ((m = reInterp.exec(compos))) interp.push({ prefix: m[1], prop: m[2], def: m[3] });
   // Classes de estado: chaves-objeto literais entre aspas com `:` (não as `[`...`]`).
   const stateClasses = new Set();
@@ -195,6 +200,15 @@ for (const layer of ['base', 'composed']) {
 collisions.sort((a, b) => a.name.localeCompare(b.name));
 
 // ── Relatório ────────────────────────────────────────────────────────────────
+// Invariante do próprio gate: DssButton é `outline` (QBtn) e DssInput é
+// `outlined` (QInput). Se a leitura dos types deixar de achar a grafia (aspas
+// duplas, tipo movido de arquivo), os dois somem da lista e "0 com violação"
+// passa sobre ninguém. O autoteste da colisão roda o mesmo regex do detector.
+sentinela('validate-variant-naming', [
+  [results.some((r) => r.name === 'DssButton' && r.tSpell === 'outline'), "DssButton lido com variante 'outline'"],
+  [results.some((r) => r.name === 'DssInput' && r.tSpell === 'outlined'), "DssInput lido com variante 'outlined'"],
+  [RE_INTERP.test('`dss-chip--${props.variant}`'), 'autoteste: classe interpolada por prop reconhecida'],
+]);
 console.log('🔎 A. Grafia de variante outline(d) — espelho do Quasar (fonte: api.json)\n');
 for (const r of results) {
   const mark = r.errors.length ? '❌' : '✅';

@@ -172,7 +172,8 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Ajuste da nota operável por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "test": "seta + Enter no radio da estrela alteram o valor"
       },
       {
         "criterion": "2.4.7",

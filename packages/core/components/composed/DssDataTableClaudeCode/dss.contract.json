@@ -1,0 +1,764 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssDataTableClaudeCode",
+  "version": "2.4",
+  "identity": {
+    "displayName": "DssDataTable - Claude Code",
+    "tagline": "Bloco operacional de dados com cabeçalho, contagem viva, situação em chip e ações por quantidade selecionada.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssTable",
+    "goldenContext": "DssDataTable"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "rows",
+        "type": "DssDataTableCcRow[]",
+        "controlHint": "text",
+        "required": true,
+        "description": "As linhas a exibir — JÁ FILTRADAS pela página.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "columns",
+        "type": "DssTableColumn[]",
+        "controlHint": "text",
+        "required": true,
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "rowKey",
+        "type": "string",
+        "controlHint": "text",
+        "default": "id",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Título da seção, exibido no cabeçalho do bloco.",
+        "category": "Conteúdo",
+        "categorySource": "override"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
+      },
+      {
+        "name": "total",
+        "type": "number | null",
+        "controlHint": "text",
+        "description": "Denominador da contagem viva (\"N de M registros\"). Omitido, o bloco informa",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "countNoun",
+        "type": "string",
+        "controlHint": "text",
+        "default": "registros",
+        "description": "Substantivo contado no cabeçalho. @default 'registros'",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "mode",
+        "type": "DssDataTableCcMode",
+        "controlHint": "segmented",
+        "default": "local",
+        "validValues": [
+          "local",
+          "remote"
+        ],
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "selection",
+        "type": "DssTableSelection",
+        "controlHint": "text",
+        "default": "none",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "modelValue",
+        "type": "DssDataTableCcRow[]",
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "vmodel"
+      },
+      {
+        "name": "filterLabel",
+        "type": "string | null",
+        "controlHint": "text",
+        "description": "Rótulo do filtro aplicado. Presente, vira chip removível no cabeçalho.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "pagination",
+        "type": "DssTablePagination",
+        "controlHint": "text",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "rowsPerPageOptions",
+        "type": "number[]",
+        "controlHint": "text",
+        "default": "[10, 25, 50]",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "override"
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "controlHint": "text",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "density",
+        "type": "DssTableDensity",
+        "controlHint": "text",
+        "default": "compact",
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "actions",
+        "type": "DssDataTableCcAction[]",
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "rowActions",
+        "type": "DssDataTableCcAction[]",
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "expandable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "expandedKeys",
+        "type": "Array<string | number>",
+        "controlHint": "text",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "statusColumn",
+        "type": "string | null",
+        "controlHint": "text",
+        "description": "Coluna cujo valor é uma situação e deve ser pintada como chip.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "statusMap",
+        "type": "Record<string, DssDataTableCcStatus>",
+        "controlHint": "text",
+        "description": "Mapa valor-da-célula → tom/ícone do chip.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "css-states"
+      },
+      {
+        "name": "brand",
+        "type": "DssDataTableCcBrand | null",
+        "controlHint": "picker-brand",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "emptyTitle",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Nenhum registro para este filtro",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "emptyDescription",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Revise os critérios ou limpe os filtros aplicados.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "DssDataTableCcRow[]"
+      },
+      {
+        "name": "update:pagination",
+        "payload": "DssTablePagination"
+      },
+      {
+        "name": "update:expandedKeys",
+        "payload": "Array<string | number>"
+      },
+      {
+        "name": "request",
+        "payload": "DssDataTableCcRequest"
+      },
+      {
+        "name": "action",
+        "payload": "DssDataTableCcActionPayload"
+      },
+      {
+        "name": "expand-request",
+        "payload": "{ row: DssDataTableCcRow; key: string | number; expanded: boolean }"
+      },
+      {
+        "name": "row-click",
+        "payload": "Event"
+      },
+      {
+        "name": "clear-filter"
+      },
+      {
+        "name": "retry"
+      }
+    ],
+    "slots": [
+      {
+        "name": "head-start",
+        "scope": "selected",
+        "description": "Entre o título e a contagem — filtros, legenda, o que a tela precisar."
+      },
+      {
+        "name": "head-actions",
+        "scope": "selected, disabled",
+        "description": "Substitui a barra de ações derivada de `actions`."
+      },
+      {
+        "name": "row-actions",
+        "scope": "row, disabled"
+      },
+      {
+        "name": "expanded-row",
+        "scope": "row, key"
+      },
+      {
+        "name": "empty",
+        "scope": "filtered",
+        "description": "Substitui o estado vazio padrão."
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "rows": [
+          {
+            "id": 1,
+            "protocolo": "65665262",
+            "servico": "Religação de água",
+            "situacao": "Atrasada"
+          },
+          {
+            "id": 2,
+            "protocolo": "65665263",
+            "servico": "Aferição de hidrômetro",
+            "situacao": "No prazo"
+          }
+        ],
+        "columns": [
+          {
+            "name": "protocolo",
+            "label": "Protocolo",
+            "field": "protocolo",
+            "align": "left",
+            "sortable": true
+          },
+          {
+            "name": "servico",
+            "label": "Serviço",
+            "field": "servico",
+            "align": "left"
+          },
+          {
+            "name": "situacao",
+            "label": "Situação",
+            "field": "situacao",
+            "align": "left"
+          }
+        ],
+        "rowKey": "id",
+        "title": "Solicitações",
+        "total": 12,
+        "statusColumn": "situacao",
+        "statusMap": {
+          "Atrasada": {
+            "tone": "error",
+            "icon": "notification_important"
+          },
+          "No prazo": {
+            "tone": "success",
+            "icon": "schedule"
+          }
+        },
+        "density": "compact"
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "box-sizing",
+          "token": null,
+          "value": "border-box",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "space-between",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "wrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-variant-numeric",
+          "token": null,
+          "value": "tabular-nums",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-block-end",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "right",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "left",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-block-end",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-style",
+          "token": null,
+          "value": "italic",
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-selected",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-block-end",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-inline-start",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "color",
+          "token": "--dss-text-disabled",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-selected",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Compõe a semântica tabular do DssTable e preserva cabeçalhos e células.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "compõe DssTable dentro de um DssCard",
+          "renderiza cabeçalho e células"
+        ]
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "A situação é chip com rótulo e ícone — cor nunca é o único veículo; valor não declarado cai em neutro sem ícone.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "pinta a situação como chip com rótulo e ícone",
+          "cai em neutro e sem ícone para situação não declarada"
+        ]
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "A raiz comunica busy e disabled, e os controles recebem nome contextual com o identificador da linha.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "comunica loading e disabled na raiz",
+          "nomeia os controles pelo contexto"
+        ]
+      },
+      {
+        "criterion": "4.1.3",
+        "level": "AA",
+        "implementation": "A contagem de registros é região viva aria-live=polite, porque filtrar não move o foco.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "anuncia a contagem de registros em região viva"
+      }
+    ],
+    "aria": {
+      "role": "region"
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Percorrer ações do cabeçalho, seleção, expansão e ações de linha."
+      },
+      {
+        "key": "Espaço",
+        "action": "Alternar seleção ou acionar o controle focado."
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssDataTableClaudeCode.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/data-table-claude-code.types.ts",
+    "docs": {
+      "normative": "DssDataTableClaudeCode.md",
+      "api": "DSSDATATABLECLAUDECODE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssDataTableClaudeCode.example.vue",
+    "tests": "DssDataTableClaudeCode.test.js"
+  }
+}

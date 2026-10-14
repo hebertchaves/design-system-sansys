@@ -43,6 +43,7 @@ const CAMADAS = ['1-structure', '2-composition', '3-variants', '4-output'];
 
 const args = process.argv.slice(2);
 const GATE = args.includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 const ALVO = args.find((a) => !a.startsWith('--'));
 
 function componentes() {
@@ -110,6 +111,11 @@ function checarOrquestrador(dir, nome) {
 }
 
 const lista = componentes();
+// Sem ALVO, a varredura TEM de achar o DssButton. Antes, lista vazia saía com
+// exit 0 e "⚠️ Nenhum componente encontrado" — aprovação sem medir nada.
+if (!ALVO) sentinela('validate-structure', [
+  [lista.some((c) => c.nome === 'DssButton'), 'DssButton entre os componentes varridos'],
+]);
 if (!lista.length) {
   console.log(ALVO ? `⚠️  Componente "${ALVO}" não encontrado.` : '⚠️  Nenhum componente encontrado.');
   process.exit(ALVO ? 2 : 0);

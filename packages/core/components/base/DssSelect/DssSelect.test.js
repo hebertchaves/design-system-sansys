@@ -209,3 +209,25 @@ describe('DssSelect — Teclado (WCAG 2.1.1)', () => {
     wrapper.unmount()
   })
 })
+
+// ===========================================================================
+// ÂNCORA a11y — WCAG 4.1.2 (dss.meta.json → a11y.wcag[].ariaAttrs)
+// O atributo é escrito pelo QSelect, não pelo DSS: só o teste prova que ele
+// chega ao DOM. Verifica a TRANSIÇÃO (false → true), não a presença — um
+// atributo constante ou ausente reprova.
+// ===========================================================================
+describe('Âncora a11y 4.1.2 — aria-expanded', () => {
+  it('combobox expõe aria-expanded e ele vira true ao abrir o menu', async () => {
+    const wrapper = mount(DssSelect, {
+      props: { modelValue: null, options: ['Hub', 'Water'] },
+      attachTo: document.body,
+    })
+    const combo = wrapper.find('[role="combobox"]')
+    expect(combo.exists()).toBe(true)
+    expect(combo.attributes('aria-expanded')).toBe('false')
+    await wrapper.find('[tabindex="0"]').trigger('keydown', { keyCode: 40 })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('[role="combobox"]').attributes('aria-expanded')).toBe('true')
+    wrapper.unmount()
+  })
+})

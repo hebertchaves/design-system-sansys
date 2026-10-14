@@ -59,6 +59,7 @@ const BASELINE = path.join(__dirname, 'dss-props-baseline.json');
 const argv = process.argv.slice(2);
 const GATE = argv.includes('--gate');
 const UPDATE = argv.includes('--update-baseline');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // ---------------------------------------------------------------------------
 // Vocabulário sempre aceito
@@ -243,6 +244,15 @@ for (const f of arquivos) {
   }
 }
 
+// Contrato ilegível é pulado; tag sem contrato é pulada. Se a leitura de
+// contratos ou o regex de tag quebrar, `achados` esvazia e o gate aprova. O
+// DssButton tem contrato, a prop `label` e é usado em dezenas de templates.
+sentinela('validate-dss-props', [
+  [api.get('DssButton')?.props.has('label'), 'contrato do DssButton lido, com a prop label'],
+  [tagsLidas > 0 && arquivos.some((f) => f.endsWith('TestButton.vue')), 'tags <Dss*> lidas, TestButton.vue na varredura'],
+  [classificar('naoExisteNoDss', api.get('DssButton') || { props: new Set(), emits: new Set(), slots: new Set() }) != null, 'autoteste: atributo inexistente é classificado como problema'],
+]);
+
 const chave = a => `${a.file}|${a.comp}|${a.tipo}|${a.nome}`;
 const atuais = achados.map(chave);
 
@@ -261,6 +271,19 @@ if (UPDATE) {
   }, null, 2) + '\n');
   console.log(`✅ Baseline atualizado: ${new Set(atuais).size} ocorrência(s) conhecida(s).`);
   process.exit(0);
+}
+
+// CATRACA (scripts/lib/catraca.cjs): o baseline do disco é comparado com o do
+// HEAD. Cresceu → reprova (débito novo só com commit dedicado + --aceitar-debito);
+// entrada já resolvida sobrando → reprova ("remova a linha"). Antes só se avisava
+// ao encolher, e um --update-baseline absorvia o caso novo em silêncio.
+{
+  const r = require('./lib/catraca.cjs').catraca({
+    gate: 'validate-dss-props', baselineRel: 'scripts/dss-props-baseline.json',
+    noDisco: baseline, chavesDe: (j) => j.conhecidos || [], aindaPendentes: atuais,
+    permitirCrescer: argv.includes('--aceitar-debito'),
+  });
+  if (r.falhou && GATE) process.exit(1);
 }
 
 console.log('🔎 Atributos em componentes DSS — precisam existir na API declarada');

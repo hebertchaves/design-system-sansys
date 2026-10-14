@@ -446,7 +446,12 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Conteúdo da dica exposto via role=tooltip e aria-label.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label",
+          "role=tooltip"
+        ]
       }
     ],
     "aria": {

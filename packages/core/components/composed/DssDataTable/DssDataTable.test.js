@@ -18,6 +18,15 @@ describe('DssDataTable', () => {
     expect(wrapper.findComponent({ name: 'DssTable' }).exists()).toBe(true)
   })
 
+  it('renderiza cabeçalho e células a partir de columns e rows', () => {
+    const wrapper = factory()
+    const cabecalhos = wrapper.findAll('th').map(th => th.text())
+    expect(cabecalhos.some(texto => texto.includes('Nome'))).toBe(true)
+    const celulas = wrapper.findAll('tbody td').map(td => td.text())
+    expect(celulas).toContain('Ana')
+    expect(celulas).toContain('Bruno')
+  })
+
   it.each(['hub', 'water', 'waste'])('propaga brand %s no nó raiz', (brand) => {
     expect(factory({ brand }).attributes('data-brand')).toBe(brand)
   })
@@ -27,6 +36,23 @@ describe('DssDataTable', () => {
     expect(wrapper.attributes('aria-busy')).toBe('true')
     expect(wrapper.attributes('aria-disabled')).toBe('true')
     expect(wrapper.findComponent({ name: 'DssTable' }).props('loading')).toBe(true)
+  })
+
+  it('nomeia os controles pelo contexto da linha e do bloco', () => {
+    const wrapper = factory({
+      selection: 'multiple',
+      expandable: true,
+      rowActions: [{ name: 'edit', label: 'Editar', icon: 'edit' }],
+      actions: [{ name: 'export', label: 'Exportar' }],
+    })
+    const checkbox = wrapper.findComponent({ name: 'DssCheckbox' })
+    expect(checkbox.props('ariaLabel')).toBe('Selecionar linha 1')
+    const expandir = wrapper.findAllComponents({ name: 'DssButton' })
+      .map(button => button.props('ariaLabel'))
+      .filter(Boolean)
+    expect(expandir).toContain('Expandir linha 1')
+    expect(wrapper.find('[role="toolbar"]').attributes('aria-label')).toBe('Ações da tabela')
+    expect(wrapper.find('[role="group"]').attributes('aria-label')).toBe('Ações da linha 1')
   })
 
   it('seleciona uma linha e propaga update:modelValue', async () => {

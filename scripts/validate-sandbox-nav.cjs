@@ -41,6 +41,7 @@ const COMPONENTS = path.join(ROOT, 'packages', 'core', 'components');
 const GRUPOS = ['base', 'composed', 'stress-test'];
 
 const GATE = process.argv.slice(2).includes('--gate');
+const { sentinela } = require('./lib/sentinela.cjs');
 
 // ---------------------------------------------------------------------------
 // 1. Catálogo real — do disco, nunca de lista
@@ -102,6 +103,13 @@ function lerMenu() {
 const catalogo = lerCatalogo();
 const { itens, views } = lerMenu();
 
+// O menu é lido por regex sobre a marcação. Se a marcação mudar, `itens`
+// esvazia e "todo item tem view" passa sobre nenhum item.
+sentinela('validate-sandbox-nav', [
+  [itens.some((i) => i.rotulo === 'DssButton'), 'item de menu "DssButton" reconhecido'],
+  [views.has('button'), "bloco de view activeComponent === 'button' reconhecido"],
+  [catalogo.has('DssButton'), 'DssButton no catálogo de componentes'],
+]);
 const semView = [];
 const semComponente = [];
 

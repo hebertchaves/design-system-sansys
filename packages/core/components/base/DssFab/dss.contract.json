@@ -3976,19 +3976,26 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Acionamento e abertura de ações operáveis por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": false
       },
       {
         "criterion": "2.4.7",
         "level": "AA",
         "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Nome via aria-label; estado de abertura via aria-expanded.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label",
+          "aria-expanded"
+        ]
       }
     ],
     "aria": {

@@ -977,13 +977,19 @@
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Nome acessível via aria-label/alt.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.1.1",
         "level": "A",
         "implementation": "Imagem/inicial com alternativa textual via alt/aria-label.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": "sets aria-label attribute when ariaLabel is provided"
       }
     ],
     "aria": {

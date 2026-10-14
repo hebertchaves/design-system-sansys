@@ -926,19 +926,30 @@
         "criterion": "2.1.1",
         "level": "A",
         "implementation": "Ajuste do valor operável por teclado.",
-        "verifiedBy": "test"
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "ArrowRight incrementa o valor",
+          "ArrowLeft decrementa o valor"
+        ]
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Valor exposto via aria-valuenow/min/max; nome via aria-label.",
-        "verifiedBy": "aria"
+        "verifiedBy": "aria",
+        "verified": true,
+        "ariaAttrs": [
+          "aria-valuenow",
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
-        "verifiedBy": "css"
+        "verifiedBy": "css",
+        "verified": true
       }
     ],
     "aria": {
