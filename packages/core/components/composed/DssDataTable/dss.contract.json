@@ -395,6 +395,24 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "text-align",
+          "token": null,
+          "value": "left",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "right",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "padding",
           "token": "--dss-spacing-6",
           "value": null,
