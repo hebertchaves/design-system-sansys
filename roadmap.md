@@ -3,7 +3,7 @@
 - [x] Map the legacy jtech-data-table API and agree on a clean DSS API with an operational core scope.
 - [x] Create the governed DssDataTable composition, four layers, tests, documentation and migration map.
 - [x] Add the real sandbox demonstration with local/remote, loading, empty, error, selection, actions and expansion scenarios.
-- [ ] Run component, contract, sandbox and browser gates; fix all applicable findings.
+- [x] Run component, contract, sandbox and browser gates; fix all applicable findings.
 
 ## Previous delivery — NFAg parallel Check-in
 
