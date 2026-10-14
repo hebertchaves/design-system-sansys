@@ -1,0 +1,12 @@
+.dss-data-table {
+  &:focus-within {
+    --dss-data-table-focus-active: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    * {
+      transition: none;
+    }
+  }
+}
