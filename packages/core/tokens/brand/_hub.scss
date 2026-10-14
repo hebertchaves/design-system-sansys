@@ -3,12 +3,22 @@
    Sobrescritas para contexto Sansys Hub (Laranja/Marrom)
    ========================================================================== */
 
-[data-brand="hub"] {
+/* O segundo seletor é a REENTRADA DA CASCA. Uma casca aninhada dentro de uma
+   zona de conteúdo precisa recuperar a marca que a barreira resetou — e aqui
+   ela recupera EXATA, porque é o próprio bloco da marca que resolve de novo.
+   Antes isso vivia em `_brand-barrier.scss`, mapeando cada token de ação para
+   um token de identidade "equivalente". Era adivinhação: quando o hub mudou de
+   600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
+   pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
+   outro é um defeito esperando acontecer. */
+[data-brand="hub"],
+[data-brand="hub"] [data-brand-zone="shell"] {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Hub
      =========================================== */
-  --dss-action-primary: var(--dss-hub-600);           /* #ef7a11 */
+  /* out/2026 — requalificado 600→700: mesmo motivo: o botão primário preenchido usa texto branco. A rampa fica 700/800/900 — monotônica, 4,52 / 6,52 / 8,88. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.2 */
+  --dss-action-primary: var(--dss-hub-700);
   --dss-action-primary-light: var(--dss-hub-300);     /* #fbcb76 */
   --dss-action-primary-disable: var(--dss-hub-200);   /* #fde2ab */
   --dss-action-primary-hover: var(--dss-hub-800);     /* #984614 */
@@ -34,7 +44,8 @@
      as três marcas usam 600, e era isso que estava escrito à mão em cada uma.
      O eixo já tinha uniforme em 50/100/200/300/400/800; 600 era a lacuna mais
      usada. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.1 (decisão A2). */
-  --dss-brand-solid: var(--dss-hub-600);
+  /* out/2026 — requalificado 600→700: superfície sólida carrega texto BRANCO; hub-600 dava 2,81:1 e reprovava a 1.4.3 (e até o 3:1 de não-texto). 700 = 4,52:1. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.2 */
+  --dss-brand-solid: var(--dss-hub-700);
   --dss-brand-secondary: var(--dss-hub-300);
   --dss-brand-tertiary: var(--dss-hub-800);
   --dss-brand-accent: var(--dss-hub-400);
@@ -44,7 +55,7 @@
   --dss-brand-dark: var(--dss-hub-900);
   --dss-brand-darker: var(--dss-hub-950);
   
-  --dss-brand-hover: var(--dss-hub-700);       /* Estado hover sobre primary — #bf590f */
+  --dss-brand-hover: var(--dss-hub-700);
   --dss-brand-disable: var(--dss-hub-200);     /* Estado desabilitado — #fde2ab */
   --dss-brand-deep: var(--dss-hub-800);        /* Estado active/pressionado — #984614 */
 

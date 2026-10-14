@@ -86,7 +86,22 @@
           Cobre o palco até o sujeito avisar que montou (`__frameMounted`).
         -->
         <div v-if="!sujeitoMontado" class="pv__loading" aria-hidden="true">
-          <div class="pv__loading-inner">
+          <!--
+            SILHUETA do próprio componente, medida do DOM real na última
+            montagem (ver silhouette.js). `contorno` é superfície com conteúdo
+            por dentro (cartão, campo, barra); `bloco` é o que se lê como peça
+            (texto, ícone, botão). O genérico abaixo só aparece na primeira
+            visita a um componente neste browser, quando ainda não há medida.
+          -->
+          <div v-if="silhueta" class="pv__sil" :style="silhuetaStyle">
+            <template v-for="(c, i) in silhueta.caixas" :key="i">
+              <div v-if="c.t === 'contorno'" class="pv__sil-contorno" :style="caixaStyle(c)" />
+              <div v-else class="pv__sil-bloco" :style="caixaStyle(c)">
+                <DssSkeleton type="rect" width="100%" :height="c.h + 'px'" />
+              </div>
+            </template>
+          </div>
+          <div v-else class="pv__loading-inner">
             <DssSkeleton type="heading" width="60%" />
             <DssSkeleton type="text" :lines="2" />
             <DssSkeleton type="rect" height="44px" />
@@ -219,6 +234,7 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 import DssSkeleton from '@components/base/DssSkeleton/DssSkeleton.vue'
+import { medirSilhueta, lerSilhueta, guardarSilhueta } from './silhouette.js'
 
 const props = defineProps({
   component: { type: String, default: 'DssInput' },
@@ -420,6 +436,30 @@ const frameSrc = computed(() => `${location.pathname}?frame=${props.component}`)
 // Volta a `false` quando o componente muda: o `src` muda e o realm sobe de novo.
 const sujeitoMontado = ref(false)
 
+// Silhueta guardada da última montagem deste componente (null = nunca medido).
+const silhueta = ref(lerSilhueta(props.component))
+const silhuetaStyle = computed(() => ({
+  width: silhueta.value.fluid ? '100%' : silhueta.value.w + 'px',
+  height: silhueta.value.h + 'px',
+}))
+const caixaStyle = (c) => ({
+  left: c.x + '%', width: c.w + '%', top: c.y + 'px', height: c.h + 'px', borderRadius: c.r + 'px',
+})
+
+// Mede DEPOIS de montar, com folga: semente de filhos e fonte de ícone chegam
+// um pouco depois do SFC, e medir antes guardaria a casca vazia. O iframe é
+// same-origin, então o parent lê o DOM dele direto — o sujeito não precisa
+// saber que está sendo medido.
+let medicao = null
+function agendarMedicao() {
+  clearTimeout(medicao)
+  const componente = props.component
+  medicao = setTimeout(() => {
+    if (componente !== props.component) return
+    guardarSilhueta(componente, medirSilhueta(frameEl.value?.contentDocument))
+  }, 600)
+}
+
 function load() {
   const key = Object.keys(contracts).find((k) => k.endsWith(`/${props.component}/dss.contract.json`))
   if (!key) { contract.value = null; knobs.value = []; return }
@@ -553,7 +593,7 @@ function onMsg(e) {
   const d = e.data
   if (!d) return
   if (d.__frameReady) { postState(); return }
-  if (d.__frameMounted) { sujeitoMontado.value = true; return }
+  if (d.__frameMounted) { sujeitoMontado.value = true; agendarMedicao(); return }
   if (d.__frameEvent) {
     eventLog.value.unshift({ t: new Date().toLocaleTimeString(), name: d.name, payload: d.payload })
     if (eventLog.value.length > 50) eventLog.value.pop()
@@ -604,9 +644,13 @@ const snippet = computed(() => {
 })
 
 watch(() => JSON.stringify({ s: state, t: temaEfetivo.value, b: brandEfetivo.value, ct: contextState, sl: activeSlots, si: slotIcons }), postState)
-watch(() => props.component, () => { sujeitoMontado.value = false; load() })
+watch(() => props.component, () => {
+  sujeitoMontado.value = false
+  silhueta.value = lerSilhueta(props.component)
+  load()
+})
 onMounted(() => { window.addEventListener('message', onMsg); load() })
-onUnmounted(() => window.removeEventListener('message', onMsg))
+onUnmounted(() => { clearTimeout(medicao); window.removeEventListener('message', onMsg) })
 </script>
 
 <style scoped>
@@ -696,6 +740,12 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
   padding: var(--dss-spacing-8);
   background: var(--dss-surface-default);
 }
+/* Silhueta medida: a raiz volta com o tamanho do sujeito e centraliza como ele
+   (`.pv-stage > * { margin: auto }`); as caixas são absolutas dentro dela. */
+.pv__sil { position: relative; flex: 0 0 auto; max-width: 100%; margin: auto; }
+.pv__sil-contorno, .pv__sil-bloco { position: absolute; }
+.pv__sil-contorno { border: var(--dss-border-width-thin) solid var(--dss-border-subtle); }
+.pv__sil-bloco { overflow: hidden; }
 .pv__loading-inner {
   display: flex; flex-direction: column; gap: var(--dss-spacing-3);
   width: 100%; max-width: 320px; margin: auto;

@@ -3,7 +3,16 @@
    Sobrescritas para contexto Sansys Waste (Verde)
    ========================================================================== */
 
-[data-brand="waste"] {
+/* O segundo seletor é a REENTRADA DA CASCA. Uma casca aninhada dentro de uma
+   zona de conteúdo precisa recuperar a marca que a barreira resetou — e aqui
+   ela recupera EXATA, porque é o próprio bloco da marca que resolve de novo.
+   Antes isso vivia em `_brand-barrier.scss`, mapeando cada token de ação para
+   um token de identidade "equivalente". Era adivinhação: quando o hub mudou de
+   600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
+   pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
+   outro é um defeito esperando acontecer. */
+[data-brand="waste"],
+[data-brand="waste"] [data-brand-zone="shell"] {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Waste

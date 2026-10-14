@@ -18,7 +18,49 @@
         </button>
       </div>
 
-      <nav class="sidebar-nav" @mouseover="onNavOver" @mouseout="onNavOut">
+      <!--
+        BUSCA do menu. Filtra pelo rótulo do item OU do grupo ("form" traz o
+        grupo Forms & Input inteiro). Enquanto há texto, os grupos recolhidos
+        abrem sozinhos — esconder um resultado dentro de um grupo fechado seria
+        dizer "não encontrado" sobre algo que existe.
+        Fica fora do <nav> de propósito: o cabeçalho e a busca não rolam.
+      -->
+      <div v-show="!sidebarCollapsed" class="sidebar-search">
+        <span class="material-icons sidebar-search__icon" aria-hidden="true">search</span>
+        <input
+          ref="navSearchEl"
+          v-model="navQuery"
+          type="search"
+          class="sidebar-search__input"
+          placeholder="Buscar componente…"
+          aria-label="Buscar no menu"
+          autocomplete="off"
+          spellcheck="false"
+          @keydown.enter.prevent="abrirPrimeiroResultado"
+          @keydown.esc.prevent="navQuery = ''"
+        />
+        <button
+          v-if="navQuery"
+          type="button"
+          class="sidebar-search__clear"
+          aria-label="Limpar busca"
+          @click="limparBusca"
+        >
+          <span class="material-icons">close</span>
+        </button>
+        <kbd v-else class="sidebar-search__kbd" aria-hidden="true">/</kbd>
+      </div>
+
+      <nav
+        ref="navEl"
+        class="sidebar-nav"
+        :data-searching="buscando ? '' : undefined"
+        @mouseover="onNavOver"
+        @mouseout="onNavOut"
+      >
+        <p v-if="buscando && navHits === 0" class="sidebar-search__empty">
+          Nada encontrado para “{{ navQuery.trim() }}”.
+        </p>
         <!-- Dashboard -->
         <div class="nav-section">
           <button
@@ -872,7 +914,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import TestIndex from './TestIndex.vue'
 // PREVIEW FRAME (durável) — playground contract-driven
 import PreviewFrame from './preview/PreviewFrame.vue'
@@ -951,6 +993,85 @@ const expandedCategories = ref({
   phase3: true,
   patterns: true
 })
+
+// ── Busca do menu ───────────────────────────────────────────────────────────
+// O menu é marcação escrita à mão (~55 itens em 600 linhas), não uma lista de
+// dados — então o filtro lê o DOM que já existe em vez de exigir reescrevê-lo
+// como array. Item novo no menu entra na busca sem registro em lugar nenhum.
+//
+// A marca é um ATRIBUTO (`data-miss`), não uma classe: os itens têm `:class`
+// reativo, e a cada troca de página o Vue reescreve o `className` inteiro —
+// uma classe posta por fora sumiria no primeiro clique.
+const navEl = ref(null)
+const navSearchEl = ref(null)
+const navQuery = ref('')
+const navHits = ref(0)
+// Com o menu retraído a busca não aparece; filtro invisível seria um menu que
+// perdeu itens sem explicação.
+const buscando = computed(() => !!navQuery.value.trim() && !sidebarCollapsed.value)
+
+// Sem acento e sem caixa: "botao" acha "Botão", "dsschip" acha "DssChip".
+const norm = (t) => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+
+function filtrarMenu() {
+  const nav = navEl.value
+  if (!nav) return
+  const marcar = (el, fora) => (fora ? el.setAttribute('data-miss', '') : el.removeAttribute('data-miss'))
+  const q = norm(navQuery.value.trim())
+  if (!buscando.value) {
+    nav.querySelectorAll('[data-miss]').forEach((el) => el.removeAttribute('data-miss'))
+    navHits.value = 0
+    return
+  }
+  const rotulo = (el) => norm(el?.querySelector('.nav-label')?.textContent)
+  let hits = 0
+  for (const item of nav.querySelectorAll('.nav-item')) {
+    // O grupo do item: o cabeçalho logo antes do bloco que o contém.
+    const sub = item.closest('.nav-subsubmenu')?.previousElementSibling
+    const cat = item.closest('.nav-submenu')?.previousElementSibling
+    const bate = rotulo(item).includes(q) || rotulo(sub).includes(q) || rotulo(cat).includes(q)
+    marcar(item, !bate)
+    if (bate) hits++
+  }
+  // Cabeçalho sem nenhum resultado embaixo some junto — senão a busca devolve
+  // uma coluna de títulos de grupo vazios.
+  const temResultado = (el) => !!el.querySelector('.nav-item:not([data-miss])')
+  for (const bloco of nav.querySelectorAll('.nav-subsubmenu')) {
+    const fora = !temResultado(bloco)
+    marcar(bloco, fora)
+    if (bloco.previousElementSibling?.classList.contains('nav-subcategory')) marcar(bloco.previousElementSibling, fora)
+  }
+  for (const secao of nav.querySelectorAll('.nav-section')) marcar(secao, !temResultado(secao))
+  navHits.value = hits
+}
+
+// `flush: 'post'` — o filtro lê o DOM, então roda depois de o Vue aplicá-lo.
+watch([navQuery, sidebarCollapsed], filtrarMenu, { flush: 'post' })
+
+function limparBusca() {
+  navQuery.value = ''
+  navSearchEl.value?.focus()
+}
+
+// Enter abre o primeiro resultado: digitar "chip" + Enter é o caminho inteiro.
+function abrirPrimeiroResultado() {
+  if (!buscando.value) return
+  navEl.value?.querySelector('.nav-item:not([data-miss])')?.click()
+}
+
+// "/" foca a busca de qualquer lugar da página — menos de dentro de um campo,
+// onde a barra é texto. O iframe do Preview Frame é outro documento e não
+// passa por aqui, o que é o comportamento certo: lá a tecla é do componente.
+function onAtalhoBusca(e) {
+  if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return
+  const alvo = e.target
+  if (alvo?.closest?.('input, textarea, select, [contenteditable]')) return
+  e.preventDefault()
+  if (sidebarCollapsed.value) sidebarCollapsed.value = false
+  nextTick(() => navSearchEl.value?.focus())
+}
+onMounted(() => window.addEventListener('keydown', onAtalhoBusca))
+onBeforeUnmount(() => window.removeEventListener('keydown', onAtalhoBusca))
 
 // Toggle category expansion
 const toggleCategory = (category) => {
@@ -1122,6 +1243,121 @@ function onNavOut(e) {
 /* ========================================
    NAVIGATION MENU
    ======================================== */
+/* ========================================
+   BUSCA DO MENU
+   Mesma paleta da sidebar (escura fixa, não segue o tema da página).
+   ======================================== */
+.sidebar-search {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0.5rem 0;
+}
+
+.sidebar-search__icon {
+  position: absolute;
+  left: 0.5rem;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.sidebar-search__input {
+  width: 100%;
+  height: 32px;
+  padding: 0 1.75rem 0 1.875rem;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  outline: none;
+}
+
+.sidebar-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.sidebar-search__input:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.sidebar-search__input:focus-visible {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(111, 168, 220, 0.95);
+}
+
+/* O "x" nativo do type=search varia por browser e não segue a paleta. */
+.sidebar-search__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.sidebar-search__clear,
+.sidebar-search__kbd {
+  position: absolute;
+  right: 0.375rem;
+}
+
+.sidebar-search__clear {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sidebar-search__clear:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-search__clear .material-icons {
+  font-size: 14px;
+}
+
+.sidebar-search__kbd {
+  padding: 0 0.3rem;
+  font: inherit;
+  font-size: 10px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.sidebar-search__input:focus ~ .sidebar-search__kbd {
+  display: none;
+}
+
+.sidebar-search__empty {
+  padding: 0.75rem 0.5rem;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.45);
+  overflow-wrap: anywhere;
+}
+
+/* Buscando: o que não bate some, e grupo recolhido abre — o `!important`
+   vence o `display: none` inline que o v-show põe no grupo fechado. */
+.sidebar-nav[data-searching] .nav-submenu,
+.sidebar-nav[data-searching] .nav-subsubmenu {
+  display: block !important;
+}
+
+/* DEPOIS da regra acima, e a ordem é a regra: as duas têm a mesma
+   especificidade, e um grupo sem resultado é ao mesmo tempo `.nav-subsubmenu`
+   e `[data-miss]` — precisa perder para esta. */
+.sidebar-nav[data-searching] [data-miss] {
+  display: none !important;
+}
+
 .sidebar-nav {
   flex: 1;
   min-height: 0;

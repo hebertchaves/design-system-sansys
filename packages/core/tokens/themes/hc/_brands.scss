@@ -43,7 +43,17 @@
   --dss-action-primary-light: var(--dss-hub-50);    /* 9.14:1 c/ texto escuro */
   --dss-action-primary:       var(--dss-hub-900);   /* 8.88:1 c/ branco */
   --dss-action-primary-hover: var(--dss-hc-hub-mid);/* 11.58:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-hc-hub-mid);
   --dss-action-primary-deep:  var(--dss-hub-950);   /* 14.88:1 */
+
+  /* Eixo de IDENTIDADE. Antes do out/2026 a barra de marca, a borda do avatar
+     e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
+     Agora consomem `--dss-brand-solid`, então o tema alcança: 8,88:1 com branco. */
+  --dss-brand-solid: var(--dss-hub-900);
 
   --dss-focus-primary: var(--dss-hub-900);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -58,7 +68,17 @@
   --dss-action-primary-light: var(--dss-water-50);   /* 8.88:1 c/ texto escuro */
   --dss-action-primary:       var(--dss-water-700);  /* 7.37:1 c/ branco */
   --dss-action-primary-hover: var(--dss-water-800);  /* 9.02:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-water-800);
   --dss-action-primary-deep:  var(--dss-water-900);  /* 10.88:1 */
+
+  /* Eixo de IDENTIDADE. Antes do out/2026 a barra de marca, a borda do avatar
+     e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
+     Agora consomem `--dss-brand-solid`, então o tema alcança: 7,37:1 com branco. */
+  --dss-brand-solid: var(--dss-water-700);
 
   --dss-focus-primary: var(--dss-water-700);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -73,7 +93,17 @@
   --dss-action-primary-light: var(--dss-waste-50);   /* 9.05:1 c/ texto escuro */
   --dss-action-primary:       var(--dss-waste-800);  /* 8.14:1 c/ branco */
   --dss-action-primary-hover: var(--dss-waste-900);  /* 10.28:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-waste-900);
   --dss-action-primary-deep:  var(--dss-waste-950);  /* 15.50:1 */
+
+  /* Eixo de IDENTIDADE. Antes do out/2026 a barra de marca, a borda do avatar
+     e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
+     Agora consomem `--dss-brand-solid`, então o tema alcança: 8,14:1 com branco. */
+  --dss-brand-solid: var(--dss-waste-800);
 
   --dss-focus-primary: var(--dss-waste-800);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);

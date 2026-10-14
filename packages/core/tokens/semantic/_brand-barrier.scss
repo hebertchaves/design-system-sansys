@@ -73,31 +73,22 @@
 }
 
 /* --------------------------------------------------------------------------
-   ZONA DE CASCA — reentra a marca pelo eixo de IDENTIDADE
+   ZONA DE CASCA — reentra a marca
    -------------------------------------------------------------------------- */
-/* No topo da árvore isto é no-op: sob `[data-brand]` a ação já está brandeada e
-   `--dss-brand-primary` vale o mesmo. Existe para o caso ANINHADO — uma
-   mini-toolbar dentro de um card — em que a casca precisa reentrar depois de a
-   barreira ter passado. Fora de marca, o eixo de identidade cai para o neutro
-   (`_brand-axis.scss`), então a casca também fica neutra. Correto.
+/* O BLOCO QUE EXISTIA AQUI FOI PARA `tokens/brand/_{hub,water,waste}.scss`.
 
-   O mapeamento foi conferido valor a valor nas três marcas: `brand-primary`,
-   `brand-secondary`, `brand-disable` e `brand-tertiary` batem EXATO com
-   `action-primary`, `-light`, `-disable` e `-hover`; e `brand-hover` bate exato
-   com o `--dss-focus-primary` de cada marca (hub-700 · water-600 · waste-700).
+   Ele mapeava cada token de ação para um token de identidade "equivalente"
+   (`--dss-action-primary: var(--dss-brand-primary)` e assim por diante). Dois
+   mapas que precisavam ficar em sincronia — e não ficaram: quando o hub foi
+   requalificado de 600 para 700 por contraste, o mapa passou a devolver a cor
+   ERRADA na casca aninhada, em silêncio. Quem pegou foi o e2e.
 
-   ⚠️ UMA APROXIMAÇÃO: `action-primary-deep` é hub-900/water-800/waste-900 e
-   `brand-deep` é 800 nas três — exato só no water. Usamos `brand-deep` porque a
-   correspondência é de PAPEL: o comentário dele em `tokens/brand/*` diz
-   literalmente "Estado active/pressionado", que é o papel de `-deep`. Falta um
-   degrau 900 no eixo de identidade; quando existir, trocar aqui. */
-[data-brand-zone="shell"] {
-  --dss-action-primary: var(--dss-brand-primary);
-  --dss-action-primary-light: var(--dss-brand-secondary);
-  --dss-action-primary-disable: var(--dss-brand-disable);
-  --dss-action-primary-hover: var(--dss-brand-tertiary);
-  --dss-action-primary-deep: var(--dss-brand-deep);
+   Agora cada arquivo de marca casa também `[data-brand="x"] [data-brand-zone="shell"]`
+   no seu próprio seletor. A reentrada resolve o bloco inteiro da marca de novo —
+   os 62 tokens, exatos por construção, sem mapa para manter.
 
-  --dss-focus-primary: var(--dss-brand-hover);
-  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
-}
+   É o mesmo mecanismo de `semantic/_scopes.scss`: não duplicar valores, re-resolver
+   a expressão no escopo certo.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §6
+   -------------------------------------------------------------------------- */

@@ -317,3 +317,76 @@ find packages/core/components -path '*4-output/_brands.scss' | wc -l
 grep -rhoE 'var\(--dss-(hub|water|waste)-[0-9]+' packages/core/components --include=*.scss | wc -l
 grep -rlE 'var\(--dss-brand-(primary|surface|text|border)\)' packages/core/components --include=*.scss | wc -l
 ```
+
+---
+
+## §9.2 Requalificação da escala de marca (out/2026)
+
+Com a liberdade de requalificar os degraus — mantida a régua de acessibilidade —
+a escala foi medida papel a papel, contra o fundo certo de cada um.
+
+### O que mudou
+
+| token | marca | de → para | motivo |
+|---|---|---|---|
+| `--dss-action-primary` | hub | 600 → **700** | superfície de ação carrega texto branco; 600 dava **2,81:1** e reprovava a 1.4.3 — e até o piso de 3:1 de não-texto |
+| `--dss-brand-solid` | hub | 600 → **700** | mesma superfície, mesmo motivo (AppBar, borda do avatar, aba ativa) |
+
+Nada mais mudou de valor. Water e waste já passavam.
+
+**Por que não bastava trocar a cor do texto.** Medido na rampa inteira do hub:
+
+| texto | base 600 | hover 800 | active 900 |
+|---|---|---|---|
+| branco | **2,81 ❌** | 6,52 ✅ | 8,88 ✅ |
+| escuro | 7,03 ✅ | **3,04 ❌** | **2,23 ❌** |
+
+Nenhuma cor de texto sobrevive aos três estados com a base em 600 — ela teria de
+trocar no hover, o que pisca. Com a base em 700 o branco passa em todos:
+**4,52 / 6,52 / 8,88**, crescendo monotonicamente.
+
+### O mapa completo, por papel
+
+Exigência conforme o papel: **4,5:1** quando carrega texto (1.4.3), **3:1** quando
+é elemento não-textual informativo (1.4.11), **nenhuma** quando é decoração.
+
+| papel | exigência | hub | water | waste |
+|---|---|---|---|---|
+| `solid` superfície c/ texto branco | 4,5 | 700 · 4,52 ✅ | 600 · 5,29 ✅ | 600 · 4,90 ✅ |
+| `hover` · `tertiary` · `deep` · `dark` | 4,5 | ✅ | ✅ | ✅ |
+| `text` texto de marca em fundo claro | 4,5 | 900 · 8,88 ✅ | 800 · 9,02 ✅ | 900 · 10,28 ✅ |
+| `accent` acento no dark | 3,0 | 400 · 7,79 ✅ | 400 · 5,75 ✅ | 400 · 7,29 ✅ |
+| `light` · `lighter` · `surface` · `background` | 4,5¹ | ✅ | ✅ | ✅ |
+| `border` · `secondary` | — | 1,26–1,88 | | |
+| `disable` | isento | — | — | — |
+
+¹ medido com texto escuro por cima, que é como se usa um tinte.
+
+> ⚠️ **`border` e `secondary` não são defeito.** São tintes sutis por desenho, com
+> **zero consumidores**. Mudar o valor deles seria inventar problema. A regra é:
+> **nunca podem carregar informação** — nem texto, nem fronteira de componente que
+> precise ser identificada. Para isso existe `--dss-brand-solid`.
+
+### Dois achados que o trabalho produziu
+
+**`-solid` e `-hover` coincidem no hub e no water.** Nenhum componente usa os dois
+juntos hoje, então não há hover invisível em tela. Quem precisar de hover sobre
+superfície sólida deve usar **`--dss-brand-tertiary`** (hub-800 · water-700 ·
+waste-800), que difere do sólido nas três marcas.
+
+**O alto contraste passou a alcançar a marca.** Os temas `hc`/`hcdark` re-apontavam
+só o eixo de ação; agora cobrem também `--dss-brand-solid` e `--dss-brand-hover`.
+Antes a barra de marca pintava com o primitivo cru e ficava de fora — é
+literalmente a promessa da frente (d), agora cumprida para essas superfícies.
+
+### A reentrada da casca mudou de lugar — e de natureza
+
+O bloco `[data-brand-zone="shell"]` de `_brand-barrier.scss` mapeava cada token de
+ação para um token de identidade "equivalente". Eram **dois mapas que precisavam
+ficar em sincronia** — e não ficaram: ao requalificar o hub de 600 para 700, o mapa
+passou a devolver a cor errada na casca aninhada, em silêncio. Quem pegou foi o e2e.
+
+Agora cada arquivo de marca casa também `[data-brand="x"] [data-brand-zone="shell"]`
+no próprio seletor. A reentrada **re-resolve o bloco inteiro da marca** — exata por
+construção, sem mapa para manter. Mesmo mecanismo de `semantic/_scopes.scss`.
+

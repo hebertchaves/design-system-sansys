@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-10-13. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-10-14. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -2980,12 +2980,22 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    DSS - TOKENS DE MARCA HUB
    Sobrescritas para contexto Sansys Hub (Laranja/Marrom)
    ========================================================================== */
-[data-brand=hub] {
+/* O segundo seletor é a REENTRADA DA CASCA. Uma casca aninhada dentro de uma
+   zona de conteúdo precisa recuperar a marca que a barreira resetou — e aqui
+   ela recupera EXATA, porque é o próprio bloco da marca que resolve de novo.
+   Antes isso vivia em `_brand-barrier.scss`, mapeando cada token de ação para
+   um token de identidade "equivalente". Era adivinhação: quando o hub mudou de
+   600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
+   pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
+   outro é um defeito esperando acontecer. */
+[data-brand=hub],
+[data-brand=hub] [data-brand-zone=shell] {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Hub
      =========================================== */
-  --dss-action-primary: var(--dss-hub-600); /* #ef7a11 */
+  /* out/2026 — requalificado 600→700: mesmo motivo: o botão primário preenchido usa texto branco. A rampa fica 700/800/900 — monotônica, 4,52 / 6,52 / 8,88. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.2 */
+  --dss-action-primary: var(--dss-hub-700);
   --dss-action-primary-light: var(--dss-hub-300); /* #fbcb76 */
   --dss-action-primary-disable: var(--dss-hub-200); /* #fde2ab */
   --dss-action-primary-hover: var(--dss-hub-800); /* #984614 */
@@ -3007,7 +3017,8 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      as três marcas usam 600, e era isso que estava escrito à mão em cada uma.
      O eixo já tinha uniforme em 50/100/200/300/400/800; 600 era a lacuna mais
      usada. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.1 (decisão A2). */
-  --dss-brand-solid: var(--dss-hub-600);
+  /* out/2026 — requalificado 600→700: superfície sólida carrega texto BRANCO; hub-600 dava 2,81:1 e reprovava a 1.4.3 (e até o 3:1 de não-texto). 700 = 4,52:1. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.2 */
+  --dss-brand-solid: var(--dss-hub-700);
   --dss-brand-secondary: var(--dss-hub-300);
   --dss-brand-tertiary: var(--dss-hub-800);
   --dss-brand-accent: var(--dss-hub-400);
@@ -3015,7 +3026,7 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-brand-lighter: var(--dss-hub-50);
   --dss-brand-dark: var(--dss-hub-900);
   --dss-brand-darker: var(--dss-hub-950);
-  --dss-brand-hover: var(--dss-hub-700); /* Estado hover sobre primary — #bf590f */
+  --dss-brand-hover: var(--dss-hub-700);
   --dss-brand-disable: var(--dss-hub-200); /* Estado desabilitado — #fde2ab */
   --dss-brand-deep: var(--dss-hub-800); /* Estado active/pressionado — #984614 */
   --dss-brand-background: var(--dss-hub-50);
@@ -3119,7 +3130,8 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      12. CLASSES DE UTILIDADE ESPECÍFICAS
      =========================================== */
 }
-[data-brand=hub] .dss-brand-hub-only {
+[data-brand=hub] .dss-brand-hub-only,
+[data-brand=hub] [data-brand-zone=shell] .dss-brand-hub-only {
   /* Classes que só aparecem no contexto Hub */
 }
 
@@ -3127,7 +3139,16 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    DSS - TOKENS DE MARCA WATER
    Sobrescritas para contexto Sansys Water (Azul)
    ========================================================================== */
-[data-brand=water] {
+/* O segundo seletor é a REENTRADA DA CASCA. Uma casca aninhada dentro de uma
+   zona de conteúdo precisa recuperar a marca que a barreira resetou — e aqui
+   ela recupera EXATA, porque é o próprio bloco da marca que resolve de novo.
+   Antes isso vivia em `_brand-barrier.scss`, mapeando cada token de ação para
+   um token de identidade "equivalente". Era adivinhação: quando o hub mudou de
+   600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
+   pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
+   outro é um defeito esperando acontecer. */
+[data-brand=water],
+[data-brand=water] [data-brand-zone=shell] {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Water
@@ -3162,7 +3183,7 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-brand-lighter: var(--dss-water-50);
   --dss-brand-dark: var(--dss-water-800);
   --dss-brand-darker: var(--dss-water-900);
-  --dss-brand-hover: var(--dss-water-600); /* Estado hover sobre primary — #026cc7 */
+  --dss-brand-hover: var(--dss-water-600);
   --dss-brand-disable: var(--dss-water-200); /* Estado desabilitado — #badefd */
   --dss-brand-deep: var(--dss-water-800); /* Estado active/pressionado — #074a85 */
   --dss-brand-background: var(--dss-water-50);
@@ -3265,7 +3286,8 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      12. CLASSES DE UTILIDADE ESPECÍFICAS
      =========================================== */
 }
-[data-brand=water] .dss-brand-water-only {
+[data-brand=water] .dss-brand-water-only,
+[data-brand=water] [data-brand-zone=shell] .dss-brand-water-only {
   /* Classes que só aparecem no contexto Water */
 }
 
@@ -3273,7 +3295,16 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    DSS - TOKENS DE MARCA WASTE
    Sobrescritas para contexto Sansys Waste (Verde)
    ========================================================================== */
-[data-brand=waste] {
+/* O segundo seletor é a REENTRADA DA CASCA. Uma casca aninhada dentro de uma
+   zona de conteúdo precisa recuperar a marca que a barreira resetou — e aqui
+   ela recupera EXATA, porque é o próprio bloco da marca que resolve de novo.
+   Antes isso vivia em `_brand-barrier.scss`, mapeando cada token de ação para
+   um token de identidade "equivalente". Era adivinhação: quando o hub mudou de
+   600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
+   pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
+   outro é um defeito esperando acontecer. */
+[data-brand=waste],
+[data-brand=waste] [data-brand-zone=shell] {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Waste
@@ -3411,7 +3442,8 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      12. CLASSES DE UTILIDADE ESPECÍFICAS
      =========================================== */
 }
-[data-brand=waste] .dss-brand-waste-only {
+[data-brand=waste] .dss-brand-waste-only,
+[data-brand=waste] [data-brand-zone=shell] .dss-brand-waste-only {
   /* Classes que só aparecem no contexto Waste */
 }
 
@@ -3862,7 +3894,16 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-light: var(--dss-hub-50); /* 9.14:1 c/ texto escuro */
   --dss-action-primary: var(--dss-hub-900); /* 8.88:1 c/ branco */
   --dss-action-primary-hover: var(--dss-hc-hub-mid); /* 11.58:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-hc-hub-mid);
   --dss-action-primary-deep: var(--dss-hub-950); /* 14.88:1 */
+  /* Eixo de IDENTIDADE. Antes do out/2026 a barra de marca, a borda do avatar
+     e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
+     Agora consomem `--dss-brand-solid`, então o tema alcança: 8,88:1 com branco. */
+  --dss-brand-solid: var(--dss-hub-900);
   --dss-focus-primary: var(--dss-hub-900);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -3876,7 +3917,16 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-light: var(--dss-water-50); /* 8.88:1 c/ texto escuro */
   --dss-action-primary: var(--dss-water-700); /* 7.37:1 c/ branco */
   --dss-action-primary-hover: var(--dss-water-800); /* 9.02:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-water-800);
   --dss-action-primary-deep: var(--dss-water-900); /* 10.88:1 */
+  /* Eixo de IDENTIDADE. Antes do out/2026 a barra de marca, a borda do avatar
+     e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
+     Agora consomem `--dss-brand-solid`, então o tema alcança: 7,37:1 com branco. */
+  --dss-brand-solid: var(--dss-water-700);
   --dss-focus-primary: var(--dss-water-700);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -3890,7 +3940,16 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-light: var(--dss-waste-50); /* 9.05:1 c/ texto escuro */
   --dss-action-primary: var(--dss-waste-800); /* 8.14:1 c/ branco */
   --dss-action-primary-hover: var(--dss-waste-900); /* 10.28:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-waste-900);
   --dss-action-primary-deep: var(--dss-waste-950); /* 15.50:1 */
+  /* Eixo de IDENTIDADE. Antes do out/2026 a barra de marca, a borda do avatar
+     e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
+     Agora consomem `--dss-brand-solid`, então o tema alcança: 8,14:1 com branco. */
+  --dss-brand-solid: var(--dss-waste-800);
   --dss-focus-primary: var(--dss-waste-800);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -3990,7 +4049,14 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-light: var(--dss-hub-950); /* 13.65:1 c/ texto claro */
   --dss-action-primary: var(--dss-hub-400); /* 7.79:1 vs superfície */
   --dss-action-primary-hover: var(--dss-hub-300); /* 10.02:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-hub-300);
   --dss-action-primary-deep: var(--dss-hub-200); /* 11.99:1 */
+  /* Eixo de IDENTIDADE — mesmo degrau da ação: 7,79:1 contra a superfície escura. */
+  --dss-brand-solid: var(--dss-hub-400);
   --dss-focus-primary: var(--dss-hub-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -4004,7 +4070,14 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-light: var(--dss-water-950); /* 13.79:1 c/ texto claro */
   --dss-action-primary: var(--dss-water-300); /* 8.05:1 vs superfície */
   --dss-action-primary-hover: var(--dss-water-200); /* 10.78:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-water-200);
   --dss-action-primary-deep: var(--dss-water-100); /* 12.85:1 */
+  /* Eixo de IDENTIDADE — mesmo degrau da ação: 8,05:1 contra a superfície escura. */
+  --dss-brand-solid: var(--dss-water-300);
   --dss-focus-primary: var(--dss-water-300);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -4018,7 +4091,14 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-light: var(--dss-waste-950); /* 14.21:1 c/ texto claro */
   --dss-action-primary: var(--dss-waste-400); /* 7.29:1 vs superfície */
   --dss-action-primary-hover: var(--dss-waste-300); /* 9.46:1 */
+  /* Eixo de IDENTIDADE, espelhando o degrau de hover da ação — sem isto o
+     hover de marca ficaria com o valor do tema CLARO dentro do alto contraste
+     (no hcdark, escurecendo onde tudo mais clareia) e, no hc/water, colidiria
+     com o próprio sólido, deixando o hover invisível. */
+  --dss-brand-hover: var(--dss-waste-300);
   --dss-action-primary-deep: var(--dss-waste-200); /* 11.49:1 */
+  /* Eixo de IDENTIDADE — mesmo degrau da ação: 7,29:1 contra a superfície escura. */
+  --dss-brand-solid: var(--dss-waste-400);
   --dss-focus-primary: var(--dss-waste-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -4098,33 +4178,25 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
 }
 
 /* --------------------------------------------------------------------------
-   ZONA DE CASCA — reentra a marca pelo eixo de IDENTIDADE
+   ZONA DE CASCA — reentra a marca
    -------------------------------------------------------------------------- */
-/* No topo da árvore isto é no-op: sob `[data-brand]` a ação já está brandeada e
-   `--dss-brand-primary` vale o mesmo. Existe para o caso ANINHADO — uma
-   mini-toolbar dentro de um card — em que a casca precisa reentrar depois de a
-   barreira ter passado. Fora de marca, o eixo de identidade cai para o neutro
-   (`_brand-axis.scss`), então a casca também fica neutra. Correto.
+/* O BLOCO QUE EXISTIA AQUI FOI PARA `tokens/brand/_{hub,water,waste}.scss`.
 
-   O mapeamento foi conferido valor a valor nas três marcas: `brand-primary`,
-   `brand-secondary`, `brand-disable` e `brand-tertiary` batem EXATO com
-   `action-primary`, `-light`, `-disable` e `-hover`; e `brand-hover` bate exato
-   com o `--dss-focus-primary` de cada marca (hub-700 · water-600 · waste-700).
+   Ele mapeava cada token de ação para um token de identidade "equivalente"
+   (`--dss-action-primary: var(--dss-brand-primary)` e assim por diante). Dois
+   mapas que precisavam ficar em sincronia — e não ficaram: quando o hub foi
+   requalificado de 600 para 700 por contraste, o mapa passou a devolver a cor
+   ERRADA na casca aninhada, em silêncio. Quem pegou foi o e2e.
 
-   ⚠️ UMA APROXIMAÇÃO: `action-primary-deep` é hub-900/water-800/waste-900 e
-   `brand-deep` é 800 nas três — exato só no water. Usamos `brand-deep` porque a
-   correspondência é de PAPEL: o comentário dele em `tokens/brand/*` diz
-   literalmente "Estado active/pressionado", que é o papel de `-deep`. Falta um
-   degrau 900 no eixo de identidade; quando existir, trocar aqui. */
-[data-brand-zone=shell] {
-  --dss-action-primary: var(--dss-brand-primary);
-  --dss-action-primary-light: var(--dss-brand-secondary);
-  --dss-action-primary-disable: var(--dss-brand-disable);
-  --dss-action-primary-hover: var(--dss-brand-tertiary);
-  --dss-action-primary-deep: var(--dss-brand-deep);
-  --dss-focus-primary: var(--dss-brand-hover);
-  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
-}
+   Agora cada arquivo de marca casa também `[data-brand="x"] [data-brand-zone="shell"]`
+   no seu próprio seletor. A reentrada resolve o bloco inteiro da marca de novo —
+   os 62 tokens, exatos por construção, sem mapa para manter.
+
+   É o mesmo mecanismo de `semantic/_scopes.scss`: não duplicar valores, re-resolver
+   a expressão no escopo certo.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §6
+   -------------------------------------------------------------------------- */
 }
 /* END:DSS-TOKENS-AUTO-GENERATED */
 

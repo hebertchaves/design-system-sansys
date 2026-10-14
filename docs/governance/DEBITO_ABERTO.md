@@ -1756,12 +1756,19 @@ filho passa a acertar sozinho, sem o consumidor saber que há caso especial.
 
 **🔴 EM ABERTO — precisa do seu aval (é contrato visual / valor de token)**
 
-1. **Fundo Hub da barra reprova AA.** Branco sobre `--dss-hub-600` (#ef7a11) = **2.81:1**. Reprova AA
-   normal (4.5) **e** AA de texto grande (3.0). O comentário do arquivo alegava que 2.8:1 "atende AA
-   para texto grande" — não atende, 2.81 < 3; e alegava "Water ~7.0:1", quando o medido é 5.29:1.
-   Corrigi os números falsos no arquivo e deixei a reprovação **declarada**, não mascarada.
-   **Opção concreta:** trocar o fundo Hub da barra para `--dss-hub-700` (#bf590f) → **4.52:1 ✅ AA
-   normal**. É mudança de aparência: precisa da sua decisão.
+1. ✅ **RESOLVIDO (out/2026) — Fundo Hub da barra.** Era branco sobre `--dss-hub-600` (#ef7a11)
+   = **2.81:1**, reprovando AA normal (4.5) **e** AA de texto grande (3.0).
+
+   Aplicada a opção que já estava escrita aqui: **hub-700 (#bf590f) → 4,52:1 ✅**. Cheguei ao
+   mesmo valor medindo a rampa inteira, antes de ler esta entrada — e a medição acrescentou o
+   porquê de não haver alternativa: com a base em 600, NENHUMA cor de texto passa nos três
+   estados (branco reprova na base com 2,81; escuro reprova no hover com 3,04 e no active com
+   2,23), então o texto teria de trocar de cor no hover. Com a base em 700 o branco passa em
+   todos: 4,52 / 6,52 / 8,88.
+
+   Alcance maior que "a barra": o mesmo degrau alimenta `--dss-action-primary`, então corrigiu
+   junto o botão primário preenchido, a borda do avatar e a aba ativa — todos abaixo até do piso
+   de 3:1 de não-texto. Detalhe e mapa completo da escala: `DSS_MODELO_PROPAGACAO_MARCA.md` §9.2.
 
 2. **Colisão de tokens no tema escuro — dois pares idênticos, DS inteiro.** Medido no navegador:
    - `--dss-surface-subtle` = `--dss-border-subtle` = **`#525252`** → toda borda sutil sobre

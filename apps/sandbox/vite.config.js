@@ -13,9 +13,19 @@ export default defineConfig({
     // forma confiável nesse mount, então o HMR não detecta mudanças de arquivo
     // (causa raiz dos "stale" — só atualizava ao reiniciar o dev). Polling força
     // o Vite a varrer os arquivos e resolve o HMR de forma definitiva.
+    //
+    // O intervalo é um TROCO, não um detalhe: cada arquivo vigiado custa um
+    // stat por ciclo, e no 9p do /mnt/c esses stats saturam as 4 threads de I/O
+    // do Node — as MESMAS que leem os arquivos para responder ao browser. A
+    // 300ms o servidor levava 1–4s para devolver até um CSS estático (medido
+    // out/2026, máquina ociosa), e o Preview Frame herdava essa espera inteira.
+    // 1500ms devolve as threads ao servidor ao custo de o HMR notar a mudança
+    // ~1s mais tarde. `ignored` tira da varredura o que ninguém edita à mão.
     watch: {
       usePolling: true,
-      interval: 300,
+      interval: 1500,
+      binaryInterval: 3000,
+      ignored: ['**/dist/**', '**/public/_archive/**', '**/playwright-report/**'],
     },
     proxy: {
       '/api': 'http://localhost:3001',
