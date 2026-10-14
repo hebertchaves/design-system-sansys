@@ -229,13 +229,28 @@ function declaradosEm(arquivo, re) {
   const out = new Set();
   let dentro = false;
   let prof = 0;
+  let casouSeletor = false; // seletor casado, aguardando a `{` que pode vir em outra linha
   for (const linha of src.split('\n')) {
-    if (!dentro && re.test(linha) && linha.includes('{')) {
-      dentro = true;
-      prof = 1;
+    if (!dentro) {
+      // LISTA DE SELETORES MULTI-LINHA. A primeira versão exigia a `{` na MESMA
+      // linha do seletor — e quando `tokens/brand/*` ganhou lista multi-linha
+      // (reentrada da casca + alias das classes Quasar-rooted), o detector parou
+      // de entrar no bloco. O B4 passou a contar ZERO tokens remapeados e a
+      // reportar ✅ sem verificar nada: gate desligado em silêncio pela própria
+      // mudança que ele deveria vigiar.
+      if (re.test(linha)) casouSeletor = true;
+      if (casouSeletor && linha.includes('{')) {
+        dentro = true;
+        prof = 1;
+        casouSeletor = false;
+        continue;
+      }
+      // linha que não é continuação de lista encerra a tentativa
+      if (casouSeletor && !/^\s*[.\[#:&a-zA-Z*][^;]*,\s*$/.test(linha)) {
+        if (!re.test(linha)) casouSeletor = false;
+      }
       continue;
     }
-    if (!dentro) continue;
     prof += (linha.match(/\{/g) || []).length - (linha.match(/\}/g) || []).length;
     const m = linha.match(/^\s*(--dss-[a-z0-9-]+)\s*:/);
     if (m) out.add(m[1]);
@@ -261,7 +276,7 @@ function analisarBarreira() {
     .filter((t) => !resetados.has(t))
     .sort();
 
-  return { remapeados: remapeados.size, resetados: resetados.size, faltando };
+  return { remapeados: remapeados.size, resetados: resetados.size, faltando, vistos: remapeados };
 }
 
 // ---------------------------------------------------------------- B5
@@ -413,6 +428,23 @@ function main() {
     `\n   B4. Barreira x remapeamentos de marca: ${b4.remapeados} remapeado(s) · ` +
       `${b4.resetados} resetado(s) · ${Object.keys(B4_DISPENSADOS).length} dispensado(s)`
   );
+  // SILÊNCIO NÃO É SUCESSO. Se o detector não achou remapeamento nenhum, ele está
+  // quebrado — `tokens/brand/*` SEMPRE remapeia. Já aconteceu: uma lista de
+  // seletores multi-linha fez o parser nunca entrar no bloco, e o B4 reportou ✅
+  // tendo verificado zero. Um gate que não mede precisa gritar, não passar.
+  // Sentinelas: dois tokens que `tokens/brand/*` SEMPRE remapeia. Se o detector
+  // não os encontra, ele está quebrado — e um gate quebrado que reporta ✅ é pior
+  // que gate nenhum. Contar não serve de guarda: quando uma lista de seletores
+  // multi-linha cegou o parser, ele achou 2 de 65 e teria passado por um piso.
+  const SENTINELAS = ['--dss-action-primary', '--dss-brand-solid'];
+  const ausentes = SENTINELAS.filter((t) => !b4.vistos.has(t));
+  if (ausentes.length) {
+    console.log(`\n   ❌ B4 ESTÁ CEGO — não achou ${ausentes.join(', ')} em tokens/brand/*.`);
+    console.log('      Esses tokens são sempre remapeados por marca; não achá-los significa');
+    console.log('      que o DETECTOR quebrou, não que o código está certo.');
+    process.exitCode = 1;
+  }
+
   for (const t of b4.faltando) {
     console.log(`       ❌ FURO: ${t} é remapeado por marca e a barreira não o reseta`);
     console.log('            Acrescente em tokens/semantic/_brand-barrier.scss, ou em');

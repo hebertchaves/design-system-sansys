@@ -151,9 +151,16 @@ O estado é de cada opção (`.q-btn-item`), mas o **retorno visual é do DSS**,
 
 **Opção selecionada em `flat`/`outline`** (`aria-pressed="true"`): o mesmo véu, permanente, a `--dss-opacity-selected`; no hover dela sobe para `--dss-opacity-active`. Vale também para opção selecionada e desabilitada — a seleção continua sendo o valor do grupo. Sem isto, com `color` e `toggleColor` ambos no default `primary`, a selecionada era idêntica às outras.
 
-> ⚠️ **Limite de acessibilidade (medido out/2026, fundo branco, `primary`):** o véu separa a selecionada da vizinha em **1,2:1** — abaixo dos 3:1 que a WCAG 1.4.11 pede para indicador de estado. O véu é melhoria, não indicador suficiente sozinho; leitor de tela recebe o estado pelo `aria-pressed`. Segundo indicador visual: decisão pendente.
+**Opção selecionada nas preenchidas** (`elevated`, `unelevated`, `push`): o fundo vai ao degrau `-deep` da própria cor (`--dss-action-<cor>-deep`, via `--q-<cor>`), inclusive sob hover — a selecionada nunca fica mais clara que o próprio repouso.
+
+> ⚠️ **Separação visual selecionada × vizinha (WCAG 1.4.11 pede 3:1 para indicador de estado), medida out/2026 com `primary`:**
 >
-> As variantes preenchidas (`elevated`, `unelevated`, `push`) **continuam sem diferença visual** entre selecionada e não selecionada com as cores default — também pendente.
+> | Variante | Neutro / Water | Hub |
+> |---|---|---|
+> | `flat` / `outline` (véu 15% sobre branco) | 1,2:1 ❌ | — |
+> | preenchidas (`-deep` × base) | 3,02:1 ✅ | 1,97:1 ❌ |
+>
+> Leitor de tela recebe o estado pelo `aria-pressed`. Onde não passa, falta um segundo indicador visual — decisão pendente.
 
 Em `flat`/`outline` o véu é desenhado no `.q-focus-helper` da opção (elemento que o QBtn já traz), não num pseudo-elemento novo. Como usa `currentColor`, segue a cor da opção e a marca sem regra própria. Opção `disabled` e grupo `readonly` não recebem o véu.
 
@@ -277,6 +284,7 @@ Seletores `.q-btn-item` são Quasar DOM internals — não subcomponentes DSS fi
 | `--dss-opacity-hover` | L4 | Véu de hover das opções em `flat`/`outline` |
 | `--dss-opacity-active` | L4 | Véu de active das opções em `flat`/`outline` |
 | `--dss-opacity-selected` | L4 | Véu permanente da opção selecionada em `flat`/`outline` |
+| `--dss-action-{cor}-deep` | L4 | Fundo da opção selecionada nas preenchidas |
 | `--dss-gray-200` | L3 | Separador unelevated |
 | `--dss-gray-300` | L3 | Separador flat |
 | `--dss-hub-600` / `--dss-hub-400` | L4 | Brand Hub |

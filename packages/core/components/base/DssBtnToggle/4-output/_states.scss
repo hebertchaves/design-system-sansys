@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use '../../../../utils/index' as utils;
 
 /* ==========================================================================
@@ -92,6 +93,38 @@
 
   &[aria-pressed='true']:not([disabled]):not(.disabled):hover > .q-focus-helper {
     opacity: var(--dss-opacity-active);
+  }
+}
+
+/* ==========================================================================
+   SELECIONADA nas PREENCHIDAS (elevated, unelevated, push) — degrau `-deep`
+
+   Mesmo defeito do bloco acima, nas variantes de fundo: `color` e `toggleColor`
+   nascem `primary`, as opções recebem todas `.bg-primary`, e a selecionada não
+   se distinguia de nada.
+
+   A selecionada vai ao degrau `-deep` da PRÓPRIA cor — o fim da rampa
+   semântica, que é o degrau de "pressionado". Mesma técnica do `rampa-hover`:
+   o `.bg-*` do Quasar é `!important` em `@layer quasar`, então em vez de
+   declarar `background` troca-se a entrada `--q-<cor>`, e o fundo recomputa.
+   Brandeia sozinho, porque a rampa é remapeada por marca.
+
+   O `:not([disabled]):not(.disabled)` não filtra nada aqui — está para empatar
+   a especificidade com a do hover e vencer pela ORDEM: sem isso, passar o mouse
+   na selecionada a devolvia ao degrau `-hover`, mais claro que o repouso dela.
+   ========================================================================== */
+
+.dss-btn-toggle > .q-btn-item[aria-pressed='true'] {
+  @each $nome, $par in utils.$cores-quasar {
+    &.bg-#{$nome},
+    &.bg-#{$nome}:not([disabled]):not(.disabled):hover {
+      #{list.nth($par, 1)}: var(#{list.nth($par, 2)}-deep);
+    }
+  }
+
+  &.bg-tertiary,
+  &.bg-tertiary:not([disabled]):not(.disabled):hover {
+    background-color: var(--dss-action-tertiary-deep);
   }
 }
 
