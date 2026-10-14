@@ -33,7 +33,7 @@
       @update:model-value="emit('update:modelValue', $event)"
       @update:pagination="emit('update:pagination', $event)"
       @request="handleRequest"
-      @row-click="(evt, row, index) => emit('row-click', evt, row, index)"
+      @row-click="handleRowClick"
     >
       <template #top>
         <div class="dss-data-table__toolbar">
@@ -171,7 +171,7 @@ const emit = defineEmits<DssDataTableEmits>()
 defineSlots<DssDataTableSlots>()
 provideDataTableContext(props)
 const { rootClasses } = useDataTableClasses(props)
-const tableRef = ref<InstanceType<typeof DssTable> | null>(null)
+const tableRef = ref<{ sort?: (col: string | { name: string }) => void } | null>(null)
 const internalFilter = computed(() => props.filter)
 const hasCustomBody = computed(() => props.expandable || props.rowActions.length > 0 || props.selection !== 'none')
 const visibleActions = computed(() => props.actions)
@@ -212,6 +212,9 @@ function updateFilter(value: string | number | null) {
 function handleRequest(value: { pagination: DssTablePagination; filter?: string; getCellValue?: (col: DssTableColumn, row: DssDataTableRow) => unknown }) {
   emit('request', { ...value, filter: props.filter })
 }
+function handleRowClick(evt: Event, row: DssDataTableRow, index: number) {
+  emit('row-click', evt, row, index)
+}
 function requestCurrentPage() { emit('request', { pagination: props.pagination, filter: props.filter }) }
 function isActionDisabled(action: DssDataTableAction) {
   if (props.disabled || props.loading || action.disabled) return true
@@ -229,7 +232,7 @@ function cellValue(col: DssTableColumn, row: DssDataTableRow) {
 }
 function alignmentClass(align?: 'left' | 'right' | 'center') { return `dss-data-table__cell--${align ?? 'left'}` }
 
-defineExpose({ request: requestCurrentPage, clearSelection: () => emit('update:modelValue', []), sort: (col: string | { name: string }) => tableRef.value?.sort(col) })
+defineExpose({ request: requestCurrentPage, clearSelection: () => emit('update:modelValue', []), sort: (col: string | { name: string }) => tableRef.value?.sort?.(col) })
 </script>
 
 <style lang="scss" scoped>
