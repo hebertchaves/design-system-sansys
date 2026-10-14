@@ -2544,19 +2544,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-600",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -2732,19 +2720,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-600",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -2830,19 +2806,7 @@
         },
         {
           "property": "outline-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "outline-color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "outline-color",
-          "token": "--dss-waste-600",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -3808,23 +3772,7 @@
         ]
       },
       {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "default",
-          "hover",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "default",
-          "hover",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
+        "name": "--dss-brand-solid",
         "usedIn": [
           "default",
           "hover",

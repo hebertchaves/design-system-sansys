@@ -28,22 +28,12 @@
   // BRAND OVERRIDES — Dark mode (tokens ~500, mais claros para contraste em fundo escuro)
   // =============================================================================
 
-  /* Hub dark: 600 → 500 para contraste em fundo escuro */
-  .dss-spinner--brand-hub.dss-spinner,
-  [data-brand="hub"] .dss-spinner {
-    color: var(--dss-hub-500);
-  }
-
-  /* Water dark: 500 → 400 para contraste em fundo escuro */
-  .dss-spinner--brand-water.dss-spinner,
-  [data-brand="water"] .dss-spinner {
-    color: var(--dss-water-400);
-  }
-
-  /* Waste dark: 600 → 500 para contraste em fundo escuro */
-  .dss-spinner--brand-waste.dss-spinner,
-  [data-brand="waste"] .dss-spinner {
-    color: var(--dss-waste-500);
+  /* out/2026 — três blocos viraram um. O trio era hub-500 · water-400 · waste-500,
+     que é exatamente `--dss-text-brand-tertiary` (o mesmo usado no dark de
+     DssTooltip e DssIcon). A metade de classe saiu: o root emite `data-brand`. */
+  .dss-spinner[data-brand],
+  [data-brand] .dss-spinner {
+    color: var(--dss-text-brand-tertiary);
   }
 }
 

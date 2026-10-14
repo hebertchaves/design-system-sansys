@@ -1,54 +1,17 @@
-// =============================================================================
-// DssInnerLoading — Layer 4: Output / Brands
-// =============================================================================
-//
-// Tokens de brand para Hub, Water e Waste.
-// Dual-selector: via prop `.dss-inner-loading--brand-*` OU via ancestor [data-brand="*"].
-//
-// A cor do spinner (via currentColor) e do label são sobrescritas pelo token da marca.
-// O fundo do overlay (--dss-surface-default) permanece branco em todos os brands —
-// garantindo contraste consistente em light mode.
-//
-// Dark mode: tokens de marca com maior brilho para fundos escuros.
-// Convenção: hub-500, water-400, waste-500 (1 nível acima do padrão light).
-// Precedente: DssCircularProgress, DssLinearProgress.
+/* ==========================================================================
+   DssInnerLoading - LAYER 4: OUTPUT - Brands
 
-// ─── Hub ─────────────────────────────────────────────────────────────────────
+   out/2026 — ETAPA 4. Três blocos viraram um. o indicador é GRÁFICO (piso 3:1), logo
+   `--dss-brand-primary`. O hub sai de 600 (2,81:1 — abaixo até do piso de
+   não-texto) para 700 (4,52:1).
 
-.dss-inner-loading--brand-hub,
-[data-brand="hub"] .dss-inner-loading {
-  color: var(--dss-hub-600);
-}
+   A metade `.dss-inner-loading--brand-*` dos seletores saiu: o root já emite
+   `data-brand`, então ela era redundante com a metade descendente.
 
-// ─── Water ───────────────────────────────────────────────────────────────────
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §9.4
+   ========================================================================== */
 
-.dss-inner-loading--brand-water,
-[data-brand="water"] .dss-inner-loading {
-  color: var(--dss-water-500);
-}
-
-// ─── Waste ───────────────────────────────────────────────────────────────────
-
-.dss-inner-loading--brand-waste,
-[data-brand="waste"] .dss-inner-loading {
-  color: var(--dss-waste-600);
-}
-
-// ─── Dark Mode Brand Overrides ───────────────────────────────────────────────
-
-@media (prefers-color-scheme: dark) {
-  .dss-inner-loading--brand-hub,
-  [data-brand="hub"] .dss-inner-loading {
-    color: var(--dss-hub-500);
-  }
-
-  .dss-inner-loading--brand-water,
-  [data-brand="water"] .dss-inner-loading {
-    color: var(--dss-water-400);
-  }
-
-  .dss-inner-loading--brand-waste,
-  [data-brand="waste"] .dss-inner-loading {
-    color: var(--dss-waste-500);
-  }
+[data-brand] .dss-inner-loading,
+.dss-inner-loading[data-brand] {
+  color: var(--dss-brand-primary);
 }

@@ -1,85 +1,41 @@
-// =============================================================================
-// Layer 4 — Brands: DssBreadcrumbsEl
-// Hub (laranja) | Water (azul) | Waste (verde)
-//
-// Brand tokens numéricos — semânticos não disponíveis ainda para links.
-// Precedente: DssTabPanel _brands.scss (mesmo padrão, família Tabs).
-//
-// Governança: a cor do item clicável é sobrescrita pela cor primária da
-// marca. O item atual (--current) mantém --dss-text-body para legibilidade.
-//
-// HOVER CORRIGIDO EM SET/2026. As regras de marca repetiam a cor de repouso no
-// `:hover`/`:active` — ou seja, sob marca o link PARAVA de reagir, enquanto no
-// neutro ele vai de `text-action` para `text-action-hover`. É o §K5 do checklist:
-// a marca tem de remapear a RAMPA inteira, não só o repouso. No claro o hover
-// escurece um degrau; no escuro clareia, afastando-se do fundo.
-// =============================================================================
+/* ==========================================================================
+   DssBreadcrumbsEl - LAYER 4: OUTPUT - Brands
 
-// ─── Hub (laranja) ─────────────────────────────────────────────────────────
-[data-brand="hub"] {
+   out/2026 — ETAPA 4. Seis blocos (3 marcas × claro/dark) viraram dois.
+
+   É TEXTO DE LINK, piso 4,5:1 — e a base reprovava em DUAS marcas:
+   hub-600 = 2,81:1 e water-500 = 3,71:1. Com `--dss-brand-solid` passam a
+   4,52 · 5,29 · 4,90.
+
+   ⚠️ O HOVER NÃO PODE SER `--dss-brand-hover`. Ele vale 700 · 600 · 700, e com
+   a base em `-solid` (700 · 600 · 600) ficaria IGUAL à base no hub e no water —
+   hover invisível. `--dss-brand-tertiary` (800 · 700 · 800) mantém o degrau e
+   sobe o contraste para 6,52 · 7,37 · 8,14.
+
+   No escuro o sentido inverte (clareia): `-accent` na base, `-secondary` no
+   hover.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §9.4
+   ========================================================================== */
+
+[data-brand] {
   .dss-breadcrumbs-el--clickable {
-    color: var(--dss-hub-600);
+    color: var(--dss-brand-solid);
 
     &:hover,
     &:active {
-      color: var(--dss-hub-700);
+      color: var(--dss-brand-tertiary);
     }
   }
 }
 
-[data-theme="dark"] [data-brand="hub"] {
+[data-theme="dark"] [data-brand] {
   .dss-breadcrumbs-el--clickable {
-    color: var(--dss-hub-400);
+    color: var(--dss-brand-accent);
 
     &:hover,
     &:active {
-      color: var(--dss-hub-300);
-    }
-  }
-}
-
-// ─── Water (azul) ──────────────────────────────────────────────────────────
-[data-brand="water"] {
-  .dss-breadcrumbs-el--clickable {
-    color: var(--dss-water-500);
-
-    &:hover,
-    &:active {
-      color: var(--dss-water-600);
-    }
-  }
-}
-
-[data-theme="dark"] [data-brand="water"] {
-  .dss-breadcrumbs-el--clickable {
-    color: var(--dss-water-400);
-
-    &:hover,
-    &:active {
-      color: var(--dss-water-300);
-    }
-  }
-}
-
-// ─── Waste (verde) ─────────────────────────────────────────────────────────
-[data-brand="waste"] {
-  .dss-breadcrumbs-el--clickable {
-    color: var(--dss-waste-600);
-
-    &:hover,
-    &:active {
-      color: var(--dss-waste-700);
-    }
-  }
-}
-
-[data-theme="dark"] [data-brand="waste"] {
-  .dss-breadcrumbs-el--clickable {
-    color: var(--dss-waste-500);
-
-    &:hover,
-    &:active {
-      color: var(--dss-waste-400);
+      color: var(--dss-brand-secondary);
     }
   }
 }

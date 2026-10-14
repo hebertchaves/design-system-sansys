@@ -1,56 +1,17 @@
-// =============================================================================
-// DssSpinner — LAYER 4: OUTPUT — Brands
-//
-// RESPONSABILIDADE: Brandability (Hub, Water, Waste)
-//
-// PADRÃO: Idêntico ao DssIcon (Golden Reference).
-//   - Seletor via prop (.dss-spinner--brand-*): mesmo elemento
-//   - Seletor via [data-brand] ancestral: descendente
-//
-// NOTA: Tokens numéricos de brand (--dss-hub-600, etc.) são usados porque
-// os tokens semânticos de brand (--dss-{brand}-primary) não existem ainda.
-// Exceção documentada nos metadados (precedente: DssIcon, DssCard).
-//
-// =============================================================================
+/* ==========================================================================
+   DssSpinner - LAYER 4: OUTPUT - Brands
 
-// =============================================================================
-// HUB BRAND (Orange)
-// =============================================================================
+   out/2026 — ETAPA 4. Três blocos viraram um. o spinner é GRÁFICO (piso 3:1), logo
+   `--dss-brand-primary`. O hub sai de 600 (2,81:1 — abaixo até do piso de
+   não-texto) para 700 (4,52:1).
 
-/* Via prop: <DssSpinner brand="hub" /> */
-.dss-spinner--brand-hub.dss-spinner {
-  color: var(--dss-hub-600);
-}
+   A metade `.dss-spinner--brand-*` dos seletores saiu: o root já emite
+   `data-brand`, então ela era redundante com a metade descendente.
 
-/* Via herança contextual: <div data-brand="hub"><DssSpinner /></div> */
-[data-brand="hub"] .dss-spinner {
-  color: var(--dss-hub-600);
-}
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §9.4
+   ========================================================================== */
 
-// =============================================================================
-// WATER BRAND (Blue)
-// =============================================================================
-
-/* Via prop: <DssSpinner brand="water" /> */
-.dss-spinner--brand-water.dss-spinner {
-  color: var(--dss-water-500);
-}
-
-/* Via herança contextual: <div data-brand="water"><DssSpinner /></div> */
-[data-brand="water"] .dss-spinner {
-  color: var(--dss-water-500);
-}
-
-// =============================================================================
-// WASTE BRAND (Green)
-// =============================================================================
-
-/* Via prop: <DssSpinner brand="waste" /> */
-.dss-spinner--brand-waste.dss-spinner {
-  color: var(--dss-waste-600);
-}
-
-/* Via herança contextual: <div data-brand="waste"><DssSpinner /></div> */
-[data-brand="waste"] .dss-spinner {
-  color: var(--dss-waste-600);
+[data-brand] .dss-spinner,
+.dss-spinner[data-brand] {
+  color: var(--dss-brand-primary);
 }

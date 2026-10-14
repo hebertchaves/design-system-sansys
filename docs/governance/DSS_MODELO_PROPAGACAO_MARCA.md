@@ -482,3 +482,45 @@ INTEIRA, e as duas rotas entregam a mesma cor — verificado em browser.
 Com isso a exceção B3 desses dois deixa de ser "não dá para corrigir" e passa a
 ser "corrigido por outro caminho, documentado".
 
+---
+
+## §9.5 Duas regras que a execução transformou em norma
+
+### `color:` nem sempre é texto — o piso vem do PAPEL, não da propriedade
+
+Quase apliquei 4,5:1 ao spinner, à estrela do `DssRating` e ao traço do
+`DssSeparator`. Nenhum é texto: são **gráficos**, piso 3:1 (1.4.11). Classificar
+pelo nome da propriedade erra nos dois sentidos — `color:` num link é texto,
+`color:` num ícone é gráfico.
+
+> **Olhe o que a regra alveja, não como a propriedade se chama.**
+
+| alvo | piso | token |
+|---|---|---|
+| texto, e fundo que recebe texto | 4,5 | `--dss-brand-solid` |
+| ícone, traço, borda, anel, sombra | 3,0 | `--dss-brand-primary` |
+| decoração sem função | — | qualquer |
+
+### O hover tem de diferir da base — e o token "natural" costuma colidir
+
+Três vezes nesta frente o par `base`/`hover` acabou no mesmo valor:
+
+| onde | base | hover "natural" | colisão |
+|---|---|---|---|
+| `-solid` × `-hover` | 700·600·600 | 700·600·700 | hub e water |
+| `DssCard` dark (waste) | — | bloco VAZIO | waste nunca clareava |
+| `DssBreadcrumbsEl` | `-solid` | `-hover` | hub e water |
+
+A causa é estrutural: `--dss-brand-hover` foi desenhado como "um degrau acima de
+`--dss-brand-primary`", e `-solid` já ocupa esse degrau no hub.
+
+> **Regra:** quando a base é `--dss-brand-solid`, o hover é
+> **`--dss-brand-tertiary`** (800 · 700 · 800) — nunca `--dss-brand-hover`.
+> Quando a base é `--dss-brand-primary`, o hover é `--dss-brand-hover`.
+>
+> Em tema escuro o sentido inverte: base `--dss-brand-accent`, hover
+> `--dss-brand-secondary`.
+
+Nenhuma dessas colisões quebra build, erra no console ou aparece em teste
+unitário. Some só em tela, no estado que o usuário mal percebe faltar.
+
