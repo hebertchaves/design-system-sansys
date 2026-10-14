@@ -359,7 +359,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-brand-primary",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -439,7 +439,7 @@
         ]
       },
       {
-        "name": "--dss-brand-primary",
+        "name": "--dss-brand-solid",
         "usedIn": [
           "default"
         ]

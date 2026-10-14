@@ -558,7 +558,7 @@
           "property": "color",
           "token": "--dss-feedback-error",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "background-color",
@@ -751,24 +751,6 @@
           "token": null,
           "value": "Field",
           "source": "4-output/_states.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-800",
-          "value": null,
-          "source": "4-output/_brands.scss"
         }
       ],
       "hover": [
@@ -832,7 +814,7 @@
           "property": "box-shadow",
           "token": "--dss-border-width-md",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "3-variants/_borderless.scss"
         },
         {
           "property": "background-color",
@@ -869,66 +851,6 @@
           "token": null,
           "value": "Highlight",
           "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
         }
       ],
       "disabled": [
@@ -1123,7 +1045,6 @@
         "usedIn": [
           "default",
           "hover",
-          "focus",
           "disabled"
         ]
       },
@@ -1184,25 +1105,6 @@
         ]
       },
       {
-        "name": "--dss-hub-700",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-700",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-800",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-border-strong-hover",
         "usedIn": [
           "hover"
@@ -1231,36 +1133,6 @@
       },
       {
         "name": "--dss-border-width-thick",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-500",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-waste-700",
         "usedIn": [
           "focus"
         ]

@@ -37,6 +37,10 @@
 
   /* Eixo de IDENTIDADE — mesmo degrau da ação: 7,79:1 contra a superfície escura. */
   --dss-brand-solid: var(--dss-hub-400);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-hub-400);
 
   --dss-focus-primary: var(--dss-hub-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -60,6 +64,10 @@
 
   /* Eixo de IDENTIDADE — mesmo degrau da ação: 8,05:1 contra a superfície escura. */
   --dss-brand-solid: var(--dss-water-300);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-water-300);
 
   --dss-focus-primary: var(--dss-water-300);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -83,6 +91,10 @@
 
   /* Eixo de IDENTIDADE — mesmo degrau da ação: 7,29:1 contra a superfície escura. */
   --dss-brand-solid: var(--dss-waste-400);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-waste-400);
 
   --dss-focus-primary: var(--dss-waste-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);

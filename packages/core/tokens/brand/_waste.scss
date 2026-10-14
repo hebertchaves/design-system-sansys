@@ -11,8 +11,17 @@
    600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
    pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
    outro é um defeito esperando acontecer. */
+/* ALIAS DA CLASSE para os dois Quasar-rooted. O QSelect e o QInput roteiam
+   `data-brand` para o <input> nativo interno, que não fica ancestral do
+   `.q-field__control` — por isso a prop deles vira classe, não atributo
+   (exceção declarada no gate B3). Aliasando aqui, a classe passa a remapear
+   a marca INTEIRA, e o `_brands.scss` de cada um deixa de precisar existir.
+   Precedente idêntico: `semantic/accessibility/_focus.scss` já faz isso para
+   `--dss-focus-primary` desde jul/2026. */
 [data-brand="waste"],
-[data-brand="waste"] [data-brand-zone="shell"] {
+[data-brand="waste"] [data-brand-zone="shell"],
+.dss-select--brand-waste,
+.dss-textarea--brand-waste {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Waste

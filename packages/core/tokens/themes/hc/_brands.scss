@@ -54,6 +54,10 @@
      e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
      Agora consomem `--dss-brand-solid`, então o tema alcança: 8,88:1 com branco. */
   --dss-brand-solid: var(--dss-hub-900);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-hub-900);
 
   --dss-focus-primary: var(--dss-hub-900);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -79,6 +83,10 @@
      e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
      Agora consomem `--dss-brand-solid`, então o tema alcança: 7,37:1 com branco. */
   --dss-brand-solid: var(--dss-water-700);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-water-700);
 
   --dss-focus-primary: var(--dss-water-700);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -104,6 +112,10 @@
      e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
      Agora consomem `--dss-brand-solid`, então o tema alcança: 8,14:1 com branco. */
   --dss-brand-solid: var(--dss-waste-800);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-waste-800);
 
   --dss-focus-primary: var(--dss-waste-800);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);

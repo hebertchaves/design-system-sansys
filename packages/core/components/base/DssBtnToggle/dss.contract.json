@@ -2546,6 +2546,30 @@
           "source": "3-variants/_outline.scss"
         },
         {
+          "property": "background-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-selected",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-deep",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
           "property": "outline",
           "token": null,
           "value": "1px solid ButtonText",
@@ -2760,6 +2784,18 @@
         {
           "property": "opacity",
           "token": "--dss-opacity-hover",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-active",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-deep",
           "value": null,
           "source": "4-output/_states.scss"
         }
@@ -3609,6 +3645,7 @@
         "name": "--dss-opacity-active",
         "usedIn": [
           "default",
+          "hover",
           "active"
         ]
       },
@@ -3850,6 +3887,20 @@
         ]
       },
       {
+        "name": "--dss-opacity-selected",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary-deep",
+        "usedIn": [
+          "default",
+          "hover",
+          "active"
+        ]
+      },
+      {
         "name": "--dss-border-width-thick",
         "usedIn": [
           "default"
@@ -3979,12 +4030,6 @@
         "name": "--dss-focus-shadow-error",
         "usedIn": [
           "focus"
-        ]
-      },
-      {
-        "name": "--dss-action-tertiary-deep",
-        "usedIn": [
-          "active"
         ]
       }
     ]

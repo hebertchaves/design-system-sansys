@@ -1,102 +1,19 @@
 /* ==========================================================================
-   DssField — LAYER 4: OUTPUT — Brands (Hub, Water, Waste)
+   DssField - LAYER 4: OUTPUT - Brands
 
-   Dual-selector: prop brand (.dss-field--brand-{b}) e data-brand ancestral.
-   Apenas accent color no focus/label — estado de erro mantém --dss-error-600.
-   Padrão idêntico ao DssInput (Golden Context).
+   SEM REGRA, E ESSE É O ESTADO CORRETO.
+
+   out/2026 — ETAPA 4. Eram 21 referências a primitivo de marca, reimplementando
+   por marca o MESMO foco que a Layer 3 já desenha.
+
+   A Layer 3 pinta o foco com `var(--dss-action-primary)`. A camada de token
+   remapeia esse token por marca, alcançada pelo `data-brand` que o root emite. Logo a cor da marca já chegava —
+   este arquivo só repetia os valores, e com o primitivo cru.
+
+   ⚠️ UMA COR MUDA, E É CORREÇÃO: o hub sai de 600 (#ef7a11) para 700 (#bf590f),
+   porque `--dss-action-primary` foi requalificado. A borda de foco do campo em
+   Hub dava **2,81:1** — abaixo até do piso de 3:1 de elemento não-textual.
+   Agora dá **4,52:1**. Water e waste não mudam.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §9.4
    ========================================================================== */
-
-/* ==========================================================================
-   HUB (Laranja)
-   ========================================================================== */
-
-[data-brand="hub"] .dss-field,
-.dss-field--brand-hub {
-  /* Focus: borda/shadow hub */
-  &.dss-field--outlined.dss-field--focused .dss-field__field {
-    border-color: var(--dss-hub-600);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-hub-600);
-  }
-
-  &.dss-field--filled.dss-field--focused .dss-field__field,
-  &.dss-field--borderless.dss-field--focused .dss-field__field {
-    border-bottom-color: var(--dss-hub-600);
-    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-hub-600);
-  }
-
-  &.dss-field--standout.dss-field--focused .dss-field__field {
-    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
-  }
-
-  /* Label em foco → cor brand */
-  &.dss-field--focused .dss-field__label {
-    color: var(--dss-hub-700);
-  }
-
-  /* Hint em brand */
-  .dss-field__hint {
-    color: var(--dss-hub-700);
-  }
-}
-
-/* ==========================================================================
-   WATER (Azul)
-   ========================================================================== */
-
-[data-brand="water"] .dss-field,
-.dss-field--brand-water {
-  &.dss-field--outlined.dss-field--focused .dss-field__field {
-    border-color: var(--dss-water-500);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-water-500);
-  }
-
-  &.dss-field--filled.dss-field--focused .dss-field__field,
-  &.dss-field--borderless.dss-field--focused .dss-field__field {
-    border-bottom-color: var(--dss-water-500);
-    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-water-500);
-  }
-
-  &.dss-field--standout.dss-field--focused .dss-field__field {
-    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
-  }
-
-  &.dss-field--focused .dss-field__label {
-    color: var(--dss-water-600);
-  }
-
-  .dss-field__hint {
-    color: var(--dss-water-700);
-  }
-}
-
-/* ==========================================================================
-   WASTE (Verde)
-   ========================================================================== */
-
-[data-brand="waste"] .dss-field,
-.dss-field--brand-waste {
-  &.dss-field--outlined.dss-field--focused .dss-field__field {
-    border-color: var(--dss-waste-600);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-waste-600);
-  }
-
-  &.dss-field--filled.dss-field--focused .dss-field__field,
-  &.dss-field--borderless.dss-field--focused .dss-field__field {
-    border-bottom-color: var(--dss-waste-600);
-    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-waste-600);
-  }
-
-  &.dss-field--standout.dss-field--focused .dss-field__field {
-    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
-  }
-
-  &.dss-field--focused .dss-field__label {
-    color: var(--dss-waste-700);
-  }
-
-  .dss-field__hint {
-    color: var(--dss-waste-800);
-  }
-}
-
-/* Estado de erro mantém --dss-error-600 independente do brand */

@@ -945,60 +945,6 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-800",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
           "token": null,
           "value": "currentColor",
           "source": "4-output/_states.scss"
@@ -1167,73 +1113,13 @@
           "property": "box-shadow",
           "token": "--dss-border-width-md",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "3-variants/_borderless.scss"
         },
         {
           "property": "background-color",
           "token": "--dss-gray-700",
           "value": null,
           "source": "3-variants/_standout.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
         },
         {
           "property": "outline",
@@ -1483,8 +1369,7 @@
       {
         "name": "--dss-border-width-thin",
         "usedIn": [
-          "default",
-          "focus"
+          "default"
         ]
       },
       {
@@ -1546,46 +1431,6 @@
         ]
       },
       {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-hub-700",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-500",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-700",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-waste-800",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-border-width-thick",
         "usedIn": [
           "default",
@@ -1609,18 +1454,6 @@
         "name": "--dss-gray-700",
         "usedIn": [
           "hover",
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-waste-700",
-        "usedIn": [
           "focus"
         ]
       },

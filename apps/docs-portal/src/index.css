@@ -2988,8 +2988,17 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
    pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
    outro é um defeito esperando acontecer. */
+/* ALIAS DA CLASSE para os dois Quasar-rooted. O QSelect e o QInput roteiam
+   `data-brand` para o <input> nativo interno, que não fica ancestral do
+   `.q-field__control` — por isso a prop deles vira classe, não atributo
+   (exceção declarada no gate B3). Aliasando aqui, a classe passa a remapear
+   a marca INTEIRA, e o `_brands.scss` de cada um deixa de precisar existir.
+   Precedente idêntico: `semantic/accessibility/_focus.scss` já faz isso para
+   `--dss-focus-primary` desde jul/2026. */
 [data-brand=hub],
-[data-brand=hub] [data-brand-zone=shell] {
+[data-brand=hub] [data-brand-zone=shell],
+.dss-select--brand-hub,
+.dss-textarea--brand-hub {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Hub
@@ -3009,7 +3018,12 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   /* ===========================================
      2. TOKENS DE MARCA ESPECÍFICOS
      =========================================== */
-  --dss-brand-primary: var(--dss-hub-600);
+  /* out/2026 — requalificado 600→700, mesma razão do `--dss-brand-solid`:
+     hub-600 sobre branco dá 2,81:1 e reprova TUDO — o piso de 4,5 de texto e
+     até o de 3,0 de elemento não-textual. 700 = 4,52:1.
+     Ao contrário do `-solid`, aqui o water fica em 500: este é o nível de
+     INDICADOR (piso 3,0), onde 3,71 passa. Ver §9.4. */
+  --dss-brand-primary: var(--dss-hub-700);
   /* Preenchimento SÓLIDO da marca — uniforme nas três marcas (600).
      Diferente de `--dss-brand-primary`, que alivia o water em um degrau (500)
      por espelhar o eixo de AÇÃO, onde o tom mais claro lê melhor como botão.
@@ -3131,7 +3145,9 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      =========================================== */
 }
 [data-brand=hub] .dss-brand-hub-only,
-[data-brand=hub] [data-brand-zone=shell] .dss-brand-hub-only {
+[data-brand=hub] [data-brand-zone=shell] .dss-brand-hub-only,
+.dss-select--brand-hub .dss-brand-hub-only,
+.dss-textarea--brand-hub .dss-brand-hub-only {
   /* Classes que só aparecem no contexto Hub */
 }
 
@@ -3147,8 +3163,17 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
    pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
    outro é um defeito esperando acontecer. */
+/* ALIAS DA CLASSE para os dois Quasar-rooted. O QSelect e o QInput roteiam
+   `data-brand` para o <input> nativo interno, que não fica ancestral do
+   `.q-field__control` — por isso a prop deles vira classe, não atributo
+   (exceção declarada no gate B3). Aliasando aqui, a classe passa a remapear
+   a marca INTEIRA, e o `_brands.scss` de cada um deixa de precisar existir.
+   Precedente idêntico: `semantic/accessibility/_focus.scss` já faz isso para
+   `--dss-focus-primary` desde jul/2026. */
 [data-brand=water],
-[data-brand=water] [data-brand-zone=shell] {
+[data-brand=water] [data-brand-zone=shell],
+.dss-select--brand-water,
+.dss-textarea--brand-water {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Water
@@ -3287,7 +3312,9 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      =========================================== */
 }
 [data-brand=water] .dss-brand-water-only,
-[data-brand=water] [data-brand-zone=shell] .dss-brand-water-only {
+[data-brand=water] [data-brand-zone=shell] .dss-brand-water-only,
+.dss-select--brand-water .dss-brand-water-only,
+.dss-textarea--brand-water .dss-brand-water-only {
   /* Classes que só aparecem no contexto Water */
 }
 
@@ -3303,8 +3330,17 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
    pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
    outro é um defeito esperando acontecer. */
+/* ALIAS DA CLASSE para os dois Quasar-rooted. O QSelect e o QInput roteiam
+   `data-brand` para o <input> nativo interno, que não fica ancestral do
+   `.q-field__control` — por isso a prop deles vira classe, não atributo
+   (exceção declarada no gate B3). Aliasando aqui, a classe passa a remapear
+   a marca INTEIRA, e o `_brands.scss` de cada um deixa de precisar existir.
+   Precedente idêntico: `semantic/accessibility/_focus.scss` já faz isso para
+   `--dss-focus-primary` desde jul/2026. */
 [data-brand=waste],
-[data-brand=waste] [data-brand-zone=shell] {
+[data-brand=waste] [data-brand-zone=shell],
+.dss-select--brand-waste,
+.dss-textarea--brand-waste {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Waste
@@ -3443,7 +3479,9 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      =========================================== */
 }
 [data-brand=waste] .dss-brand-waste-only,
-[data-brand=waste] [data-brand-zone=shell] .dss-brand-waste-only {
+[data-brand=waste] [data-brand-zone=shell] .dss-brand-waste-only,
+.dss-select--brand-waste .dss-brand-waste-only,
+.dss-textarea--brand-waste .dss-brand-waste-only {
   /* Classes que só aparecem no contexto Waste */
 }
 
@@ -3904,6 +3942,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
      Agora consomem `--dss-brand-solid`, então o tema alcança: 8,88:1 com branco. */
   --dss-brand-solid: var(--dss-hub-900);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-hub-900);
   --dss-focus-primary: var(--dss-hub-900);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -3927,6 +3969,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
      Agora consomem `--dss-brand-solid`, então o tema alcança: 7,37:1 com branco. */
   --dss-brand-solid: var(--dss-water-700);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-water-700);
   --dss-focus-primary: var(--dss-water-700);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -3950,6 +3996,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      e a aba ativa pintavam com o primitivo cru e ficavam FORA do alto contraste.
      Agora consomem `--dss-brand-solid`, então o tema alcança: 8,14:1 com branco. */
   --dss-brand-solid: var(--dss-waste-800);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-waste-800);
   --dss-focus-primary: var(--dss-waste-800);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -4057,6 +4107,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-deep: var(--dss-hub-200); /* 11.99:1 */
   /* Eixo de IDENTIDADE — mesmo degrau da ação: 7,79:1 contra a superfície escura. */
   --dss-brand-solid: var(--dss-hub-400);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-hub-400);
   --dss-focus-primary: var(--dss-hub-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -4078,6 +4132,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-deep: var(--dss-water-100); /* 12.85:1 */
   /* Eixo de IDENTIDADE — mesmo degrau da ação: 8,05:1 contra a superfície escura. */
   --dss-brand-solid: var(--dss-water-300);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-water-300);
   --dss-focus-primary: var(--dss-water-300);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -4099,6 +4157,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-action-primary-deep: var(--dss-waste-200); /* 11.49:1 */
   /* Eixo de IDENTIDADE — mesmo degrau da ação: 7,29:1 contra a superfície escura. */
   --dss-brand-solid: var(--dss-waste-400);
+  /* Nível de INDICADOR do eixo de identidade — acompanha o degrau da ação,
+     como o `-solid`. Sem isto ficaria com o valor do tema claro dentro do
+     alto contraste. */
+  --dss-brand-primary: var(--dss-waste-400);
   --dss-focus-primary: var(--dss-waste-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }

@@ -432,3 +432,53 @@ Carousel comunica seleção** (não-texto informativo, 3:1). Ambos em `hub-600` 
 > moram no mesmo lugar, e encontrar um expõe o outro. Em quatro das cinco vezes
 > nesta frente, o que estava morto era um bloco de acessibilidade.
 
+---
+
+## §9.4 O eixo de identidade tem DOIS NÍVEIS de contraste
+
+A requalificação do hub (§9.2) expôs que um token só não dá conta: o piso muda
+conforme o papel, e o **water** é o que separa os dois níveis.
+
+| token | hub | water | waste | para quê | piso |
+|---|---|---|---|---|---|
+| `--dss-brand-primary` | 700 · 4,52 | **500 · 3,71** | 600 · 4,90 | **indicador** — borda, anel, sombra, acento | 3:1 (1.4.11) |
+| `--dss-brand-solid` | 700 · 4,52 | **600 · 5,29** | 600 · 4,90 | **superfície e texto** — fundo que recebe texto, cor de texto | 4,5:1 (1.4.3) |
+
+A diferença é só o water. O 500 lê melhor como ação e **passa** como indicador;
+não passa como texto. Por isso dois tokens, não um.
+
+> **Como escolher, em uma pergunta:** *tem texto em cima, ou É texto?* Se sim,
+> `-solid`. Se é borda, anel, sombra ou acento, `-primary`.
+
+Corrigi dois usos meus por causa disso: `DssTooltip` (fundo com texto branco) e
+`DssIcon` (cor de texto) estavam em `-primary` e no water davam 3,71:1.
+
+### A família de campos: 141 referências removidas de uma vez
+
+`DssInput`, `DssFile`, `DssField`, `DssSelect` e `DssTextarea` tinham, juntas,
+141 referências a primitivo — e todas **reimplementavam por marca o mesmo foco
+que a Layer 3 já desenha**. A Layer 3 pinta com `var(--dss-action-primary)`, que
+a camada de token remapeia por marca. A cor já chegava; o `_brands.scss` só
+repetia os valores com o primitivo cru.
+
+Os cinco foram a zero. O hub sai de 2,81:1 para 4,52:1 de carona, porque
+`--dss-action-primary` foi requalificado.
+
+**Os dois Quasar-rooted entraram junto.** `DssSelect` e `DssTextarea` não aceitam
+`data-brand` no root — o Quasar roteia o atributo para o `<input>` nativo
+interno. A saída foi **aliasar a classe na camada de token**:
+
+```scss
+[data-brand="hub"],
+[data-brand="hub"] [data-brand-zone="shell"],
+.dss-select--brand-hub,
+.dss-textarea--brand-hub { … }
+```
+
+Não é invenção: `semantic/accessibility/_focus.scss` já fazia exatamente isso
+para `--dss-focus-primary` desde jul/2026. Agora a classe remapeia a marca
+INTEIRA, e as duas rotas entregam a mesma cor — verificado em browser.
+
+Com isso a exceção B3 desses dois deixa de ser "não dá para corrigir" e passa a
+ser "corrigido por outro caminho, documentado".
+

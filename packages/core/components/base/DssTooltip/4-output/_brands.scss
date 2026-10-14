@@ -34,7 +34,8 @@
    contraste. */
 [data-brand] {
   &.dss-tooltip {
-    background-color: var(--dss-brand-primary);
+    /* fundo com texto BRANCO por cima: piso 4,5. Com `-primary` o water dava 3,71 — ver §9.4 */
+  background-color: var(--dss-brand-solid);
     color: var(--dss-text-on-primary);
   }
 }

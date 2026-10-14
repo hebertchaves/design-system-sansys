@@ -69,6 +69,30 @@
       opacity: var(--dss-opacity-active);
     }
   }
+
+  /* SELECIONADA — o mesmo véu, PERMANENTE, a `--dss-opacity-selected`.
+     Sem isto a opção escolhida era idêntica às outras: `color` e `toggleColor`
+     nascem ambos `primary`, então o Quasar pintava as duas com o mesmo
+     `.text-primary` e a seleção só existia no `aria-pressed` (medido out/2026).
+     O seletor é o `aria-pressed` que o QBtnToggle já escreve — o estado
+     semântico, não uma classe de aparência.
+     Fica FORA do `:not([disabled])`: opção desabilitada que está selecionada
+     continua selecionada, e esconder isso mentiria sobre o valor do grupo.
+     Hover sobre a selecionada sobe para o degrau de active, para o retorno de
+     ponteiro não sumir (10% de hover seria MENOS que os 15% de repouso). */
+  &[aria-pressed='true'] > .q-focus-helper {
+    background-color: currentColor;
+    opacity: var(--dss-opacity-selected);
+
+    &::before,
+    &::after {
+      opacity: 0;
+    }
+  }
+
+  &[aria-pressed='true']:not([disabled]):not(.disabled):hover > .q-focus-helper {
+    opacity: var(--dss-opacity-active);
+  }
 }
 
 /* ==========================================================================

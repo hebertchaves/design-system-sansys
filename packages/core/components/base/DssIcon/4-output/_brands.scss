@@ -40,7 +40,8 @@
    que estavam escritos um a um. CO-LOCALIZADO, nunca descendente: a decisão do
    selo v2.2 continua valendo (ícone embutido não herda marca do contexto). */
 [data-brand].dss-icon {
-  color: var(--dss-brand-primary);
+  /* é COR DE TEXTO sobre fundo claro: piso 4,5. Com `-primary` o water dava 3,71 — ver §9.4 */
+  color: var(--dss-brand-solid);
 }
 
 /* Via prop: <DssIcon brand="water" /> */

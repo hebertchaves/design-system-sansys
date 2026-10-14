@@ -11,8 +11,17 @@
    600 para 700, o mapa silenciosamente passou a devolver a cor errada — pego
    pelo e2e da casca aninhada. Um mapa que precisa ser mantido em sincronia com
    outro é um defeito esperando acontecer. */
+/* ALIAS DA CLASSE para os dois Quasar-rooted. O QSelect e o QInput roteiam
+   `data-brand` para o <input> nativo interno, que não fica ancestral do
+   `.q-field__control` — por isso a prop deles vira classe, não atributo
+   (exceção declarada no gate B3). Aliasando aqui, a classe passa a remapear
+   a marca INTEIRA, e o `_brands.scss` de cada um deixa de precisar existir.
+   Precedente idêntico: `semantic/accessibility/_focus.scss` já faz isso para
+   `--dss-focus-primary` desde jul/2026. */
 [data-brand="hub"],
-[data-brand="hub"] [data-brand-zone="shell"] {
+[data-brand="hub"] [data-brand-zone="shell"],
+.dss-select--brand-hub,
+.dss-textarea--brand-hub {
   /* ===========================================
      1. TOKENS DE AÇÃO (ACTION TOKENS)
      Primary actions usam cores da marca Hub
@@ -35,7 +44,12 @@
   /* ===========================================
      2. TOKENS DE MARCA ESPECÍFICOS
      =========================================== */
-  --dss-brand-primary: var(--dss-hub-600);
+  /* out/2026 — requalificado 600→700, mesma razão do `--dss-brand-solid`:
+     hub-600 sobre branco dá 2,81:1 e reprova TUDO — o piso de 4,5 de texto e
+     até o de 3,0 de elemento não-textual. 700 = 4,52:1.
+     Ao contrário do `-solid`, aqui o water fica em 500: este é o nível de
+     INDICADOR (piso 3,0), onde 3,71 passa. Ver §9.4. */
+  --dss-brand-primary: var(--dss-hub-700);
 
   /* Preenchimento SÓLIDO da marca — uniforme nas três marcas (600).
      Diferente de `--dss-brand-primary`, que alivia o water em um degrau (500)
