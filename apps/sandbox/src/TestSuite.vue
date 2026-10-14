@@ -583,6 +583,15 @@
             </button>
 
             <button
+              @click="activeComponent = 'data-table'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'data-table' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">table_view</span></span>
+              <span class="nav-label">DssDataTable</span>
+              <span class="nav-badge stress">piloto</span>
+            </button>
+
+            <button
               @click="activeComponent = 'uploader'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'uploader' }]"
             >
@@ -726,6 +735,10 @@
 
       <div v-else-if="activeComponent === 'table'" class="component-view">
         <TestTable />
+      </div>
+
+      <div v-else-if="activeComponent === 'data-table'" class="component-view">
+        <TestDataTable />
       </div>
 
       <div v-else-if="activeComponent === 'container'" class="component-view">
@@ -958,6 +971,7 @@ import TestBanner from './TestBanner.vue'
 import TestBreadcrumbsEl from './TestBreadcrumbsEl.vue'
 import TestMarkupTable from './TestMarkupTable.vue'
 import TestTable from './TestTable.vue'
+import TestDataTable from './TestDataTable.vue'
 import TestContainer from './TestContainer.vue'
 import TestForm from './TestForm.vue'
 import TestDialog from './TestDialog.vue'

@@ -1,0 +1,69 @@
+.dss-data-table {
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--dss-text-body);
+  font-family: var(--dss-font-family-sans);
+
+  &__toolbar,
+  &__toolbar-start,
+  &__toolbar-end,
+  &__actions,
+  &__row-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-spacing-2);
+  }
+
+  &__toolbar {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  &__toolbar-start,
+  &__toolbar-end {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  &__toolbar-end {
+    margin-inline-start: auto;
+  }
+
+  &__filter {
+    min-width: var(--dss-spacing-56);
+  }
+
+  &__error {
+    margin-bottom: var(--dss-spacing-2);
+  }
+
+  &__expanded-content {
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    background-color: var(--dss-surface-subtle);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  }
+
+  &__expand-cell,
+  &__select-cell,
+  &__actions-cell {
+    width: var(--dss-touch-target-md);
+    white-space: nowrap;
+  }
+
+  &__cell--left {
+    text-align: left;
+  }
+
+  &__cell--center {
+    text-align: center;
+  }
+
+  &__cell--right {
+    text-align: right;
+  }
+
+  &__empty {
+    padding: var(--dss-spacing-6);
+  }
+}
