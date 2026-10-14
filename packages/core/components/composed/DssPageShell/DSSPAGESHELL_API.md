@@ -51,7 +51,7 @@ O `DssPageShell` em si não emite.
 | `--dss-action-primary-deep` | L2 | Fundo do rail |
 | `--dss-action-primary-hover` | L2, L4 | Separador dos itens e hover |
 | `--dss-action-primary` | L4 | Item ativo |
-| `--dss-text-inverse` | L2, L4 | Ícone do rail e anel de foco |
+| `--dss-action-primary-text` | L2, L4 | Ícone do rail e anel de foco — texto sobre superfície de marca, estável entre temas |
 | `--dss-border-subtle` / `--dss-radius-md` | L3 | Moldura do board |
 | `--dss-opacity-disabled` | L4 | Item desabilitado |
 | `--dss-duration-fast` / `--dss-easing-standard` | L2 | Transição do hover |

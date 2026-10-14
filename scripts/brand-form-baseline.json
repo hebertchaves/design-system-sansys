@@ -34,11 +34,8 @@
     "base/DssTabPanel/4-output/_brands.scss",
     "base/DssTabs/4-output/_brands.scss",
     "base/DssTextarea/4-output/_brands.scss",
-    "base/DssTimeline/4-output/_brands.scss",
-    "base/DssTimeline/4-output/_states.scss",
     "base/DssTree/4-output/_brands.scss",
     "composed/DssBottomSheet/4-output/_brands.scss",
-    "composed/DssCarousel/4-output/_brands.scss",
     "composed/DssColorPicker/4-output/_brands.scss",
     "composed/DssDatePicker/4-output/_brands.scss",
     "composed/DssTable/4-output/_brands.scss",
@@ -73,7 +70,6 @@
     "base/DssTextarea/4-output/_brands.scss",
     "base/DssTree/4-output/_brands.scss",
     "composed/DssBottomSheet/4-output/_brands.scss",
-    "composed/DssCarousel/4-output/_brands.scss",
     "composed/DssDatePicker/4-output/_brands.scss",
     "composed/DssTable/4-output/_brands.scss",
     "composed/DssTimePicker/4-output/_brands.scss",
@@ -87,5 +83,10 @@
     "base/DssKnob",
     "base/DssMarkupTable",
     "base/DssRating"
+  ],
+  "classeMorta": [
+    "composed/DssTestPageComplexity/4-output/_brands.scss :: .dss-test-page-complexity--brand-hub",
+    "composed/DssTestPageComplexity/4-output/_brands.scss :: .dss-test-page-complexity--brand-waste",
+    "composed/DssTestPageComplexity/4-output/_brands.scss :: .dss-test-page-complexity--brand-water"
   ]
 }

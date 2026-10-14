@@ -20,11 +20,12 @@
 // O anel é INTERNO (`outline-offset` negativo): o item ocupa a largura inteira
 // do rail, e um anel externo seria cortado pela borda da coluna.
 //
-// A cor é `--dss-text-inverse` porque o fundo do rail é a marca escura —
-// `--dss-action-primary` ali seria azul sobre azul.
+// A cor é `--dss-action-primary-text` porque o fundo do rail é a marca escura —
+// `--dss-action-primary` ali seria azul sobre azul. Não `--dss-text-inverse`:
+// ele inverte com o tema e o rail não (ver a cor do item, na Layer 2).
 
 .dss-page-shell__rail-item:focus-visible {
-  outline: var(--dss-border-width-md) solid var(--dss-text-inverse);
+  outline: var(--dss-border-width-md) solid var(--dss-action-primary-text);
   outline-offset: calc(var(--dss-spacing-px) * -2);
 }
 

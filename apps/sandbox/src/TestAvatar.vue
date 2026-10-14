@@ -1,933 +1,376 @@
 <template>
-  <div class="test-container">
-    <header class="test-header">
-      <h1>DssAvatar - Teste Completo de Variacoes v2.3.0</h1>
-      <p>Todas as combinacoes possiveis de props, cores, tamanhos, formas, brands, status e acessibilidade</p>
-    </header>
+  <PlaygroundLayout
+    title="DssAvatar — Playground"
+    code="base/DssAvatar"
+    :sections="SECTIONS"
+    :kpis="KPIS"
+  >
+    <!-- ── 01. Conteúdo ────────────────────────────────────────────────── -->
+    <PgSection id="conteudo" index="01" title="Conteúdo" :count="4"
+      desc="Três formas de preencher o avatar: iniciais ou imagem pelo slot default, ou a prop icon. As duas vias são EXCLUDENTES — com `icon` definido o slot não é renderizado (o template só monta o conteúdo do slot quando não há ícone).">
+      <PgGrid>
+        <PgTile align="start" code="slot: iniciais">
+          <DssAvatar color="primary">JD</DssAvatar>
+        </PgTile>
+        <PgTile align="start" code="icon=&quot;person&quot;">
+          <DssAvatar color="primary" icon="person" />
+        </PgTile>
+        <PgTile align="start" code="slot: &lt;img&gt;">
+          <DssAvatar aria-label="Foto de Maria Kim"><img :src="FOTO" alt="" /></DssAvatar>
+        </PgTile>
+        <PgTile align="start" code="icon + slot → só o ícone">
+          <DssAvatar color="primary" icon="person">JD</DssAvatar>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-    <main class="test-content">
-      <!-- ========== SECAO 1: CORES SEMANTICAS COM INICIAIS ========== -->
-      <section class="test-section">
-        <h2>1. Cores Semanticas com Iniciais (8 cores)</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar color="primary">JD</DssAvatar>
-            <code>color="primary"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="secondary">AB</DssAvatar>
-            <code>color="secondary"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="tertiary">XY</DssAvatar>
-            <code>color="tertiary"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="accent">MK</DssAvatar>
-            <code>color="accent"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="positive">OK</DssAvatar>
-            <code>color="positive"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="negative">ER</DssAvatar>
-            <code>color="negative"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="warning">WN</DssAvatar>
-            <code>color="warning"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="info">IF</DssAvatar>
-            <code>color="info"</code>
+    <!-- ── 02. Tamanhos ────────────────────────────────────────────────── -->
+    <PgSection id="tamanhos" index="02" title="Tamanhos" :count="SIZES.length * 2"
+      desc="Prop size — xs, sm, md (default), lg, xl. As dimensões abaixo de cada avatar são MEDIDAS do DOM, não escritas à mão: se o token mudar, o número muda junto.">
+      <div class="pg-matrix">
+        <div class="pg-matrix-row">
+          <div class="pg-matrix-row__label">iniciais</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <div v-for="s in SIZES" :key="s" class="av-medido">
+              <DssAvatar :size="s" color="primary" :data-medida="`ini-${s}`">{{ s.toUpperCase() }}</DssAvatar>
+              <small>{{ s }}<template v-if="medidas[`ini-${s}`]"> · {{ medidas[`ini-${s}`] }}</template></small>
+            </div>
           </div>
         </div>
-      </section>
+        <div class="pg-matrix-row">
+          <div class="pg-matrix-row__label">ícone</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <div v-for="s in SIZES" :key="s" class="av-medido">
+              <DssAvatar :size="s" color="secondary" icon="person" :data-medida="`ico-${s}`" />
+              <small>{{ s }}<template v-if="medidas[`ico-${s}`]"> · {{ medidas[`ico-${s}`] }}</template></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </PgSection>
 
-      <!-- ========== SECAO 2: TAMANHOS (5 variantes com enum) ========== -->
-      <section class="test-section">
-        <h2>2. Tamanhos Predefinidos (xs, sm, md, lg, xl)</h2>
-        <p class="section-info">Usando enum de tamanhos DSS em vez de valores em pixels</p>
-        <div class="test-grid" style="align-items: center;">
-          <div class="test-item">
-            <DssAvatar color="primary" size="xs">XS</DssAvatar>
-            <code>size="xs" (32px)</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="secondary" size="sm">SM</DssAvatar>
-            <code>size="sm" (40px)</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="accent" size="md">MD</DssAvatar>
-            <code>size="md" (48px - default)</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="positive" size="lg">LG</DssAvatar>
-            <code>size="lg" (64px)</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="info" size="xl">XL</DssAvatar>
-            <code>size="xl" (80px)</code>
-          </div>
-        </div>
-      </section>
+    <!-- ── 03. Tamanho livre ───────────────────────────────────────────── -->
+    <PgSection id="tamanho-livre" index="03" title="Tamanho e fonte livres" :count="6"
+      desc="size também aceita qualquer comprimento CSS, e fontSize ajusta o conteúdo sem mexer na caixa. É a saída para o caso que a escala não cobre — o caminho normal é o enum, que vem de token.">
+      <PgGrid>
+        <PgTile align="start" v-for="s in CUSTOM_SIZES" :key="s" :code="`size=&quot;${s}&quot;`">
+          <DssAvatar :size="s" color="accent">AB</DssAvatar>
+        </PgTile>
+        <PgTile align="start" v-for="f in FONT_SIZES" :key="f" :code="`size=&quot;lg&quot; font-size=&quot;${f}&quot;`">
+          <DssAvatar size="lg" :font-size="f" color="accent">AB</DssAvatar>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-      <!-- ========== SECAO 3: TAMANHOS COM ICONES ========== -->
-      <section class="test-section">
-        <h2>3. Tamanhos com Icones Material</h2>
-        <div class="test-grid" style="align-items: center;">
-          <div class="test-item">
-            <DssAvatar icon="person" color="primary" size="xs" />
-            <code>size="xs" + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="account_circle" color="secondary" size="sm" />
-            <code>size="sm" + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="face" color="accent" size="md" />
-            <code>size="md" + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="group" color="positive" size="lg" />
-            <code>size="lg" + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="business" color="info" size="xl" />
-            <code>size="xl" + icon</code>
-          </div>
-        </div>
-      </section>
+    <!-- ── 04. Cores ───────────────────────────────────────────────────── -->
+    <PgSection id="cores" index="04" title="Cores Semânticas" :count="COLORS.length"
+      desc="Prop color — pinta o fundo pela classe utilitária bg-* (a cor não mora no SCSS do componente) e põe o texto em branco. O default é primary: avatar sem a prop já nasce pintado.">
+      <PgGrid>
+        <PgTile align="start" v-for="c in COLORS" :key="c" :code="`color=&quot;${c}&quot;`">
+          <DssAvatar :color="c">{{ iniciais(c) }}</DssAvatar>
+        </PgTile>
+        <PgTile align="start" code="sem a prop (= primary)">
+          <DssAvatar>JD</DssAvatar>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-      <!-- ========== SECAO 4: BRAND - BRANDABILIDADE DSS ========== -->
-      <section class="test-section highlight-section">
-        <h2>4. Brandabilidade DSS (Hub, Water, Waste)</h2>
-        <p class="section-info">Nova prop brand para aplicar estilos de marca Sansys com bordas coloridas</p>
-        <div class="test-grid">
-          <div class="test-item brand-demo">
-            <DssAvatar brand="hub" icon="person" size="lg" />
-            <code>brand="hub"</code>
-            <span class="brand-label brand-hub">Sansys Hub</span>
-          </div>
-          <div class="test-item brand-demo">
-            <DssAvatar brand="water" icon="person" size="lg" />
-            <code>brand="water"</code>
-            <span class="brand-label brand-water">Sansys Water</span>
-          </div>
-          <div class="test-item brand-demo">
-            <DssAvatar brand="waste" icon="person" size="lg" />
-            <code>brand="waste"</code>
-            <span class="brand-label brand-waste">Sansys Waste</span>
-          </div>
-        </div>
-        <div class="test-grid" style="margin-top: 1.5rem;">
-          <div class="test-item brand-demo">
-            <DssAvatar brand="hub" color="primary" size="lg">HB</DssAvatar>
-            <code>brand="hub" + iniciais</code>
-          </div>
-          <div class="test-item brand-demo">
-            <DssAvatar brand="water" color="secondary" size="lg">WT</DssAvatar>
-            <code>brand="water" + iniciais</code>
-          </div>
-          <div class="test-item brand-demo">
-            <DssAvatar brand="waste" color="positive" size="lg">WS</DssAvatar>
-            <code>brand="waste" + iniciais</code>
-          </div>
-        </div>
-      </section>
+    <!-- ── 05. Cor do texto ────────────────────────────────────────────── -->
+    <PgSection id="texto" index="05" title="Cor do texto" :count="TEXT_COLORS.length"
+      desc="textColor acrescenta a classe text-* por cima do branco padrão. O contraste passa a ser responsabilidade de quem escolhe o par — o componente não valida a combinação.">
+      <PgGrid>
+        <PgTile align="start" v-for="t in TEXT_COLORS" :key="t.text" :code="`color=&quot;${t.bg}&quot; text-color=&quot;${t.text}&quot;`">
+          <DssAvatar :color="t.bg" :text-color="t.text">Aa</DssAvatar>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-      <!-- ========== SECAO 5: STATUS - INDICADORES DE STATUS ========== -->
-      <section class="test-section highlight-section">
-        <h2>5. Status Indicators (online, away, busy, offline)</h2>
-        <p class="section-info">Nova prop status para indicadores visuais usando tokens DSS (--dss-positive, --dss-warning, --dss-negative, --dss-neutral-400)</p>
-        <div class="test-grid">
-          <div class="test-item status-demo">
-            <DssAvatar status="online" color="primary" size="lg">JD</DssAvatar>
-            <code>status="online"</code>
-            <span class="status-label status-online">Online</span>
-          </div>
-          <div class="test-item status-demo">
-            <DssAvatar status="away" color="secondary" size="lg">AB</DssAvatar>
-            <code>status="away"</code>
-            <span class="status-label status-away">Ausente</span>
-          </div>
-          <div class="test-item status-demo">
-            <DssAvatar status="busy" color="accent" size="lg">XY</DssAvatar>
-            <code>status="busy"</code>
-            <span class="status-label status-busy">Ocupado</span>
-          </div>
-          <div class="test-item status-demo">
-            <DssAvatar status="offline" color="info" size="lg">ZZ</DssAvatar>
-            <code>status="offline"</code>
-            <span class="status-label status-offline">Offline</span>
+    <!-- ── 06. Forma ───────────────────────────────────────────────────── -->
+    <PgSection id="forma" index="06" title="Forma" :count="6"
+      desc="Circular por padrão; square e rounded mudam o raio. square costuma servir a logo de empresa, onde o círculo cortaria a marca.">
+      <div class="pg-matrix">
+        <div v-for="f in FORMAS" :key="f.code" class="pg-matrix-row">
+          <div class="pg-matrix-row__label">{{ f.code }}</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <DssAvatar v-bind="f.props" size="lg" color="primary">JD</DssAvatar>
+            <DssAvatar v-bind="f.props" size="lg" color="secondary" icon="business" />
           </div>
         </div>
-        <div class="test-grid" style="margin-top: 1.5rem;">
-          <div class="test-item">
-            <DssAvatar status="online" icon="person" color="primary" size="lg" />
-            <code>status + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar status="away" icon="face" color="secondary" size="lg" />
-            <code>status + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar status="busy" icon="account_circle" color="accent" size="lg" />
-            <code>status + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar status="offline" icon="group" color="info" size="lg" />
-            <code>status + icon</code>
-          </div>
-        </div>
-      </section>
+      </div>
+    </PgSection>
 
-      <!-- ========== SECAO 6: ACESSIBILIDADE (aria-label) ========== -->
-      <section class="test-section highlight-section">
-        <h2>6. Acessibilidade WCAG 2.1 AA (aria-label)</h2>
-        <p class="section-info">Nova prop aria-label para suporte a screen readers</p>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar
-              icon="person"
-              color="primary"
-              size="lg"
-              aria-label="Avatar de Joao Silva"
-            />
-            <code>aria-label="Avatar de Joao Silva"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar
-              color="secondary"
-              size="lg"
-              aria-label="Usuario Alice Brown"
-              @click="handleAvatarClick"
-              style="cursor: pointer;"
-            >AB</DssAvatar>
-            <code>aria-label + @click</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar
-              status="online"
-              color="positive"
-              size="lg"
-              aria-label="Maria Kim - Online"
-            >MK</DssAvatar>
-            <code>aria-label + status</code>
+    <!-- ── 07. Status ──────────────────────────────────────────────────── -->
+    <PgSection id="status" index="07" title="Status" :count="STATUSES.length * 2"
+      desc="Prop status — online, away, busy, offline. O indicador é um elemento próprio com aria-label (`Status: online`), não só uma cor: quem não vê a bolinha ainda recebe o estado.">
+      <div class="pg-matrix">
+        <div class="pg-matrix-row">
+          <div class="pg-matrix-row__label">iniciais</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <div v-for="s in STATUSES" :key="s" class="av-medido">
+              <DssAvatar :status="s" size="lg" color="primary">JD</DssAvatar>
+              <small>{{ s }}</small>
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- ========== SECAO 7: FORMAS (circular, square, rounded) ========== -->
-      <section class="test-section">
-        <h2>7. Formas (circular, square, rounded)</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar color="primary" size="lg">JD</DssAvatar>
-            <code>circular (default)</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar square color="secondary" size="lg">AB</DssAvatar>
-            <code>square</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar rounded color="accent" size="lg">XY</DssAvatar>
-            <code>rounded</code>
+        <div class="pg-matrix-row">
+          <div class="pg-matrix-row__label">por tamanho</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <div v-for="s in SIZES" :key="s" class="av-medido">
+              <DssAvatar status="online" :size="s" color="secondary" icon="person" />
+              <small>{{ s }}</small>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </PgSection>
 
-      <!-- ========== SECAO 8: FORMAS COM ICONES ========== -->
-      <section class="test-section">
-        <h2>8. Formas com Icones</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar icon="person" color="primary" size="lg" />
-            <code>circular + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar square icon="business" color="secondary" size="lg" />
-            <code>square + icon</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar rounded icon="group" color="accent" size="lg" />
-            <code>rounded + icon</code>
+    <!-- ── 08. Brandabilidade ──────────────────────────────────────────── -->
+    <PgSection id="brand" index="08" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
+      desc="A prop brand escreve [data-brand] no próprio avatar; as pílulas do topo escrevem no ancestral. São os dois caminhos da mesma marca. Linha de cima: prop brand. Linha de baixo: sem prop — só reage às pílulas do topo.">
+      <div class="pg-matrix">
+        <div class="pg-matrix-row">
+          <div class="pg-matrix-row__label">prop brand</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <div v-for="b in BRAND_KEYS" :key="b" class="av-medido">
+              <DssAvatar :brand="b" size="lg" icon="person" />
+              <small>brand="{{ b }}"</small>
+            </div>
+            <div v-for="b in BRAND_KEYS" :key="`c-${b}`" class="av-medido">
+              <DssAvatar :brand="b" size="lg" color="primary">{{ b.slice(0, 2).toUpperCase() }}</DssAvatar>
+              <small>{{ b }} + primary</small>
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- ========== SECAO 9: ICONES MATERIAL (VARIADOS) ========== -->
-      <section class="test-section">
-        <h2>9. Icones Material Diversos</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar icon="person" color="primary" />
-            <code>icon="person"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="account_circle" color="secondary" />
-            <code>icon="account_circle"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="face" color="accent" />
-            <code>icon="face"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="group" color="positive" />
-            <code>icon="group"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="business" color="info" />
-            <code>icon="business"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="work" color="warning" />
-            <code>icon="work"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="admin_panel_settings" color="negative" />
-            <code>icon="admin_panel_settings"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="supervised_user_circle" color="tertiary" />
-            <code>icon="supervised_user_circle"</code>
+        <div class="pg-matrix-row">
+          <div class="pg-matrix-row__label">só o topo</div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic av-linha">
+            <DssAvatar size="lg" icon="person" />
+            <DssAvatar size="lg" color="primary">JD</DssAvatar>
+            <DssAvatar size="lg" color="positive">OK</DssAvatar>
+            <DssAvatar size="lg" color="primary" status="online">JD</DssAvatar>
           </div>
         </div>
-      </section>
+      </div>
+    </PgSection>
 
-      <!-- ========== SECAO 10: FONT SIZE CUSTOMIZADO ========== -->
-      <section class="test-section">
-        <h2>10. Font Size Customizado</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar color="primary" size="lg" font-size="12px">S</DssAvatar>
-            <code>fontSize="12px"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="secondary" size="lg" font-size="16px">M</DssAvatar>
-            <code>fontSize="16px"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="accent" size="lg" font-size="24px">L</DssAvatar>
-            <code>fontSize="24px"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="positive" size="lg" font-size="32px">XL</DssAvatar>
-            <code>fontSize="32px"</code>
-          </div>
-        </div>
-      </section>
+    <!-- ── 09. Acessibilidade ──────────────────────────────────────────── -->
+    <PgSection id="a11y" index="09" title="Acessibilidade" :count="3"
+      desc="Com ariaLabel o avatar vira role=&quot;img&quot; nomeado; sem ele, não tem papel e o leitor de tela lê o conteúdo cru (as iniciais, letra a letra). Os atributos abaixo são lidos do DOM. O evento click é emitido sempre, mas o avatar é um &lt;div&gt; sem tabindex: não entra na ordem de tabulação nem responde a Enter. Os estados de hover/foco do CSS só valem para button.dss-avatar, a.dss-avatar ou role=&quot;button&quot; — ação de verdade pede um desses.">
+      <PgGrid>
+        <PgTile align="start" :code="a11y.semLabel || 'sem aria-label'">
+          <DssAvatar color="primary" data-a11y="semLabel">JD</DssAvatar>
+        </PgTile>
+        <PgTile align="start" :code="a11y.comLabel || 'aria-label'">
+          <DssAvatar color="primary" aria-label="Avatar de João Dias" data-a11y="comLabel">JD</DssAvatar>
+        </PgTile>
+        <PgTile align="start" :code="`@click · cliques: ${cliques}`">
+          <DssAvatar color="secondary" aria-label="Alice Brown" @click="cliques++">AB</DssAvatar>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-      <!-- ========== SECAO 11: TEXT COLOR OVERRIDE ========== -->
-      <section class="test-section">
-        <h2>11. Text Color Override</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar color="primary" text-color="white">WT</DssAvatar>
-            <code>text-color="white"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="secondary" text-color="black">BK</DssAvatar>
-            <code>text-color="black"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="accent" text-color="negative">RD</DssAvatar>
-            <code>text-color="negative"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar icon="person" color="positive" text-color="primary" />
-            <code>icon + text-color</code>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 12: COMBINACAO BRAND + STATUS ========== -->
-      <section class="test-section highlight-section">
-        <h2>12. Combinacao Brand + Status (Caso de Uso Real)</h2>
-        <p class="section-info">Demonstracao de avatares com brand e status combinados</p>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar brand="hub" status="online" size="lg">HB</DssAvatar>
-            <code>brand="hub" + status="online"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar brand="water" status="away" size="lg">WT</DssAvatar>
-            <code>brand="water" + status="away"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar brand="waste" status="busy" size="lg">WS</DssAvatar>
-            <code>brand="waste" + status="busy"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar brand="hub" status="offline" icon="person" size="lg" />
-            <code>brand + status + icon</code>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 13: AVATAR GROUP (SOBREPOSICAO) ========== -->
-      <section class="test-section">
-        <h2>13. Avatar Group (Sobreposicao)</h2>
-        <div class="test-item">
+    <!-- ── 10. Grupo ───────────────────────────────────────────────────── -->
+    <PgSection id="grupo" index="10" title="Grupo" :count="3"
+      desc="A classe .dss-avatar-group (do próprio CSS do componente) sobrepõe os avatares e dá a cada um a borda da superfície, para o recorte entre eles continuar legível. Não há componente DssAvatarGroup — é um wrapper de classe.">
+      <PgGrid :cols="1">
+        <PgTile align="start" code=".dss-avatar-group">
           <div class="dss-avatar-group">
-            <DssAvatar color="primary">JD</DssAvatar>
-            <DssAvatar color="secondary">AB</DssAvatar>
-            <DssAvatar color="accent">XY</DssAvatar>
-            <DssAvatar color="positive">MK</DssAvatar>
+            <DssAvatar v-for="p in PESSOAS.slice(0, 4)" :key="p.ini" :color="p.cor">{{ p.ini }}</DssAvatar>
             <DssAvatar color="info">+5</DssAvatar>
           </div>
-          <code>dss-avatar-group</code>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 14: AVATAR GROUP COM ICONES ========== -->
-      <section class="test-section">
-        <h2>14. Avatar Group com Icones</h2>
-        <div class="test-item">
+        </PgTile>
+        <PgTile align="start" code=".dss-avatar-group + status">
           <div class="dss-avatar-group">
-            <DssAvatar icon="person" color="primary" />
-            <DssAvatar icon="face" color="secondary" />
-            <DssAvatar icon="account_circle" color="accent" />
-            <DssAvatar icon="group" color="positive" />
-            <DssAvatar color="info">+12</DssAvatar>
+            <DssAvatar v-for="p in PESSOAS.slice(0, 4)" :key="p.ini" :color="p.cor" :status="p.status">{{ p.ini }}</DssAvatar>
           </div>
-          <code>group + icons</code>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 15: AVATAR GROUP COM STATUS ========== -->
-      <section class="test-section">
-        <h2>15. Avatar Group com Status</h2>
-        <div class="test-item">
+        </PgTile>
+        <PgTile align="start" code=".dss-avatar-group · 12 avatares">
           <div class="dss-avatar-group">
-            <DssAvatar status="online" color="primary">JD</DssAvatar>
-            <DssAvatar status="online" color="secondary">AB</DssAvatar>
-            <DssAvatar status="away" color="accent">XY</DssAvatar>
-            <DssAvatar status="busy" color="positive">MK</DssAvatar>
-            <DssAvatar status="offline" color="info">+3</DssAvatar>
+            <DssAvatar v-for="i in 12" :key="i" :color="COLORS[i % COLORS.length]" size="sm">{{ i }}</DssAvatar>
           </div>
-          <code>group + status indicators</code>
-        </div>
-      </section>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-      <!-- ========== SECAO 16: AVATARS EM LISTA DE USUARIOS ========== -->
-      <section class="test-section">
-        <h2>16. Avatars em Lista de Usuarios (com Status DSS)</h2>
-        <div class="list-demo">
-          <div class="list-item">
-            <DssAvatar status="online" color="primary" aria-label="John Doe - Online">JD</DssAvatar>
-            <div class="user-info">
-              <strong>John Doe</strong>
-              <p>Software Engineer</p>
-            </div>
-            <DssBadge color="positive" label="Online" />
-          </div>
-          <div class="list-item">
-            <DssAvatar status="away" icon="person" color="secondary" aria-label="Alice Brown - Ausente" />
-            <div class="user-info">
-              <strong>Alice Brown</strong>
-              <p>Product Manager</p>
-            </div>
-            <DssBadge color="warning" label="Away" />
-          </div>
-          <div class="list-item">
-            <DssAvatar status="busy" color="accent" aria-label="Xavier Young - Ocupado">XY</DssAvatar>
-            <div class="user-info">
-              <strong>Xavier Young</strong>
-              <p>UX Designer</p>
-            </div>
-            <DssBadge color="negative" label="Busy" />
-          </div>
-          <div class="list-item">
-            <DssAvatar status="offline" icon="face" color="positive" aria-label="Maria Kim - Offline" />
-            <div class="user-info">
-              <strong>Maria Kim</strong>
-              <p>Frontend Developer</p>
-            </div>
-            <DssBadge color="info" label="Offline" />
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 17: AVATARS QUADRADOS (LOGOS) ========== -->
-      <section class="test-section">
-        <h2>17. Avatars Quadrados para Logos/Empresas</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar square icon="business" color="primary" size="lg" />
-            <code>square company 1</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar square icon="work" color="secondary" size="lg" />
-            <code>square company 2</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar square icon="corporate_fare" color="accent" size="lg" />
-            <code>square company 3</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar square color="positive" size="lg">CO</DssAvatar>
-            <code>square initials</code>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 18: AVATARS COM SLOTS (CONTEUDO CUSTOMIZADO) ========== -->
-      <section class="test-section">
-        <h2>18. Avatars com Slots (Conteudo Customizado)</h2>
-        <div class="test-grid">
-          <div class="test-item">
-            <DssAvatar color="primary">
-              <strong>JD</strong>
-            </DssAvatar>
-            <code>slot: &lt;strong&gt;</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="secondary">
-              <span style="font-size: 24px;">&#128100;</span>
-            </DssAvatar>
-            <code>slot: emoji</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="accent">
-              <div style="display: flex; flex-direction: column; align-items: center; font-size: 12px;">
-                <div>J</div>
-                <div>D</div>
+    <!-- ── 11. Em contexto ─────────────────────────────────────────────── -->
+    <PgSection id="contexto" index="11" title="Em contexto" :count="PESSOAS.length"
+      desc="O uso mais comum: avatar à esquerda de nome e papel, com status. O avatar leva aria-label com o estado por extenso — o nome ao lado já identifica a pessoa, o que faltava ao leitor de tela era o status.">
+      <PgGrid :cols="1">
+        <PgTile align="stretch" code="lista de usuários">
+          <ul class="av-lista">
+            <li v-for="p in PESSOAS" :key="p.ini" class="av-lista__item">
+              <DssAvatar :color="p.cor" :status="p.status" :aria-label="`${p.nome} — ${p.status}`">{{ p.ini }}</DssAvatar>
+              <div class="av-lista__texto">
+                <strong>{{ p.nome }}</strong>
+                <span>{{ p.papel }}</span>
               </div>
-            </DssAvatar>
-            <code>slot: complex</code>
-          </div>
-        </div>
-      </section>
+            </li>
+          </ul>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-      <!-- ========== SECAO 19: TAMANHOS CUSTOMIZADOS (UNIDADES DIFERENTES) ========== -->
-      <section class="test-section">
-        <h2>19. Tamanhos Customizados (diferentes unidades CSS)</h2>
-        <div class="test-grid" style="align-items: center;">
-          <div class="test-item">
-            <DssAvatar color="primary" size="3rem">3R</DssAvatar>
-            <code>size="3rem"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="secondary" size="4em">4E</DssAvatar>
-            <code>size="4em"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="accent" size="100px">PX</DssAvatar>
-            <code>size="100px"</code>
-          </div>
-          <div class="test-item">
-            <DssAvatar color="positive" size="10vh">VH</DssAvatar>
-            <code>size="10vh"</code>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 20: STRESS TEST (RENDERIZACAO) ========== -->
-      <section class="test-section">
-        <h2>20. Stress Test (renderizacao de multiplos avatars)</h2>
-        <div class="stress-test">
-          <DssAvatar
-            v-for="n in 30"
-            :key="n"
-            :color="colors[n % colors.length]"
-          >
-            {{ n }}
-          </DssAvatar>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 21: STRESS TEST COM ICONES ========== -->
-      <section class="test-section">
-        <h2>21. Stress Test com Icones</h2>
-        <div class="stress-test">
-          <DssAvatar
-            v-for="n in 30"
-            :key="n"
-            :icon="icons[n % icons.length]"
-            :color="colors[n % colors.length]"
-          />
-        </div>
-      </section>
-
-      <!-- ========== SECAO 22: STRESS TEST COM STATUS ========== -->
-      <section class="test-section">
-        <h2>22. Stress Test com Status</h2>
-        <div class="stress-test">
-          <DssAvatar
-            v-for="n in 20"
-            :key="n"
-            :status="statuses[n % statuses.length]"
-            :color="colors[n % colors.length]"
-          >
-            {{ n }}
-          </DssAvatar>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 23: AVATAR GROUP GRANDE ========== -->
-      <section class="test-section">
-        <h2>23. Avatar Group Grande (muitos usuarios)</h2>
-        <div class="test-item">
-          <div class="dss-avatar-group">
-            <DssAvatar v-for="n in 8" :key="n" :color="colors[n % colors.length]">
-              {{ String.fromCharCode(65 + n) }}{{ String.fromCharCode(66 + n) }}
-            </DssAvatar>
-            <DssAvatar color="info">+25</DssAvatar>
-          </div>
-          <code>large avatar group</code>
-        </div>
-      </section>
-
-      <!-- ========== SECAO 24: TOKENS DSS UTILIZADOS ========== -->
-      <section class="test-section tokens-section">
-        <h2>24. Tokens DSS Utilizados pelo DssAvatar</h2>
-        <p class="section-info">Referencia dos tokens DSS aplicados no componente</p>
-        <div class="tokens-grid">
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-positive, #21BA45);"></div>
-            <code>--dss-positive</code>
-            <span>Status Online</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-warning, #F2C037);"></div>
-            <code>--dss-warning</code>
-            <span>Status Away</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-negative, #C10015);"></div>
-            <code>--dss-negative</code>
-            <span>Status Busy</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-neutral-400, #9E9E9E);"></div>
-            <code>--dss-neutral-400</code>
-            <span>Status Offline</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-brand-hub-primary, #F7931E);"></div>
-            <code>--dss-brand-hub-primary</code>
-            <span>Brand Hub</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-brand-water-primary, #0074BD);"></div>
-            <code>--dss-brand-water-primary</code>
-            <span>Brand Water</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-brand-waste-primary, #00A651);"></div>
-            <code>--dss-brand-waste-primary</code>
-            <span>Brand Waste</span>
-          </div>
-          <div class="token-item">
-            <div class="token-swatch" style="background: var(--dss-border-radius-full, 9999px); width: 32px; height: 32px; border-radius: 50%;"></div>
-            <code>--dss-border-radius-full</code>
-            <span>Circular</span>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <footer class="test-footer">
-      <p>Teste completo de DssAvatar - Design System Sansys v2.3.0</p>
-    </footer>
-  </div>
+    <!-- ── 12. Exemplos de uso (.example.vue como fonte) ───────────────── -->
+    <PgSection id="exemplos" index="12" title="Exemplos de uso" :count="1"
+      desc="Composições reais do DssAvatar.example.vue — fonte única, também usável na documentação.">
+      <DssAvatarExample />
+    </PgSection>
+  </PlaygroundLayout>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 
-// Componentes DSS reais (Entry Point Wrappers — Princípio #11). Sem isto o Vue não
-// resolve as tags <DssAvatar>/<DssBadge> e a página não renderiza os componentes.
+// Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssAvatar from '@components/base/DssAvatar/DssAvatar.vue'
-import DssBadge from '@components/base/DssBadge/DssBadge.vue'
+import DssAvatarExample from '@components/base/DssAvatar/DssAvatar.example.vue'
 
-const colors = ['primary', 'secondary', 'tertiary', 'accent', 'positive', 'negative', 'warning', 'info']
-const icons = ['person', 'account_circle', 'face', 'group', 'business', 'work', 'supervised_user_circle', 'admin_panel_settings']
-const statuses = ['online', 'away', 'busy', 'offline']
-const brands = ['hub', 'water', 'waste']
+// Template reutilizável das páginas de teste
+import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
 
-const handleAvatarClick = (event) => {
-  console.log('Avatar clicado!', event)
-  alert('Avatar clicado! Evento @click funcionando.')
+// ──────────────────────────────────────────────────────────────────────────
+// API canônica do DssAvatar (vide types/avatar.types.ts)
+// ──────────────────────────────────────────────────────────────────────────
+const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+const COLORS = [
+  'primary', 'secondary', 'tertiary', 'accent',
+  'positive', 'negative', 'warning', 'info',
+] as const
+const STATUSES = ['online', 'away', 'busy', 'offline'] as const
+const BRAND_KEYS = ['hub', 'water', 'waste'] as const
+
+const CUSTOM_SIZES = ['3rem', '72px', '4em']
+const FONT_SIZES = ['12px', '20px', '28px']
+
+const TEXT_COLORS = [
+  { bg: 'primary' as const, text: 'white' },
+  { bg: 'warning' as const, text: 'black' },
+  { bg: 'accent' as const, text: 'negative' },
+]
+
+const FORMAS = [
+  { code: 'circular (padrão)', props: {} },
+  { code: 'square', props: { square: true } },
+  { code: 'rounded', props: { rounded: true } },
+]
+
+const PESSOAS = [
+  { ini: 'JD', nome: 'João Dias', papel: 'Administrador', cor: 'primary' as const, status: 'online' as const },
+  { ini: 'AB', nome: 'Alice Brown', papel: 'Operadora', cor: 'secondary' as const, status: 'away' as const },
+  { ini: 'MK', nome: 'Maria Kim', papel: 'Analista', cor: 'accent' as const, status: 'busy' as const },
+  { ini: 'RS', nome: 'Rui Souza', papel: 'Leitura de campo', cor: 'positive' as const, status: 'offline' as const },
+]
+
+// Foto de demonstração embutida: a página não pode depender de rede para
+// mostrar o caso "imagem no slot".
+const FOTO = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#c9d6e2"/><circle cx="32" cy="25" r="12" fill="#6b8299"/><path d="M8 64c2-16 12-24 24-24s22 8 24 24z" fill="#6b8299"/></svg>'
+)
+
+const SECTIONS = [
+  { id: 'conteudo',      index: '01', title: 'Conteúdo' },
+  { id: 'tamanhos',      index: '02', title: 'Tamanhos' },
+  { id: 'tamanho-livre', index: '03', title: 'Tamanho e fonte livres' },
+  { id: 'cores',         index: '04', title: 'Cores Semânticas' },
+  { id: 'texto',         index: '05', title: 'Cor do texto' },
+  { id: 'forma',         index: '06', title: 'Forma' },
+  { id: 'status',        index: '07', title: 'Status' },
+  { id: 'brand',         index: '08', title: 'Brandabilidade' },
+  { id: 'a11y',          index: '09', title: 'Acessibilidade' },
+  { id: 'grupo',         index: '10', title: 'Grupo' },
+  { id: 'contexto',      index: '11', title: 'Em contexto' },
+  { id: 'exemplos',      index: '12', title: 'Exemplos de uso' },
+]
+
+const KPIS = [
+  { value: SIZES.length,      label: 'Tamanhos' },
+  { value: COLORS.length,     label: 'Cores' },
+  { value: STATUSES.length,   label: 'Status' },
+  { value: BRAND_KEYS.length, label: 'Brands' },
+]
+
+const cliques = ref(0)
+const iniciais = (c: string) => c.slice(0, 2).toUpperCase()
+
+// Dimensões e atributos de a11y saem do DOM. `offsetParent === null` pula o que
+// está oculto — a casca mantém as seções montadas com v-show enquanto mostra o
+// Preview Frame, e medir ali devolveria zero em tudo.
+const medidas = reactive<Record<string, string>>({})
+const a11y = reactive<Record<string, string>>({})
+
+function medir() {
+  for (const el of document.querySelectorAll<HTMLElement>('[data-medida]')) {
+    if (el.offsetParent === null) continue
+    const r = el.getBoundingClientRect()
+    medidas[el.dataset.medida as string] = `${Math.round(r.width)}×${Math.round(r.height)}px`
+  }
+  for (const el of document.querySelectorAll<HTMLElement>('[data-a11y]')) {
+    if (el.offsetParent === null) continue
+    const role = el.getAttribute('role')
+    const label = el.getAttribute('aria-label')
+    a11y[el.dataset.a11y as string] = role ? `role="${role}" aria-label="${label}"` : 'sem role, sem aria-label'
+  }
 }
+
+// A página ABRE no Preview Frame, com as seções ocultas: medir só no mount
+// não acharia nada. O ResizeObserver dispara quando o avatar sai de `display:
+// none` (0×0) para o tamanho real — isto é, quando as seções aparecem.
+let observador: ResizeObserver | null = null
+onMounted(() => {
+  const alvo = document.querySelector('[data-medida]')
+  if (!alvo) return
+  observador = new ResizeObserver(medir)
+  observador.observe(alvo)
+})
+onBeforeUnmount(() => observador?.disconnect())
 </script>
 
 <style scoped>
-/* ========================================
-   CSS USANDO TOKENS DSS
-   ======================================== */
-.test-container {
-  min-height: 100vh;
-  background: var(--dss-surface-background, #f5f5f5);
+.av-linha {
+  align-items: flex-end;
+  gap: var(--dss-spacing-5);
 }
 
-.test-header {
-  background: linear-gradient(135deg, var(--dss-action-primary, #1976D2) 0%, var(--dss-action-primary-hover, #1565C0) 100%);
-  color: var(--dss-text-on-primary, white);
-  padding: var(--dss-spacing-8, 2rem);
-  text-align: center;
-  box-shadow: var(--dss-shadow-md, 0 2px 8px rgba(0, 0, 0, 0.1));
-}
-
-.test-header h1 {
-  margin: 0 0 var(--dss-spacing-2, 0.5rem) 0;
-  font-size: var(--dss-font-size-2xl, 2rem);
-  font-weight: var(--dss-font-weight-bold, 700);
-}
-
-.test-header p {
-  margin: 0;
-  opacity: 0.95;
-}
-
-.test-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: var(--dss-spacing-8, 2rem);
-}
-
-.test-section {
-  background: var(--dss-surface-default, white);
-  border-radius: var(--dss-border-radius-lg, 12px);
-  padding: var(--dss-spacing-8, 2rem);
-  margin-bottom: var(--dss-spacing-8, 2rem);
-  box-shadow: var(--dss-shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.08));
-}
-
-.test-section.highlight-section {
-  border: 2px solid var(--dss-action-primary, #1976D2);
-  box-shadow: var(--dss-shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
-}
-
-.test-section h2 {
-  margin: 0 0 var(--dss-spacing-4, 1rem) 0;
-  font-size: var(--dss-font-size-lg, 1.25rem);
-  font-weight: var(--dss-font-weight-semibold, 600);
-  color: var(--dss-text-primary, #333);
-  border-left: 4px solid var(--dss-action-primary, #1976D2);
-  padding-left: var(--dss-spacing-4, 1rem);
-}
-
-.section-info {
-  margin: 0 0 var(--dss-spacing-4, 1rem) 0;
-  padding: var(--dss-spacing-3, 0.75rem) var(--dss-spacing-4, 1rem);
-  background: var(--dss-surface-elevated, #E3F2FD);
-  border-radius: var(--dss-border-radius-md, 8px);
-  color: var(--dss-text-secondary, #555);
-  font-size: var(--dss-font-size-sm, 0.875rem);
-}
-
-.test-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--dss-spacing-6, 1.5rem);
-}
-
-.test-item {
+.av-medido {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--dss-spacing-2, 0.5rem);
-  padding: var(--dss-spacing-4, 1rem);
-  background: var(--dss-surface-subtle, #fafafa);
-  border-radius: var(--dss-border-radius-md, 8px);
-  border: 1px solid var(--dss-border-default, #e0e0e0);
+  gap: var(--dss-spacing-2);
 }
 
-.test-item code {
-  font-size: var(--dss-font-size-xs, 0.75rem);
-  color: var(--dss-text-secondary, #666);
-  background: var(--dss-surface-default, #fff);
-  padding: var(--dss-spacing-1, 0.25rem) var(--dss-spacing-2, 0.5rem);
-  border-radius: var(--dss-border-radius-sm, 4px);
-  border: 1px solid var(--dss-border-light, #ddd);
-  font-family: 'Courier New', monospace;
-  text-align: center;
+.av-medido small {
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-subtle);
+  white-space: nowrap;
 }
 
-/* ========================================
-   BRAND DEMO STYLES (usando tokens DSS)
-   ======================================== */
-.brand-demo {
-  position: relative;
-}
-
-.brand-label {
-  padding: var(--dss-spacing-1, 0.25rem) var(--dss-spacing-2, 0.5rem);
-  border-radius: var(--dss-border-radius-sm, 4px);
-  font-size: var(--dss-font-size-xs, 0.75rem);
-  font-weight: var(--dss-font-weight-medium, 500);
-}
-
-.brand-label.brand-hub {
-  background: var(--dss-brand-hub-primary, #F7931E);
-  color: var(--dss-text-on-primary, white);
-}
-
-.brand-label.brand-water {
-  background: var(--dss-brand-water-primary, #0074BD);
-  color: var(--dss-text-on-primary, white);
-}
-
-.brand-label.brand-waste {
-  background: var(--dss-brand-waste-primary, #00A651);
-  color: var(--dss-text-on-primary, white);
-}
-
-/* ========================================
-   STATUS DEMO STYLES (usando tokens DSS)
-   ======================================== */
-.status-demo {
-  position: relative;
-}
-
-.status-label {
-  padding: var(--dss-spacing-1, 0.25rem) var(--dss-spacing-2, 0.5rem);
-  border-radius: var(--dss-border-radius-sm, 4px);
-  font-size: var(--dss-font-size-xs, 0.75rem);
-  font-weight: var(--dss-font-weight-medium, 500);
-}
-
-.status-label.status-online {
-  background: var(--dss-positive, #21BA45);
-  color: var(--dss-text-on-primary, white);
-}
-
-.status-label.status-away {
-  background: var(--dss-warning, #F2C037);
-  color: var(--dss-text-primary, #333);
-}
-
-.status-label.status-busy {
-  background: var(--dss-negative, #C10015);
-  color: var(--dss-text-on-primary, white);
-}
-
-.status-label.status-offline {
-  background: var(--dss-neutral-400, #9E9E9E);
-  color: var(--dss-text-on-primary, white);
-}
-
-/* ========================================
-   LIST DEMO STYLES
-   ======================================== */
-.list-demo {
+.av-lista {
+  list-style: none;
+  margin: var(--dss-spacing-0);
+  padding: var(--dss-spacing-0);
   display: flex;
   flex-direction: column;
-  gap: var(--dss-spacing-4, 1rem);
+  gap: var(--dss-spacing-3);
 }
 
-.list-item {
+.av-lista__item {
   display: flex;
   align-items: center;
-  gap: var(--dss-spacing-4, 1rem);
-  padding: var(--dss-spacing-4, 1rem);
-  background: var(--dss-surface-subtle, #fafafa);
-  border-radius: var(--dss-border-radius-md, 8px);
-  border: 1px solid var(--dss-border-default, #e0e0e0);
+  gap: var(--dss-spacing-3);
 }
 
-.user-info {
-  flex: 1;
-}
-
-.user-info strong {
-  display: block;
-  color: var(--dss-text-primary, #333);
-  margin-bottom: var(--dss-spacing-1, 0.25rem);
-}
-
-.user-info p {
-  margin: 0;
-  color: var(--dss-text-secondary, #666);
-  font-size: var(--dss-font-size-sm, 0.875rem);
-}
-
-/* ========================================
-   TOKENS SECTION STYLES
-   ======================================== */
-.tokens-section {
-  background: linear-gradient(135deg, var(--dss-surface-default, white) 0%, var(--dss-surface-subtle, #fafafa) 100%);
-}
-
-.tokens-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--dss-spacing-4, 1rem);
-}
-
-.token-item {
+.av-lista__texto {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--dss-spacing-2, 0.5rem);
-  padding: var(--dss-spacing-4, 1rem);
-  background: var(--dss-surface-default, white);
-  border-radius: var(--dss-border-radius-md, 8px);
-  border: 1px solid var(--dss-border-default, #e0e0e0);
+  line-height: var(--dss-line-height-tight);
 }
 
-.token-swatch {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--dss-border-radius-md, 8px);
-  border: 2px solid var(--dss-border-default, #e0e0e0);
+.av-lista__texto strong {
+  color: var(--dss-text-body);
 }
 
-.token-item code {
-  font-size: var(--dss-font-size-xs, 0.7rem);
-  color: var(--dss-text-secondary, #666);
-  background: var(--dss-surface-subtle, #f5f5f5);
-  padding: var(--dss-spacing-1, 0.25rem) var(--dss-spacing-2, 0.5rem);
-  border-radius: var(--dss-border-radius-sm, 4px);
-  text-align: center;
-}
-
-.token-item span {
-  font-size: var(--dss-font-size-xs, 0.75rem);
-  color: var(--dss-text-secondary, #888);
-}
-
-/* ========================================
-   STRESS TEST STYLES
-   ======================================== */
-.stress-test {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--dss-spacing-2, 0.5rem);
-  padding: var(--dss-spacing-4, 1rem);
-  background: var(--dss-surface-subtle, #fafafa);
-  border-radius: var(--dss-border-radius-md, 8px);
-  align-items: center;
-}
-
-/* ========================================
-   FOOTER STYLES
-   ======================================== */
-.test-footer {
-  background: var(--dss-surface-dark, #333);
-  color: var(--dss-text-on-dark, white);
-  text-align: center;
-  padding: var(--dss-spacing-6, 1.5rem);
-}
-
-.test-footer p {
-  margin: 0;
-}
-
-/* ========================================
-   RESPONSIVE DESIGN
-   ======================================== */
-@media (max-width: 768px) {
-  .test-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .tokens-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.av-lista__texto span {
+  font-size: var(--dss-font-size-sm);
+  color: var(--dss-text-subtle);
 }
 </style>

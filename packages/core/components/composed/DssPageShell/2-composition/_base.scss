@@ -79,7 +79,11 @@
   // prendia o rail à marca Water.
   border-block-end: var(--dss-border-width-thin) solid var(--dss-action-primary-hover);
   background: transparent;
-  color: var(--dss-text-inverse);
+  // `--dss-action-primary-text`, NÃO `--dss-text-inverse`. O rail é superfície
+  // de marca e não acompanha o tema (`--dss-action-primary-deep` é o mesmo no
+  // claro e no escuro); `text-inverse` é "o inverso do texto do TEMA" e vira
+  // gray-900 no escuro. O ícone escurecia sobre um fundo que não tinha mudado.
+  color: var(--dss-action-primary-text);
   cursor: pointer;
   transition: background-color var(--dss-duration-fast) var(--dss-easing-standard);
 }

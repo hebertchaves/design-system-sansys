@@ -390,3 +390,45 @@ Agora cada arquivo de marca casa também `[data-brand="x"] [data-brand-zone="she
 no próprio seletor. A reentrada **re-resolve o bloco inteiro da marca** — exata por
 construção, sem mapa para manter. Mesmo mecanismo de `semantic/_scopes.scss`.
 
+---
+
+## §9.3 Varredura: "dois mapas que precisam concordar à mão"
+
+Depois que o mapa de reentrada da casca quebrou em silêncio **menos de um dia**
+depois de eu escrevê-lo, fiz uma varredura procurando a mesma classe de defeito
+em outros lugares. Três formas, medidas:
+
+| forma | resultado |
+|---|---|
+| paridade de tokens entre as 3 marcas | **0 assimetrias** (63 tokens) |
+| paridade dentro de cada tema HC | **0 assimetrias** |
+| **regra CSS para classe que ninguém gera** | **12 casos** |
+
+A terceira é real e virou a regra **B6** do gate.
+
+### Por que só essa virou gate
+
+O espelho — "classe gerada sem regra CSS" — tem **102 casos**, e a maioria é
+legítima: ganchos de estado para consumidor e teste (`--checked`, `--decorative`)
+que não precisam de estilo. Gatear aquilo seria ruído. Já regra que nunca casa
+é defeito sem ambiguidade.
+
+### O que os 12 eram
+
+| componente | o que era |
+|---|---|
+| `DssAvatar` (3) | bloco de **`forced-colors`** que eu esqueci de portar na migração de rota — ACESSIBILIDADE morrendo em silêncio |
+| `DssTimeline` (3) | componente **nunca teve** prop `brand`; a metade de classe sempre foi morta |
+| `DssCarousel` (3) | idem |
+| `DssTestPageComplexity` (3) | fixture, fora de escopo por governança — no baseline |
+
+Os de `Timeline` e `Carousel` renderam mais do que limpeza: ao colapsar os três
+blocos num só, apareceu que **o ponto da Timeline é preenchimento saturado com
+glifo branco** (superfície com texto, 4,5:1) e que **o indicador ativo do
+Carousel comunica seleção** (não-texto informativo, 3:1). Ambos em `hub-600` =
+**2,81:1**. Com `--dss-brand-solid` passam a 4,52:1.
+
+> Esse é o padrão que se repete: o defeito de forma e o defeito de contraste
+> moram no mesmo lugar, e encontrar um expõe o outro. Em quatro das cinco vezes
+> nesta frente, o que estava morto era um bloco de acessibilidade.
+

@@ -71,10 +71,12 @@
     outline-offset: var(--dss-focus-ring-offset);
   }
 
-  /* Brands nao se aplicam em forced-colors - sistema controla cores */
-  .dss-avatar--brand-hub,
-  .dss-avatar--brand-water,
-  .dss-avatar--brand-waste {
+  /* Brands nao se aplicam em forced-colors - sistema controla cores.
+     out/2026 — portado de `.dss-avatar--brand-*` para o atributo junto com a
+     migração de rota. Eu tinha esquecido ESTE bloco; a regra ficaria morta e o
+     avatar de marca voltaria a pintar cor própria em alto contraste do SO.
+     Foi o gate de classe morta que pegou. */
+  .dss-avatar[data-brand] {
     border-color: ButtonText;
     background-color: ButtonFace;
     color: ButtonText;

@@ -2749,7 +2749,19 @@
           "property": "opacity",
           "token": null,
           "value": "0",
-          "source": "_hover-ramp.scss"
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-hover",
+          "value": null,
+          "source": "4-output/_states.scss"
         }
       ],
       "focus": [
@@ -2844,6 +2856,24 @@
           "token": null,
           "value": "none",
           "source": "_hover-ramp.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-active",
+          "value": null,
+          "source": "4-output/_states.scss"
         }
       ],
       "disabled": [
@@ -3571,13 +3601,15 @@
       {
         "name": "--dss-opacity-hover",
         "usedIn": [
-          "default"
+          "default",
+          "hover"
         ]
       },
       {
         "name": "--dss-opacity-active",
         "usedIn": [
-          "default"
+          "default",
+          "active"
         ]
       },
       {

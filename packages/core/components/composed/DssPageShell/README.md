@@ -181,4 +181,4 @@ grid master), então um degrau a menos vale 40px — quase uma linha inteira.
 | `--dss-action-primary-hover` | L2, L4 | Separador e hover |
 | `--dss-action-primary` | L4 | Item ativo |
 | `--dss-icon-size-sm` | L2 | Ícone do item (20px) — fecha o vazamento de `font-size` da página |
-| `--dss-text-inverse` | L2, L4 | Ícone do rail e anel de foco |
+| `--dss-action-primary-text` | L2, L4 | Ícone do rail e anel de foco — texto sobre superfície de marca, estável entre temas |

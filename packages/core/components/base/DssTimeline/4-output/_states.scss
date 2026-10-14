@@ -52,23 +52,14 @@
     --dss-timeline-dot-color: var(--dss-gray-700);
   }
 
-  [data-brand="hub"] .dss-timeline,
-  .dss-timeline--brand-hub {
-    --dss-timeline-line-color: var(--dss-hub-800);
-    --dss-timeline-dot-color: var(--dss-hub-800);
+  /* out/2026 — três blocos viraram um. O trio era hub-800 · water-700 · waste-800,
+     que é exatamente `--dss-brand-tertiary`. A metade `.dss-timeline--brand-*`
+     estava morta: este componente não tem prop `brand`. */
+  [data-brand] .dss-timeline {
+    --dss-timeline-line-color: var(--dss-brand-tertiary);
+    --dss-timeline-dot-color: var(--dss-brand-tertiary);
   }
 
-  [data-brand="water"] .dss-timeline,
-  .dss-timeline--brand-water {
-    --dss-timeline-line-color: var(--dss-water-700);
-    --dss-timeline-dot-color: var(--dss-water-700);
-  }
-
-  [data-brand="waste"] .dss-timeline,
-  .dss-timeline--brand-waste {
-    --dss-timeline-line-color: var(--dss-waste-800);
-    --dss-timeline-dot-color: var(--dss-waste-800);
-  }
 }
 
 /* ==========================================================================

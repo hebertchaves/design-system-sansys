@@ -20,6 +20,58 @@
 }
 
 /* ==========================================================================
+   HOVER / ACTIVE em FLAT e OUTLINE — o véu de `currentColor`, o MESMO do DssButton
+
+   A rampa acima só alcança `.bg-*`, que apenas o preenchido carrega. Flat e
+   outline pintam por `.text-*`, e o `sem-realce-quasar` do bloco anterior
+   zera o véu do Quasar para todas as variantes — então nessas duas a opção não
+   dava retorno NENHUM ao passar o mouse.
+
+   Os valores são os do DssButton (`3-variants/_flat.scss` e `_outline.scss`):
+   `currentColor` a `--dss-opacity-hover`, e `--dss-opacity-active` ao pressionar.
+   `currentColor` vem da classe utilitária `.text-*`, então o véu segue a cor da
+   opção — e a marca — sem regra própria.
+
+   POR QUE o `.q-focus-helper` e não um `::after`, como no DssButton. O DssButton
+   é um <button> nativo e desenha o véu num pseudo-elemento seu. Aqui cada opção
+   é um `.q-btn` do Quasar, que já traz um elemento pronto para isso: absoluto,
+   cobrindo a opção, com `border-radius: inherit` e atrás do conteúdo. Reusá-lo
+   deixa o `::before` da opção livre (é a borda do outline no Quasar) e evita
+   empilhar um segundo véu sobre o do próprio helper.
+
+   Os pseudo-elementos do helper ficam em zero: o Quasar põe ali preto a 10% e
+   BRANCO a 40%, que é o "brilho por cima" que o `sem-realce-quasar` existe para
+   tirar. Sobra só o `currentColor`.
+
+   Vem DEPOIS do bloco da rampa, e a ordem é a regra: as duas têm a mesma
+   especificidade no `:hover > .q-focus-helper`, e esta precisa vencer o
+   `opacity: 0` de lá.
+   ========================================================================== */
+
+.dss-btn-toggle--flat > .q-btn-item,
+.dss-btn-toggle--outline > .q-btn-item {
+  &:not([disabled]):not(.disabled) {
+    &:hover > .q-focus-helper,
+    &:active > .q-focus-helper {
+      background-color: currentColor;
+
+      &::before,
+      &::after {
+        opacity: 0;
+      }
+    }
+
+    &:hover > .q-focus-helper {
+      opacity: var(--dss-opacity-hover);
+    }
+
+    &:active > .q-focus-helper {
+      opacity: var(--dss-opacity-active);
+    }
+  }
+}
+
+/* ==========================================================================
    DssBtnToggle - LAYER 4: OUTPUT (States)
 
    Responsabilidade: Estados especiais (dark mode, forced-colors).

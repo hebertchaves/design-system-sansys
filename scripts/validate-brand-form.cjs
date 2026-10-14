@@ -63,6 +63,26 @@
  *     (Constituição #6: o código é a fonte); este gate impede que a derivada
  *     minta — inclusive quando alguém remove o atributo e esquece o meta.
  *
+ * B6) REGRA CSS PARA CLASSE QUE NINGUÉM GERA — BLOQUEIA (baseline por regra)
+ *     Um seletor `.dss-x--algo` sem nada que produza essa classe é regra que
+ *     NUNCA casa. Não quebra build, não some do CSS, não erra no console: só
+ *     deixa de pintar.
+ *
+ *     Entra aqui porque foi a classe de defeito mais produtiva da migração de
+ *     marca. Ao trocar a rota de CLASSE para ATRIBUTO, toda regra que ainda
+ *     casava a classe velha morria em silêncio — e por quatro vezes o que
+ *     morria era um bloco de `forced-colors`, ou seja, ACESSIBILIDADE. Uma
+ *     delas foi minha e passou batido na revisão à mão; quem pegou foi a
+ *     primeira versão deste gate.
+ *
+ *     Também pega o caso inverso de origem: componentes com regra `--brand-*`
+ *     que nunca tiveram prop `brand` (DssTab, DssTimeline, DssCarousel).
+ *
+ *     ⚠️ NÃO cobre o espelho ("classe gerada sem regra CSS"): medi 102 casos e a
+ *     maioria é legítima — ganchos de estado para consumidor e teste
+ *     (`--checked`, `--decorative`) que não precisam de estilo. Gatear aquilo
+ *     seria ruído.
+ *
  * COMMENT-AWARE, como o hover-tokens. Sem strip, o próprio texto que explica por
  * que um primitivo saiu reprovaria o gate.
  *
@@ -278,12 +298,52 @@ function analisarZonas() {
   return problemas;
 }
 
+// ---------------------------------------------------------------- B6
+/** Classes `.dss-x--algo` que o SCSS casa mas que nada no TS/Vue produz. */
+function analisarClassesMortas() {
+  const mortas = [];
+  const dirs = new Set(walk(COMPONENTS, ['.scss', '.ts', '.vue']).map((f) => componenteDe(f)));
+
+  for (const comp of [...dirs].sort()) {
+    const raiz = path.join(COMPONENTS, comp);
+    // `componenteDe` devolve "base/index.ts" para arquivo solto na raiz da
+    // categoria; só diretório é componente.
+    if (!fs.existsSync(raiz) || !fs.statSync(raiz).isDirectory()) continue;
+    const geradas = new Set();
+    const prefixos = new Set();
+    const noScss = new Map();
+
+    for (const f of walk(raiz, ['.scss', '.ts', '.vue'])) {
+      if (f.endsWith('.test.js')) continue;
+      const src = stripComments(fs.readFileSync(f, 'utf8'));
+      if (f.endsWith('.scss')) {
+        for (const m of src.matchAll(/\.(dss-[a-z0-9-]+--[a-z0-9-]+)/g)) {
+          if (!noScss.has(m[1])) noScss.set(m[1], rel(f));
+        }
+      } else {
+        // nome literal: 'dss-x--foo'
+        for (const m of src.matchAll(/['"`](dss-[a-z0-9-]+--[a-z0-9-]+)['"`]/g)) geradas.add(m[1]);
+        // template com variável: `dss-x--brand-${…}` → vira prefixo
+        for (const m of src.matchAll(/`(dss-[a-z0-9-]+--[a-z0-9-]*)\$\{/g)) prefixos.add(m[1]);
+      }
+    }
+
+    for (const [cls, arquivo] of noScss) {
+      if (geradas.has(cls)) continue;
+      if ([...prefixos].some((p) => cls.startsWith(p))) continue;
+      mortas.push({ comp, cls, arquivo });
+    }
+  }
+  return mortas;
+}
+
 // ---------------------------------------------------------------- main
 function main() {
   const { b1, b2 } = analisarScss();
   const b3 = analisarProps();
   const b4 = analisarBarreira();
   const b5 = analisarZonas();
+  const b6 = analisarClassesMortas();
 
   const arquivosB1 = [...new Set(b1.map((a) => a.arquivo))].sort();
 
@@ -298,6 +358,7 @@ function main() {
           primitivoDeMarca: arquivosB1,
           brandsSemRemap: b2.sort(),
           propSemRota: b3,
+          classeMorta: b6.map((x) => `${x.arquivo} :: .${x.cls}`).sort(),
         },
         null,
         2
@@ -366,6 +427,18 @@ function main() {
   }
   if (!b5.length) console.log('       ✅ meta e código concordam');
 
+  const chaveB6 = (x) => `${x.arquivo} :: .${x.cls}`;
+  const atualB6 = b6.map(chaveB6).sort();
+  const novoB6 = atualB6.filter((k) => !(base.classeMorta || []).includes(k));
+  console.log(`\n   B6. Regra CSS para classe que ninguém gera: ${atualB6.length}`);
+  if (base.classeMorta?.length) console.log(`       (${base.classeMorta.length} no baseline)`);
+  for (const k of novoB6) {
+    console.log(`       ❌ NOVO: ${k}`);
+    console.log('            Regra que nunca casa. Se a rota virou atributo, porte para');
+    console.log('            `[data-brand]`; se a classe não existe mais, remova a regra.');
+  }
+  if (!atualB6.length) console.log('       ✅ nenhuma regra órfã');
+
   // A catraca: o baseline só pode encolher.
   const sumiuB1 = (base.primitivoDeMarca || []).filter((f) => !arquivosB1.includes(f));
   const sumiuB2 = (base.brandsSemRemap || []).filter((f) => !b2.includes(f));
@@ -375,7 +448,8 @@ function main() {
     console.log(`\n   🎉 ${migrados} item(ns) do baseline já corrigido(s). Rode --update-baseline para encolher a lista.`);
   }
 
-  const falhou = novoB1.length + novoB2.length + novoB3.length + b4.faltando.length + b5.length;
+  const falhou =
+    novoB1.length + novoB2.length + novoB3.length + b4.faltando.length + b5.length + novoB6.length;
   if (!falhou) {
     console.log('\n✅ Nenhum caso NOVO de forma de marca.');
     return;

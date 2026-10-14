@@ -1,71 +1,34 @@
 /* ==========================================================================
-   DssCarousel — LAYER 4: BRANDS (Hub, Water, Waste)
+   DssCarousel - LAYER 4: OUTPUT - Brands
 
-   Sobrescreve --q-color-primary por brand para colorir os controles de
-   navegação (setas e ponto de paginação ativo).
+   out/2026 — ETAPA 4 + REQUALIFICAÇÃO DA ESCALA
 
-   EXC-Gate-02a: --q-color-primary override — padrão estabelecido por
-   DssPagination e DssAjaxBar. Cor real dos controles é governada pelo DSS,
-   não pela prop control-color do Quasar.
+   Eram três blocos, um por marca, com o primitivo escrito à mão. Viraram um:
+   `--dss-brand-solid` resolve a marca sozinho.
 
-   Padrão dual-selector (data-brand + classe standalone).
-   Tokens numéricos de marca: hub-600, water-500, waste-600.
+   ⚠️ A METADE `.dss-carousel--brand-*` DOS SELETORES ESTAVA MORTA. Este componente
+   NÃO TEM prop `brand` — nada gerava essa classe. Só a metade descendente
+   (`[data-brand] .dss-carousel`) estava viva, e é a correta: a marca chega do
+   contexto, não por prop. Pego pela varredura de classe morta.
+
+   ⚠️ A COR MUDA NO HUB, e é correção de acessibilidade: o ícone de navegação ativo e a moldura do thumbnail ativo
+   INDICAM qual slide está selecionado — elemento não-textual informativo, 3:1
+   pela 1.4.11. O hub dava 2,81:1 e reprovava.
+   Com `--dss-brand-solid` o hub passa de 600 (#ef7a11, 2,81:1) para 700
+   (#bf590f, 4,52:1). Water e waste não mudam.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §9.2
    ========================================================================== */
 
-/* ==========================================================================
-   HUB (Laranja)
-   ========================================================================== */
-
-[data-brand="hub"] .dss-carousel,
-.dss-carousel--brand-hub {
-  --q-color-primary: var(--dss-hub-600);
+[data-brand] .dss-carousel {
+  --q-color-primary: var(--dss-brand-solid);
 }
 
-[data-brand="hub"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
-.dss-carousel--brand-hub .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
-  /* T4: sem !important — seletor (0,4,0) vence por especificidade (validado: 0 mudança). */
-  color: var(--dss-hub-600);
+/* T4: sem !important — o seletor vence por especificidade (validado: 0 mudança). */
+[data-brand] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
+  color: var(--dss-brand-solid);
 }
 
-[data-brand="hub"] .dss-carousel .q-carousel__thumbnail--active,
-.dss-carousel--brand-hub .q-carousel__thumbnail--active {
-  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
-}
-
-/* ==========================================================================
-   WATER (Azul)
-   ========================================================================== */
-
-[data-brand="water"] .dss-carousel,
-.dss-carousel--brand-water {
-  --q-color-primary: var(--dss-water-500);
-}
-
-[data-brand="water"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
-.dss-carousel--brand-water .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
-  color: var(--dss-water-500);
-}
-
-[data-brand="water"] .dss-carousel .q-carousel__thumbnail--active,
-.dss-carousel--brand-water .q-carousel__thumbnail--active {
-  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
-}
-
-/* ==========================================================================
-   WASTE (Verde)
-   ========================================================================== */
-
-[data-brand="waste"] .dss-carousel,
-.dss-carousel--brand-waste {
-  --q-color-primary: var(--dss-waste-600);
-}
-
-[data-brand="waste"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
-.dss-carousel--brand-waste .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
-  color: var(--dss-waste-600);
-}
-
-[data-brand="waste"] .dss-carousel .q-carousel__thumbnail--active,
-.dss-carousel--brand-waste .q-carousel__thumbnail--active {
-  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+[data-brand] .dss-carousel .q-carousel__thumbnail--active {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-brand-solid);
 }
