@@ -178,6 +178,7 @@ const visibleActions = computed(() => props.actions)
 const effectiveColumns = computed<DssTableColumn[]>(() => {
   const result = [...props.columns]
   if (props.expandable) result.unshift({ name: '__expand', label: '', field: props.rowKey, align: 'center' })
+  if (hasCustomBody.value && props.selection !== 'none') result.unshift({ name: '__select', label: '', field: props.rowKey, align: 'center' })
   if (props.rowActions.length) result.push({ name: '__actions', label: 'Ações', field: props.rowKey, align: 'right' })
   return result
 })

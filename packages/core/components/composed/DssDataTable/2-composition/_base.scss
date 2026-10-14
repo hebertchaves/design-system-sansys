@@ -45,9 +45,22 @@
   }
 
   &__expand-cell,
+  &__select-cell,
   &__actions-cell {
     width: var(--dss-touch-target-md);
     white-space: nowrap;
+  }
+
+  &__cell--left {
+    text-align: left;
+  }
+
+  &__cell--center {
+    text-align: center;
+  }
+
+  &__cell--right {
+    text-align: right;
   }
 
   &__empty {
