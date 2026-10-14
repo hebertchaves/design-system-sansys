@@ -1,43 +1,49 @@
-## Plano: Página do componente DssForm
+# Plano: DssDataTable — piloto de incorporação WebComps → DSS
 
-Criar `src/pages/components/DssFormPage.tsx` seguindo a estrutura normativa COMPONENT_PAGE_STRUCTURE.md v2.3 e o padrão de playground v3.2, usando como baseline as páginas Golden já existentes (DssButtonPage, DssCheckboxPage).
+## Objetivo
 
-### Estrutura da página (seções independentes colapsáveis)
+Criar um novo composto `DssDataTable`, inspirado no `jtech-data-table`, mas com uma API Vue 3 limpa e governada pelo DSS. O piloto cobrirá o núcleo operacional: dados locais e remotos controlados, filtro, paginação, seleção, ações, expansão e estados de carregamento/vazio/erro.
 
-1. **Badges de metadados** — versão, Quasar Compatible, status normativo
-2. **PageHeader** — título "DssForm" com ícone `ClipboardListIcon`, descrição orientada a produto (2–4 frases) explicando que DssForm é o wrapper de formulários do DSS que orquestra validação, submissão e agrupamento de campos (`DssInput`, `DssSelect`, `DssCheckbox`, `DssRadio`, etc.)
-3. **Quando Usar / Quando NÃO Usar** — com tabela de alternativas
-4. **Playground Interativo (v3.2)** — controles 4–6 colunas:
-   - Layout: `vertical` | `horizontal` | `inline`
-   - Density: `xs` | `sm` | `md` | `lg`
-   - Gutter: `sm` | `md` | `lg`
-   - Validação: `eager` | `lazy` | `on-submit`
-   - Toggles: `noErrorIcon`, `noResetFocus`, `autofocus`, `greedy`
-   - Seletores mutuamente exclusivos Brand / Color / Feedback (sem "None", sem `disabled`)
-   - Preview renderiza um mini-formulário (Input + Select + Checkbox + botões Submit/Reset)
-   - Geração de código em tempo real + toggle Light/Dark
-5. **Estados Interativos** — tabela única (Default, Validating, Valid, Invalid, Submitting, Disabled)
-6. **Anatomia 4 Camadas** (AnatomySection): Structure (form semântico + ARIA), Composition (gutter, alinhamento), Variants (layouts e densidades), Output (dark mode, forced-colors, reduced-motion)
-7. **Seções técnicas colapsáveis independentes**:
-   - 7.1 Props API & Eventos (submit, reset, validation-error)
-   - 7.2 Slots (default)
-   - 7.3 Tokens (tabela de tipos: dimensões, espaçamentos, feedback)
-   - 7.4 Acessibilidade WCAG (1.3.1, 2.4.6, 3.3.1, 3.3.3, 4.1.2)
-8. **Anti-patterns** — mínimo 3 (ex: usar DssForm como container visual, validação só por cor, formulários longos sem agrupamento)
-9. **Vinculantes DSS v2.2** — classificação (Compact/Container), uso de pseudo-elementos (N/A), brightness (N/A)
-10. **Referências Normativas** — links para `04_FORMS_INPUTS.md`, DSS_TOKEN_REFERENCE, DSS_COMPONENT_ARCHITECTURE
+A implementação legado será referência funcional, não fonte arquitetural. O novo componente comporá o `DssTable` e demais componentes DSS; não copiará Quasar cru, Stylus, mixins Vue 2, acesso a repositório global ou expressões dinâmicas.
 
-### Integração
+## O que será construído
 
-- Registrar rota `/components/dss-form` em `src/App.tsx`
-- Adicionar entrada "DssForm" no `src/components/navigation/DSSSidebar.tsx` com ícone `ClipboardListIcon`
+1. **Contrato funcional antes do código**
+   - Registrar o pre-prompt Fase 3 com casos de uso, casos negativos, árvore de composição, estados e limites.
+   - Definir o de-para legado → DSS e validar a composição disponível.
 
-### Compliance
+2. **Novo composto `DssDataTable`**
+   - Estrutura DSS completa em quatro camadas, wrapper oficial, types, composables, documentação e contrato derivado.
+   - API controlada com `rows`, `columns`, `rowKey`, `selection`, `modelValue`, `filter`, `pagination`, `loading`, `error`, `density` e `mode: local | remote`.
+   - Paginação remota via evento `request`; nenhuma chamada de rede dentro do componente.
+   - Ações de topo/lote e ações por linha configuradas por dados, renderizadas com `DssButton`/`DssActionMenu` e eventos explícitos.
+   - Expansão de linha controlada, com slot tipado para detalhes e carregamento assíncrono solicitado por evento.
+   - Estados completos: padrão, loading, vazio, filtro sem resultado, erro e seleção ativa.
+   - Brand e tema herdados por `data-*`; sem props `dark`, `color` ou estilos hardcoded.
 
-Executar mentalmente o `PLAYGROUND_COMPLIANCE_CHECKLIST.md` (8 seções) comparando lado a lado com `DssCheckboxPage` (Golden de formulário) antes de finalizar.
+3. **Fora deste primeiro piloto**
+   - Edição inline, upload/imagem automática, `expr-eval`, mutação interna de linhas, resolução por `nmInterface`, scroll infinito remoto e compatibilidade por aliases com a API Vue 2.
+   - Esses pontos serão documentados como lacunas de migração, sem implementação implícita.
 
-### Arquivos afetados
+4. **Demonstração real no sandbox**
+   - Criar uma página operacional, montando o SFC real, com seletor `SANDBOX · ESTADO`.
+   - Cenários: local, remoto simulado, loading, vazio, erro, seleção múltipla, ações e expansão.
+   - Controles de tema e marca ficarão na barra do sandbox, sem alterar o estado funcional.
+   - Registrar o componente no Preview Frame/registry exigido pela governança, além da página operacional.
 
-- `src/pages/components/DssFormPage.tsx` (criar)
-- `src/App.tsx` (rota)
-- `src/components/navigation/DSSSidebar.tsx` (navegação)
+5. **Documentação e migração**
+   - README, documento normativo, API completa e exemplos.
+   - Matriz de migração `jtech-data-table` → `DssDataTable`, destacando equivalências, mudanças deliberadas e itens adiados.
+   - Registrar a decisão arquitetural no `AGENTS.md`: dados remotos pertencem ao consumidor; o composto apenas emite solicitações e apresenta estado.
+
+## Validação
+
+- Testes unitários de renderização, API, seleção, paginação, ações, expansão, estados e acessibilidade.
+- SCSS, TypeScript, higiene de SFC, paridade API/docs, contrato derivado e scans constitucionais.
+- Gates do sandbox e regressão estática aplicável.
+- Validação em Chromium do fluxo local e remoto simulado, em light/dark e Hub/Water/Waste, incluindo seleção, ações e expansão.
+- Probe visual do SFC real no Preview Frame.
+
+## Critério de conclusão
+
+O piloto estará concluído quando o componente real estiver utilizável no sandbox, com contrato e documentação derivados, todos os gates aplicáveis verdes e limitações registradas. A certificação final por auditor independente e integrações reais dos produtos Sansys permanecerão fora desta entrega.
