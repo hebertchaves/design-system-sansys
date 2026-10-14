@@ -1,4 +1,11 @@
-# Current delivery — NFAg parallel Check-in
+# Current delivery — DssDataTable pilot
+
+- [x] Map the legacy jtech-data-table API and agree on a clean DSS API with an operational core scope.
+- [x] Create the governed DssDataTable composition, four layers, tests, documentation and migration map.
+- [x] Add the real sandbox demonstration with local/remote, loading, empty, error, selection, actions and expansion scenarios.
+- [ ] Run component, contract, sandbox and browser gates; fix all applicable findings.
+
+## Previous delivery — NFAg parallel Check-in
 
 - [x] Move theme/brand controls to the right of sandbox · estado and verify state preservation (real Chromium; 48 static tests passed).
 
