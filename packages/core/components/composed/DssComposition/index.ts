@@ -1,5 +1,0 @@
-export { default as DssComposition } from './DssComposition.vue'
-export { default as DssCompositions } from './DssCompositions.vue'
-export { useCompositionClasses, provideCompositionContext, useCompositionContext } from './composables'
-export type * from './types/composition.types'
-export { default } from './DssComposition.vue'
