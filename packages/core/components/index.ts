@@ -156,6 +156,7 @@ export { DssContextHeader, useContextHeader } from './composed/DssContextHeader'
 export { DssDialog } from './composed/DssDialog'
 export { DssTable } from './composed/DssTable'
 export { DssDataTable } from './composed/DssDataTable'
+export { DssComposition, DssCompositions } from './composed/DssComposition'
 export { DssCarousel, DssCarouselSlide } from './composed/DssCarousel'
 export { DssBottomSheet } from './composed/DssBottomSheet'
 export { DssChatMessage } from './composed/DssChatMessage'
@@ -254,6 +255,8 @@ import DssEmptyState from './base/DssEmptyState/DssEmptyState.vue'
 import DssDialog from './composed/DssDialog/DssDialog.vue'
 import DssTable from './composed/DssTable/DssTable.vue'
 import DssDataTable from './composed/DssDataTable/DssDataTable.vue'
+import DssComposition from './composed/DssComposition/DssComposition.vue'
+import DssCompositions from './composed/DssComposition/DssCompositions.vue'
 import DssCarousel from './composed/DssCarousel/DssCarousel.vue'
 import DssCarouselSlide from './composed/DssCarousel/DssCarouselSlide.vue'
 import DssBottomSheet from './composed/DssBottomSheet/DssBottomSheet.vue'
@@ -301,7 +304,7 @@ const allComponents = [
   DssVirtualScroll, DssInfiniteScroll, DssPullToRefresh, DssSlideItem,
   DssParallax, DssVideo, DssBanner, DssEmptyState,
   // Compostos
-  DssDialog, DssTable, DssDataTable, DssCarousel, DssCarouselSlide,
+  DssDialog, DssTable, DssDataTable, DssComposition, DssCompositions, DssCarousel, DssCarouselSlide,
   DssBottomSheet, DssChatMessage, DssColorPicker, DssDatePicker,
   DssMultiselectAutocomplete,
   DssTimePicker, DssForm, DssPopupEdit, DssUploader,

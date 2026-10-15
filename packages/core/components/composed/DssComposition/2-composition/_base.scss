@@ -1,0 +1,49 @@
+.dss-composition {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+  width: 100%;
+  color: var(--dss-text-body);
+  font-family: var(--dss-font-family-sans);
+
+  &__row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--dss-spacing-1);
+  }
+
+  &__dialog-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-spacing-3);
+    min-width: min(100%, var(--dss-spacing-96));
+  }
+
+  &__detail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--dss-spacing-3);
+    margin: 0;
+
+    dt {
+      font-size: var(--dss-font-size-xs);
+      color: var(--dss-text-subtle);
+    }
+
+    dd {
+      margin: 0;
+      font-weight: var(--dss-font-weight-semibold);
+    }
+  }
+
+  &__confirm {
+    margin: 0;
+  }
+}
+
+.dss-compositions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
