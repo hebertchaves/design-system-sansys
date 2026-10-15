@@ -1,0 +1,12 @@
+.dss-composition--invalid {
+  --dss-composition-outline: var(--dss-feedback-error);
+}
+
+.dss-composition {
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    * {
+      transition: none;
+    }
+  }
+}
