@@ -28,7 +28,7 @@
   }
 
   .q-table__bottom {
-    padding: var(--dss-spacing-1_5) var(--dss-spacing-3);
+    padding-inline: var(--dss-spacing-3);
   }
 }
 
@@ -53,6 +53,6 @@
   }
 
   .q-table__bottom {
-    padding: var(--dss-spacing-3) var(--dss-spacing-6);
+    padding-inline: var(--dss-spacing-6);
   }
 }

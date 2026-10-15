@@ -83,6 +83,10 @@ export interface DssTableProps {
   hideHeader?: boolean
   /** Opções de linhas por página na paginação */
   rowsPerPageOptions?: number[]
+  /** Rótulo do seletor de linhas por página (área bottom) */
+  rowsPerPageLabel?: string
+  /** Formata o contador da área bottom — recebe (primeiro, último, total) */
+  paginationLabel?: (firstRowIndex: number, endRowIndex: number, totalRowsNumber: number) => string
 
   // PROPS BLOQUEADAS (não expostas):
   // dark  → governado globalmente por [data-theme="dark"]

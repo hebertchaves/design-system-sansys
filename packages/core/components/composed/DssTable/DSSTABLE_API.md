@@ -28,6 +28,8 @@ Motor: **QTable** (Quasar). CSS global (sem scoped) — DOM do QTable pode ser r
 | `hide-bottom` | `boolean` | `undefined` | Oculta a barra inferior (paginação) |
 | `hide-header` | `boolean` | `undefined` | Oculta o cabeçalho da tabela |
 | `rows-per-page-options` | `number[]` | `[10, 25, 50]` | Opções de quantidade de linhas por página |
+| `rows-per-page-label` | `string` | `'Linhas por página:'` | Rótulo do seletor de linhas por página (barra inferior) |
+| `pagination-label` | `(first, end, total) => string` | `` `${first}–${end} de ${total}` `` | Formata o contador da barra inferior |
 
 ## Props bloqueadas (não usar)
 

@@ -348,7 +348,11 @@ Mudanças em dark mode:
 | `--dss-spacing-6` | Padding comfortable (horizontal) |
 | `--dss-border-width-thin` | Separadores entre linhas |
 | `--dss-border-width-md` | Borda do cabeçalho + focus outline |
-| `--dss-touch-target-md` | Altura mínima das áreas top e bottom |
+| `--dss-touch-target-md` | Altura mínima das áreas top e bottom; alvo de toque do seletor e dos botões ‹ › do rodapé |
+| `--dss-compact-control-height-lg` | Altura visual do seletor de linhas por página (rodapé) |
+| `--dss-border-default` / `--dss-radius-sm` | Borda e raio do seletor de linhas por página |
+| `--dss-icon-size-sm` / `--dss-icon-size-md` | Ícone do seletor / ícones ‹ › do rodapé |
+| `--dss-spacing-2` | Espaço entre rótulo e controle no rodapé |
 | `--dss-duration-250` | Duração das transições de hover e seleção |
 | `--dss-hub-50/200/600/700/900` | Brand Hub |
 | `--dss-water-50/200/500/700/900` | Brand Water |
@@ -367,6 +371,7 @@ Mudanças em dark mode:
 | `EXC-03` | `display: block` em `@media print` |
 | `EXC-04` | `1px solid currentColor` em células no `@media print` |
 | `EXC-Expose-01` | `defineExpose` com API imperativa (5 métodos) |
+| `EXC-05` | `padding: 0 !important` nos botões ‹ › do rodapé — vence o `.q-btn { padding: … !important }` global (unlayered), que somava 16px de cada lado no botão redondo |
 
 ---
 

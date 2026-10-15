@@ -109,6 +109,28 @@ describe('DssTable', () => {
     expect(qTable.props('noResultsLabel')).toBe('Nenhum resultado encontrado para o filtro aplicado')
   })
 
+  it('usa rowsPerPageLabel em português por padrão', () => {
+    const wrapper = mount(DssTable, { props: { rows, columns } })
+    const qTable = wrapper.findComponent({ name: 'QTable' })
+    expect(qTable.props('rowsPerPageLabel')).toBe('Linhas por página:')
+  })
+
+  it('usa paginationLabel em português por padrão', () => {
+    const wrapper = mount(DssTable, { props: { rows, columns } })
+    const qTable = wrapper.findComponent({ name: 'QTable' })
+    expect(qTable.props('paginationLabel')(1, 3, 5)).toBe('1–3 de 5')
+  })
+
+  it('aceita rowsPerPageLabel e paginationLabel customizados', () => {
+    const paginationLabel = (first, end, total) => `${first}/${end}/${total}`
+    const wrapper = mount(DssTable, {
+      props: { rows, columns, rowsPerPageLabel: 'Por página:', paginationLabel }
+    })
+    const qTable = wrapper.findComponent({ name: 'QTable' })
+    expect(qTable.props('rowsPerPageLabel')).toBe('Por página:')
+    expect(qTable.props('paginationLabel')).toBe(paginationLabel)
+  })
+
   it('aceita noDataLabel customizado', () => {
     const wrapper = mount(DssTable, { props: { rows: [], columns, noDataLabel: 'Vazio' } })
     const qTable = wrapper.findComponent({ name: 'QTable' })

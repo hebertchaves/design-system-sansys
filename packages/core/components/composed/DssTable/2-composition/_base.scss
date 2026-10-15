@@ -202,12 +202,82 @@
      BOTTOM AREA (paginação — .q-table__bottom)
      ========================================================================== */
 
+  /* O QTable gera este DOM sozinho e não tem prop de classe para ele
+     (só table-class / table-header-class / card-class / title-class) —
+     por isso estilizamos pela raiz, em vez de um `dss-table__bottom`.
+     Altura = touch target: os controles já têm 44px, padding vertical 0. */
   .q-table__bottom {
-    padding: var(--dss-spacing-1_5) var(--dss-spacing-4);
+    padding: 0 var(--dss-spacing-4);
     border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
     font-size: var(--dss-font-size-sm);
     color: var(--dss-text-body);
     min-height: var(--dss-touch-target-md);
+    column-gap: var(--dss-spacing-6);
+    row-gap: 0;
+
+    /* rótulo · seletor  |  contador · ‹ › — espaço por gap, não pela
+       margin-right fixa do Quasar (que colava o rótulo no seletor) */
+    .q-table__control {
+      align-items: center;
+      gap: var(--dss-spacing-2);
+    }
+
+    .q-table__bottom-item {
+      margin-right: 0;
+    }
+
+    /* Seletor de linhas por página: caixa compacta com borda, centrada
+       numa área clicável de 44px. */
+    .q-table__select {
+      min-height: var(--dss-touch-target-md);
+
+      .q-field__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .q-field__control {
+        height: var(--dss-compact-control-height-lg);
+        min-height: var(--dss-compact-control-height-lg);
+        padding: 0 var(--dss-spacing-1) 0 var(--dss-spacing-2);
+        align-items: center;
+        border: var(--dss-border-width-thin) solid var(--dss-border-default);
+        border-radius: var(--dss-radius-sm);
+      }
+
+      .q-field__control-container,
+      .q-field__native,
+      .q-field__append {
+        height: 100%;
+        min-height: 0;
+        padding: 0;
+      }
+
+      /* Anula o `top: spacing-1_5` global de `.q-field--float .q-field__append`
+         (_quasar-overrides) — pensado p/ label flutuante, aqui descia o ícone. */
+      .q-field__append {
+        top: 0;
+      }
+
+      .q-select__dropdown-icon {
+        font-size: var(--dss-icon-size-sm);
+      }
+    }
+
+    /* Navegação ‹ › — o QTable cria QBtn dense round com font-size inline de
+       10px (ícone de 12,5px, botão de 29px). Ícone pelo token e alvo de 44px. */
+    .q-btn {
+      /* EXC-05 — !important load-bearing: `.q-btn { padding: … !important }` global
+         (unlayered) somava 16px de cada lado no botão redondo. */
+      padding: 0 !important;
+      min-width: var(--dss-touch-target-md);
+      min-height: var(--dss-touch-target-md);
+
+      .q-icon {
+        font-size: var(--dss-icon-size-md);
+      }
+    }
   }
 
   /* ==========================================================================

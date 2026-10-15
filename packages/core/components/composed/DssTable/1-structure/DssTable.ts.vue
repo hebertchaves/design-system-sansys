@@ -23,6 +23,8 @@
     :hide-bottom="props.hideBottom"
     :hide-header="props.hideHeader"
     :rows-per-page-options="props.rowsPerPageOptions"
+    :rows-per-page-label="props.rowsPerPageLabel"
+    :pagination-label="props.paginationLabel"
     @update:selected="emit('update:modelValue', $event as Record<string, unknown>[])"
     @update:pagination="emit('update:pagination', $event)"
     @request="emit('request', $event)"
@@ -69,7 +71,12 @@ const props = withDefaults(defineProps<DssTableProps>(), {
   modelValue: () => [],
   rowsPerPageOptions: () => [10, 25, 50],
   noDataLabel: 'Nenhum dado disponível',
-  noResultsLabel: 'Nenhum resultado encontrado para o filtro aplicado'
+  noResultsLabel: 'Nenhum resultado encontrado para o filtro aplicado',
+  // Rótulos da área bottom em pt-BR, como os dois acima. Sem eles o QTable
+  // cai no $q.lang ("Records per page:" / "1-3 of 5") quando o consumidor
+  // não instala o pacote de idioma — e o rodapé saía em inglês.
+  rowsPerPageLabel: 'Linhas por página:',
+  paginationLabel: (first: number, end: number, total: number) => `${first}–${end} de ${total}`
 })
 
 // ============================================================================

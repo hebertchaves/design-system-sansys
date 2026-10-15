@@ -196,6 +196,22 @@
         "description": "Opções de linhas por página na paginação",
         "category": "Comportamento",
         "categorySource": "quasar"
+      },
+      {
+        "name": "rowsPerPageLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Rótulo do seletor de linhas por página (área bottom)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "paginationLabel",
+        "type": "(firstRowIndex: number, endRowIndex: number, totalRowsNumber: number) => string",
+        "controlHint": "text",
+        "description": "Formata o contador da área bottom — recebe (primeiro, último, total)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [
@@ -211,12 +227,12 @@
       },
       {
         "name": "request",
-        "payload": "{\r\n      pagination: DssTablePagination\r\n      filter?: string\r\n      getCellValue: (col: DssTableColumn, row: Record<string, unknown>) => unknown\r\n    }",
+        "payload": "{\n      pagination: DssTablePagination\n      filter?: string\n      getCellValue: (col: DssTableColumn, row: Record<string, unknown>) => unknown\n    }",
         "description": "Evento de requisição server-side (quando @request é necessário)"
       },
       {
         "name": "selection",
-        "payload": "{\r\n      rows: Record<string, unknown>[]\r\n      keys: unknown[]\r\n      added: boolean\r\n      evt: Event\r\n    }",
+        "payload": "{\n      rows: Record<string, unknown>[]\n      keys: unknown[]\n      added: boolean\n      evt: Event\n    }",
         "description": "Evento de mudança de seleção"
       },
       {
@@ -432,7 +448,7 @@
           "property": "padding",
           "token": "--dss-spacing-3",
           "value": null,
-          "source": "3-variants/_variant.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "font-size",
@@ -550,13 +566,121 @@
         },
         {
           "property": "padding",
-          "token": "--dss-spacing-1_5",
+          "token": "--dss-spacing-4",
           "value": null,
           "source": "3-variants/_variant.scss"
         },
         {
           "property": "border-top",
           "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "column-gap",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "row-gap",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-right",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-compact-control-height-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -568,7 +692,19 @@
         },
         {
           "property": "padding",
-          "token": "--dss-spacing-4",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "padding-inline",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "padding-inline",
+          "token": "--dss-spacing-6",
           "value": null,
           "source": "3-variants/_variant.scss"
         },
@@ -888,13 +1024,55 @@
         ]
       },
       {
-        "name": "--dss-spacing-1_5",
+        "name": "--dss-spacing-4",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-spacing-4",
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
         "usedIn": [
           "default"
         ]
