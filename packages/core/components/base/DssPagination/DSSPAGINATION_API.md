@@ -9,7 +9,7 @@
 | `max-pages` | `Number` | `5` | Número máximo de botões de página visíveis simultaneamente. |
 | `disable` | `Boolean` | `false` | Desabilita toda a paginação (visual + interação). |
 | `readonly` | `Boolean` | `false` | Bloqueia interação sem alterar aparência visual. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Tamanho dos botões de página. Mapeia para `--dss-compact-control-height-*`. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Tamanho dos botões de página, repassado ao `DssButton`. A caixa de cada numeral é quadrada: largura mínima = altura = `--dss-touch-target-*` (xs 32 · sm 36 · md 44 · lg 52px). |
 | `ellipses` | `Boolean` | `true` | Exibe reticências (`…`) para páginas fora da janela visível. |
 | `boundary-links` | `Boolean` | `false` | Exibe botões para ir à primeira e à última página. |
 | `direction-links` | `Boolean` | `true` | Exibe botões para ir à página anterior e à próxima. |
@@ -44,8 +44,10 @@ Nenhum slot disponível. QPagination é usado como motor e não expõe API de sl
 ### Espaçamento e Dimensões
 | Token | Uso |
 |---|---|
-| `--dss-gap-1` | Espaçamento entre botões de página. |
-| `--dss-compact-control-height-xs/sm/md/lg` | Dimensão mínima dos botões por `size`. |
+| `--dss-gap-1` | Espaçamento entre botões de página (numerais entre si e setas entre si). |
+| `--dss-gap-2` | Margem extra na fronteira setas ↔ numerais (4 + 8 = 12px), para as setas se distinguirem do bloco de numerais. |
+| `--dss-touch-target-xs/sm/md/lg` | Largura mínima dos numerais e da reticência por `size` — o mesmo token da altura do `DssButton`, para a caixa ser quadrada (e circular com `round`). |
+| `--dss-spacing-2` | `padding-inline` dos numerais (como no `icon-only`), para até 3 dígitos caberem no quadrado em `md`/`lg`. |
 
 ### Tipografia
 | Token | Uso |

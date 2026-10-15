@@ -601,6 +601,23 @@
             </button>
 
             <button
+              @click="activeComponent = 'data-grid'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'data-grid' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">grid_view</span></span>
+              <span class="nav-label">DssDataGrid</span>
+              <span class="nav-badge stress">piloto</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'pagination'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'pagination' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">last_page</span></span>
+              <span class="nav-label">DssPagination</span>
+            </button>
+
+            <button
               @click="activeComponent = 'uploader'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'uploader' }]"
             >
@@ -752,6 +769,14 @@
 
       <div v-else-if="activeComponent === 'data-table-cc'" class="component-view">
         <TestDataTableClaudeCode />
+      </div>
+
+      <div v-else-if="activeComponent === 'data-grid'" class="component-view">
+        <TestDataGrid />
+      </div>
+
+      <div v-else-if="activeComponent === 'pagination'" class="component-view">
+        <TestPagination />
       </div>
 
       <div v-else-if="activeComponent === 'container'" class="component-view">
@@ -986,6 +1011,8 @@ import TestMarkupTable from './TestMarkupTable.vue'
 import TestTable from './TestTable.vue'
 import TestDataTable from './TestDataTable.vue'
 import TestDataTableClaudeCode from './TestDataTableClaudeCode.vue'
+import TestDataGrid from './TestDataGrid.vue'
+import TestPagination from './TestPagination.vue'
 import TestContainer from './TestContainer.vue'
 import TestForm from './TestForm.vue'
 import TestDialog from './TestDialog.vue'

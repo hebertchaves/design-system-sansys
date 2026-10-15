@@ -110,7 +110,7 @@
         "property": "scrollbar thumb color",
         "token": "--dss-action-primary",
         "value": null,
-        "source": ".q-scrollarea__thumb descendant"
+        "source": "4-output/_brands.scss"
       },
       {
         "property": "opacity",

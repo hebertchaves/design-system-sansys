@@ -449,12 +449,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "padding",
-          "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "background",
           "token": "--dss-surface-default",
           "value": null,
@@ -462,8 +456,8 @@
         },
         {
           "property": "width",
-          "token": "--dss-touch-target-md",
-          "value": null,
+          "token": null,
+          "value": "1%",
           "source": "2-composition/_base.scss"
         },
         {
@@ -479,15 +473,27 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "text-align",
+          "property": "min-inline-size",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
           "token": null,
-          "value": "right",
+          "value": "center",
           "source": "2-composition/_base.scss"
         },
         {
           "property": "text-align",
           "token": null,
           "value": "left",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "right",
           "source": "2-composition/_base.scss"
         },
         {
@@ -537,12 +543,6 @@
           "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-inline-start",
-          "token": "--dss-spacing-1",
-          "value": null,
-          "source": "4-output/_brands.scss"
         }
       ],
       "disabled": [

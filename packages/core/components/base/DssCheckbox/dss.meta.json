@@ -79,7 +79,7 @@
         "property": "touch target",
         "token": "--dss-touch-target-md",
         "value": "44px",
-        "source": "Via `::before` (WCAG 2.5.5)"
+        "source": "2-composition/_base.scss"
       }
     ],
     "demoContent": "Label 'Opção'",
@@ -125,7 +125,10 @@
         "level": "A",
         "implementation": "Estado exposto via aria-checked; nome via label/aria-label.",
         "verifiedBy": "aria",
-        "ariaAttrs": ["aria-checked", "aria-label"]
+        "ariaAttrs": [
+          "aria-checked",
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.4.3",

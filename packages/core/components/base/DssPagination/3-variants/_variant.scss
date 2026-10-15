@@ -1,41 +1,79 @@
-// EXC-Gate-01: Quasar button variant overrides for flat, outline, round modes.
-// QPagination does not expose per-button slot — variant styles must target internals.
-// aria-current="page" is the ARIA value QPagination sets on the active page button.
+// ==========================================================================
+//  DssPagination · L3 Variantes
 //
-// T3 (higiene !important): o `!important` em `background-color: transparent` foi
-// REMOVIDO. Pelo FATO DE CASCATA, o `.bg-primary{…!important}` do Quasar está em
-// @layer quasar e VENCE qualquer unlayered (layered important > unlayered important):
-// no ramo `.bg-primary` o transparent já era INSUFICIENTE (inerte, não load-bearing);
-// no ramo `[aria-current]` puro o seletor DSS (0,4,0) vence a base por especificidade
-// mesmo normal. Validado por resolvedor layer-aware (0 mudança de computed em ambos).
-// Nota: a intenção "botão ativo transparente" no flat/outline já é derrotada pelo
-// `.bg-primary !important` do Quasar quando o botão ativo recebe `.bg-primary` —
-// isso é conflito DSS×Quasar-important (fix = layer/JS), FORA do escopo da higiene.
-.dss-pagination {
-  &--flat {
-    // EXC-Gate-01: flat variant — active button uses text color, no filled background
-    .q-pagination .q-btn[aria-current="page"],
-    .q-pagination .q-btn.bg-primary {
-      background-color: transparent;
-      color: var(--dss-action-primary);
-      font-weight: var(--dss-font-weight-bold);
-    }
-  }
+//  A escala de tamanho é repassada ao `DssButton` pela prop `size` — altura,
+//  fonte, ícone e raio vêm do botão. Antes cada tamanho reescrevia `min-width`,
+//  `min-height` (com `!important`), `font-size`, `line-height` e o tamanho do
+//  ícone, porque o botão interno era do Quasar e não respeitava o token.
+//
+//  O que sobra é o que o botão não sabe: a GEOMETRIA da faixa.
+// ==========================================================================
 
-  &--outline {
-    // EXC-Gate-01: outline variant — active button border matches action-primary
-    .q-pagination .q-btn[aria-current="page"],
-    .q-pagination .q-btn.bg-primary {
-      background-color: transparent;
-      border: var(--dss-border-width-thin) solid var(--dss-action-primary);
-      color: var(--dss-action-primary);
-    }
-  }
+// --------------------------------------------------------------------------
+//  NUMERAL QUADRADO — largura mínima = altura do mesmo tamanho
+//
+//  O numeral é um DssButton COM rótulo, e botão com rótulo tem `min-width`
+//  maior que a altura de propósito (xs 32×48 · sm 36×56 · md 44×64 ·
+//  lg 52×80): é um botão de texto. Na paginação isso deixava a caixa
+//  retangular, e com `round` virava pílula em vez de círculo (out/2026).
+//
+//  A largura mínima passa a usar o MESMO token que o DssButton usa para a
+//  altura (`--dss-touch-target-*`), então os dois eixos são iguais por
+//  construção — é a regra que o próprio botão já aplica no `icon-only`, e por
+//  isso as setas e os numerais agora têm a mesma caixa.
+//
+//  `padding-inline` cai para `spacing-2`, também como no `icon-only`: com o
+//  padding de botão de texto (até 20px por lado no `lg`) um numeral de dois
+//  dígitos já passava da largura mínima e alargava. Com 8px por lado, até três
+//  dígitos cabem no quadrado em `md`/`lg`; acima disso a caixa cresce pelo
+//  conteúdo, que é o certo — nunca corta o número.
+//
+//  Especificidade 0-2-0 vence `.dss-button--{size}` (0-1-0) sem `!important`
+//  e sem `:deep()` — a classe `__page` está na raiz do DssButton.
+// --------------------------------------------------------------------------
+.dss-pagination .dss-pagination__page {
+  padding-inline: var(--dss-spacing-2);
+}
 
-  &--round {
-    // EXC-Gate-01: round variant — circular page buttons
-    .q-pagination .q-btn {
-      border-radius: var(--dss-radius-full);
-    }
-  }
+.dss-pagination--xs .dss-pagination__page {
+  min-inline-size: var(--dss-touch-target-xs); /* = altura do DssButton xs */
+}
+
+.dss-pagination--sm .dss-pagination__page {
+  min-inline-size: var(--dss-touch-target-sm); /* = altura do DssButton sm */
+}
+
+.dss-pagination--md .dss-pagination__page {
+  min-inline-size: var(--dss-touch-target-md); /* = altura do DssButton md */
+}
+
+.dss-pagination--lg .dss-pagination__page {
+  min-inline-size: var(--dss-touch-target-lg); /* = altura do DssButton lg */
+}
+
+// --------------------------------------------------------------------------
+//  RETICÊNCIA — ocupa a mesma caixa dos numerais
+//
+//  Usava `--dss-compact-control-height-*` (20/24/32px), escala de chip/badge,
+//  enquanto os botões medem 32/36/44/52: a reticência ficava mais estreita que
+//  qualquer numeral e a linha, irregular. `md` nem tinha regra e caía no `sm`
+//  da L2.
+// --------------------------------------------------------------------------
+.dss-pagination--xs .dss-pagination__ellipsis {
+  min-inline-size: var(--dss-touch-target-xs);
+  font-size: var(--dss-font-size-xs);
+}
+
+.dss-pagination--sm .dss-pagination__ellipsis {
+  min-inline-size: var(--dss-touch-target-sm);
+  font-size: var(--dss-font-size-sm);
+}
+
+.dss-pagination--md .dss-pagination__ellipsis {
+  min-inline-size: var(--dss-touch-target-md);
+}
+
+.dss-pagination--lg .dss-pagination__ellipsis {
+  min-inline-size: var(--dss-touch-target-lg);
+  font-size: var(--dss-font-size-lg);
 }

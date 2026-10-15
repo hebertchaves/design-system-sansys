@@ -68,7 +68,16 @@
       </template>
     </DssBanner>
 
-    <DssCard variant="outlined" class="dss-data-table-cc__card">
+    <!-- FLAT, não `outlined`.
+
+         Este cartão existe para dar superfície e padding à grade, não para
+         desenhar uma moldura: o DssTable já traz as próprias divisórias, e o
+         bloco inteiro costuma viver dentro de um container da página que tem
+         a borda. Com `outlined` o resultado era borda dentro de borda — o
+         caso que o módulo 03_CARD_PATTERNS §3.1 chama de aninhar "sem
+         necessidade". A borda fica para quem a usa para SIGNIFICAR: a linha
+         selecionada. -->
+    <DssCard variant="flat" class="dss-data-table-cc__card">
       <DssTable
         ref="tabelaRef"
         :rows="error ? [] : rows"
@@ -86,6 +95,30 @@
         @request="aoSolicitar"
         @row-click="aoClicarNaLinha"
       >
+        <!-- Selecionar todas, na linha do título. Sem isto a coluna de
+             seleção tem cabeçalho vazio e a ação em lote exige clicar
+             linha a linha. -->
+        <template v-if="corpoProprio && selection === 'multiple'" #header-cell-__selecionar="cabecalho">
+          <th :class="cabecalho.col?.classes" class="dss-data-table-cc__control-cell">
+            <!-- Indeterminado é `null`, não uma prop: é o contrato do
+                 DssCheckbox (null = parcial). -->
+            <DssCheckbox
+              :model-value="estadoDoCabecalho"
+              :aria-label="todasSelecionadas ? 'Desmarcar todas as linhas' : 'Selecionar todas as linhas'"
+              :disable="disabled || loading || !rows.length"
+              @update:model-value="alternarTodas"
+            />
+          </th>
+        </template>
+
+        <!-- O `align` da coluna governa as CÉLULAS, não o cabeçalho: medido,
+             o `th` saía `text-align: left` com as células centradas, e rótulo
+             e conteúdo ficavam em cantos opostos. O slot de cabeçalho é o
+             único lugar com controle sobre o `th`. -->
+        <template v-if="rowActions.length" #header-cell-__acoes="cabecalho">
+          <th class="dss-data-table-cc__actions-cell">{{ cabecalho.col?.label }}</th>
+        </template>
+
         <template v-if="corpoProprio" #body="scope">
           <tr :class="{ 'dss-data-table-cc__row--selected': estaSelecionada(scope.row) }">
             <td v-if="selection !== 'none'" class="dss-data-table-cc__control-cell">
@@ -318,7 +351,10 @@ const colunasEfetivas = computed<DssTableColumn[]>(() => {
     resultado.unshift({ name: '__selecionar', label: '', field: props.rowKey, align: 'center' })
   }
   if (props.rowActions.length) {
-    resultado.push({ name: '__acoes', label: 'Ações', field: props.rowKey, align: 'right' })
+    // Centro, não direita. A coluna de ações não contém VALOR comparável — o
+    // alinhamento à direita existe para alinhar vírgulas de números. Aqui ele
+    // só descolava o rótulo do conteúdo, que ficava em cantos opostos.
+    resultado.push({ name: '__acoes', label: 'Ações', field: props.rowKey, align: 'center' })
   }
   return resultado
 })
@@ -334,6 +370,23 @@ function estaSelecionada(row: DssDataTableCcRow) {
 
 function estaExpandida(row: DssDataTableCcRow) {
   return props.expandedKeys.includes(identificador(row))
+}
+
+const todasSelecionadas = computed(
+  () => props.rows.length > 0 && props.rows.every((linha) => estaSelecionada(linha)),
+)
+const algumasSelecionadas = computed(
+  () => !todasSelecionadas.value && props.rows.some((linha) => estaSelecionada(linha)),
+)
+
+/** `true` todas · `null` parcial · `false` nenhuma. */
+const estadoDoCabecalho = computed(() =>
+  todasSelecionadas.value ? true : algumasSelecionadas.value ? null : false,
+)
+
+function alternarTodas(marcar: boolean | null) {
+  if (props.disabled || props.loading) return
+  emit('update:modelValue', marcar === true ? [...props.rows] : [])
 }
 
 function alternarSelecao(row: DssDataTableCcRow) {

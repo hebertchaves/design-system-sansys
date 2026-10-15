@@ -48,10 +48,12 @@
     ],
     "spacing": [
       "--dss-gap-1",
-      "--dss-compact-control-height-xs",
-      "--dss-compact-control-height-sm",
-      "--dss-compact-control-height-md",
-      "--dss-compact-control-height-lg"
+      "--dss-gap-2",
+      "--dss-spacing-2",
+      "--dss-touch-target-xs",
+      "--dss-touch-target-sm",
+      "--dss-touch-target-md",
+      "--dss-touch-target-lg"
     ],
     "typography": [
       "--dss-font-size-xs",
@@ -257,19 +259,19 @@
       {
         "criterion": "2.4.7",
         "level": "AA",
-        "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css",
-        "cssRule": {
-          "selectorIncludes": ":focus",
-          "property": "outline"
-        }
+        "implementation": "O anel de foco é o do DssButton, que este componente COMPÕE — não é reimplementado aqui (Cartão Composto M1: nunca reimplementar primitivo). Antes a regra vivia no SCSS da paginação porque o botão interno era QBtn cru e não trazia o anel.",
+        "verifiedBy": "test",
+        "test": "compõe DssButton — nenhum QBtn cru na árvore"
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Nome via aria-label; página atual via aria-current.",
         "verifiedBy": "aria",
-        "ariaAttrs": ["aria-label", "aria-current"]
+        "ariaAttrs": [
+          "aria-label",
+          "aria-current"
+        ]
       },
       {
         "criterion": "1.4.3",

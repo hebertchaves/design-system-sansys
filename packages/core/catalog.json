@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-14",
-  "total": 101,
+  "generated": "2026-10-15",
+  "total": 102,
   "sealed": 89,
   "components": [
     {
@@ -366,6 +366,20 @@
       "previewGroup": "contextuais",
       "goldenReference": "DssChip",
       "goldenContext": "DssDataCard"
+    },
+    {
+      "component": "DssDataGrid",
+      "dir": "packages/core/components/composed/DssDataGrid",
+      "phase": 3,
+      "category": null,
+      "status": "candidate",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "contextuais",
+      "goldenReference": "DssCard",
+      "goldenContext": "DssDataTableClaudeCode"
     },
     {
       "component": "DssDataTable",

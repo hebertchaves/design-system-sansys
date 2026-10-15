@@ -57,8 +57,12 @@ describe('DssDataTableClaudeCode', () => {
       rowActions: [{ name: 'edit', label: 'Editar', icon: 'edit' }],
       filterLabel: 'Equipe CL250',
     })
-    expect(wrapper.findComponent({ name: 'DssCheckbox' }).props('ariaLabel'))
-      .toBe('Selecionar linha 1')
+    // O PRIMEIRO DssCheckbox da árvore passou a ser o "selecionar todas" do
+    // cabeçalho; buscar por posição daria o controle errado.
+    const caixas = wrapper.findAllComponents({ name: 'DssCheckbox' })
+      .map((c) => c.props('ariaLabel'))
+    expect(caixas).toContain('Selecionar linha 1')
+    expect(caixas).toContain('Selecionar todas as linhas')
     const rotulos = wrapper.findAllComponents({ name: 'DssButton' })
       .map((botao) => botao.props('ariaLabel'))
       .filter(Boolean)
@@ -114,8 +118,33 @@ describe('DssDataTableClaudeCode', () => {
 
   it('seleciona uma linha e propaga update:modelValue', async () => {
     const wrapper = factory({ selection: 'multiple' })
-    await wrapper.findComponent({ name: 'DssCheckbox' }).vm.$emit('update:modelValue', true)
+    const daLinha = wrapper.findAllComponents({ name: 'DssCheckbox' })
+      .find((c) => c.props('ariaLabel') === 'Selecionar linha 1')
+    await daLinha.vm.$emit('update:modelValue', true)
     expect(wrapper.emitted('update:modelValue')[0]).toEqual([[rows[0]]])
+  })
+
+  it('selecionar todas marca o conjunto inteiro e desmarcar esvazia', async () => {
+    const vazio = factory({ selection: 'multiple' })
+    const topo = vazio.findAllComponents({ name: 'DssCheckbox' })
+      .find((c) => String(c.props('ariaLabel')).startsWith('Selecionar todas'))
+    await topo.vm.$emit('update:modelValue', true)
+    expect(vazio.emitted('update:modelValue')[0]).toEqual([rows])
+
+    const cheio = factory({ selection: 'multiple', modelValue: [...rows] })
+    const topoCheio = cheio.findAllComponents({ name: 'DssCheckbox' })
+      .find((c) => String(c.props('ariaLabel')).startsWith('Desmarcar todas'))
+    expect(topoCheio.props('modelValue')).toBe(true)
+    await topoCheio.vm.$emit('update:modelValue', false)
+    expect(cheio.emitted('update:modelValue')[0]).toEqual([[]])
+  })
+
+  it('o cabeçalho fica indeterminado com seleção parcial', () => {
+    const wrapper = factory({ selection: 'multiple', modelValue: [rows[0]] })
+    const topo = wrapper.findAllComponents({ name: 'DssCheckbox' })
+      .find((c) => String(c.props('ariaLabel')).includes('todas'))
+    // Parcial é `modelValue: null` — o contrato de indeterminado do DssCheckbox.
+    expect(topo.props('modelValue')).toBeNull()
   })
 
   it('controla expansão e emite solicitação de detalhes', async () => {

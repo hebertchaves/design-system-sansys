@@ -41,7 +41,14 @@
   // por isso não precisa ser declarado) e quem fica grudado é a LISTA. Continua
   // sem `height: 100vh` — a viewport ignoraria a barra de aplicação acima e o
   // rail transbordaria exatamente a altura dela.
-  overflow-y: auto;
+  //
+  // NÃO declarar `overflow-y: auto` aqui. Medido out/2026: `overflow` torna o
+  // rail o container de rolagem MAIS PRÓXIMO da lista `sticky` abaixo — e como
+  // o rail não transborda (altura do rail == altura do shell), a lista nunca
+  // tinha de onde grudar e rolava junto com a página. Com o overflow removido,
+  // o scroller mais próximo volta a ser o `.scroll` do QLayout e o sticky
+  // passa a funcionar: numa rolagem de 200px a lista deslocou 200px antes
+  // (nada grudava) e 49px depois (o offset do cabeçalho, e então trava).
 }
 
 .dss-page-shell__rail-list {

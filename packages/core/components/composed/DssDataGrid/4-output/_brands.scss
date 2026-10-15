@@ -1,0 +1,19 @@
+// ==========================================================================
+//  DssDataGrid · L4 Marca
+//
+//  NADA é pintado aqui, e isso é a decisão — não um esquecimento.
+//
+//  O bloco é superfície de CONTEÚDO: pelo modelo de dois eixos, a ação dentro
+//  dele volta ao semântico e a identidade é assunto de quem a carrega. Quem
+//  carrega aqui é o `DssSectionTitle` do cabeçalho, que JÁ desenha o traço da
+//  marca (`border-block-end` com `--dss-brand-primary`, 2-composition/_base
+//  do próprio componente).
+//
+//  A primeira versão deste arquivo repetia essa mesma regra no `__head`, que
+//  é largura inteira: o resultado foi um segundo traço, do tamanho do bloco,
+//  logo abaixo do traço curto do título. Reimplementar o visual de um
+//  primitivo é o anti-padrão que o Cartão Composto proíbe (M1 — nunca
+//  reimplementar primitivo) e aqui ele apareceu como ruído visual puro.
+//
+//  Se um dia a identidade precisar de mais presença neste bloco, o lugar é o
+//  `DssSectionTitle` (que serve a todos os blocos), não uma regra local.

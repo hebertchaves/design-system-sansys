@@ -132,25 +132,34 @@ describe('DssBanner', () => {
     expect(wrapper.find('.custom-icon').exists()).toBe(true)
   })
 
-  // ─── Forwarding de props Quasar ─────────────────────────────────────────
+  // ─── Modificadores do próprio componente ────────────────────────────────
+  //
+  // Antes estes três testes verificavam o REPASSE ao QBanner e as classes que
+  // ele escrevia (`.q-banner--dense`, `.rounded-borders`). Com a estrutura
+  // própria, o contrato é a classe do DSS — que não depende da nomenclatura
+  // interna de terceiro nem muda com a versão do Quasar.
 
-  it('repassa dense=true ao QBanner', () => {
+  it('dense=true aplica o modificador do componente', () => {
     const wrapper = mount(DssBanner, { props: { dense: true } })
-    expect(wrapper.find('.q-banner--dense').exists()).toBe(true)
+    expect(wrapper.classes()).toContain('dss-banner--dense')
   })
 
-  it('repassa rounded=true ao QBanner', () => {
+  it('rounded=true aplica o modificador do componente', () => {
     const wrapper = mount(DssBanner, { props: { rounded: true } })
-    expect(wrapper.find('.rounded-borders').exists()).toBe(true)
+    expect(wrapper.classes()).toContain('dss-banner--rounded')
   })
 
-  it('repassa inlineActions=true ao QBanner', () => {
-    const wrapper = mount(DssBanner, {
-      props: { inlineActions: true, dismissible: true }
-    })
-    // Contrato real: a prop chega ao QBanner (a classe CSS depende da
-    // presença simultânea do slot action no motor)
-    expect(wrapper.findComponent({ name: 'QBanner' }).props('inlineActions')).toBe(true)
+  it('inlineActions=true aplica o modificador do componente', () => {
+    const wrapper = mount(DssBanner, { props: { inlineActions: true, dismissible: true } })
+    expect(wrapper.classes()).toContain('dss-banner--inline-actions')
+  })
+
+  it('não monta componente do Quasar — a estrutura é própria', () => {
+    const wrapper = mount(DssBanner, { props: { dismissible: true, icon: 'info' } })
+    expect(wrapper.findComponent({ name: 'QBanner' }).exists()).toBe(false)
+    expect(wrapper.find('.dss-banner__avatar').exists()).toBe(true)
+    expect(wrapper.find('.dss-banner__content').exists()).toBe(true)
+    expect(wrapper.find('.dss-banner__actions').exists()).toBe(true)
   })
 
   // ─── Forwarding de $attrs ────────────────────────────────────────────────

@@ -1,0 +1,145 @@
+// ==========================================================================
+//  DssDataGrid · L2 Composição
+//
+//  O enquadramento (cabeçalho, contagem, cartão) é o mesmo que os patterns
+//  "Solicitações" e "Check-in NFAg" consolidaram. O que é próprio deste
+//  componente é a grade de cards e a ficha `<dl>` dentro de cada um.
+// ==========================================================================
+
+.dss-data-grid {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-3);
+  width: 100%;
+  color: var(--dss-text-body);
+  font-family: var(--dss-font-family-sans);
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--dss-spacing-3);
+  }
+
+  &__identity,
+  &__actions,
+  &__card-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--dss-spacing-2);
+    min-width: 0;
+  }
+
+  &__count {
+    font-size: var(--dss-font-size-xs);
+    color: var(--dss-text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__error {
+    margin-block-end: var(--dss-spacing-1);
+  }
+
+  // A grade. `auto-fill` com piso em `--dss-spacing-64` evita o card
+  // espremido quando o container é estreito — a contagem de colunas declarada
+  // é um TETO, não uma imposição.
+  &__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--dss-spacing-3);
+    grid-template-columns: repeat(auto-fill, minmax(var(--dss-spacing-64), 1fr));
+  }
+
+  &__item {
+    display: flex;
+    min-width: 0;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-spacing-2);
+    padding: var(--dss-spacing-3);
+    width: 100%;
+    min-width: 0;
+    background: var(--dss-surface-default);
+  }
+
+  &__card-head {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-spacing-2);
+    min-width: 0;
+    padding-block-end: var(--dss-spacing-2);
+    border-block-end: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  }
+
+  &__card-title {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    font-size: var(--dss-font-size-md);
+    font-weight: var(--dss-font-weight-semibold);
+    line-height: var(--dss-line-height-tight);
+    overflow-wrap: anywhere;
+  }
+
+  &__card-actions {
+    margin-inline-start: auto;
+    flex-shrink: 0;
+  }
+
+  // A ficha. Duas colunas: rótulo e valor, vinculados por <dt>/<dd>.
+  //
+  // SEM gap de coluna, de propósito: o espaçamento é padding DENTRO de cada
+  // célula, para que o filete separador de cada par seja uma linha contínua.
+  // Com gap, o separador quebra em dois segmentos e a ficha ganha aspecto de
+  // caixas soltas — foi o que aconteceu enquanto o par tinha fundo em vez de
+  // filete.
+  &__fields {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    margin: 0;
+    font-size: var(--dss-font-size-sm);
+
+    dt,
+    dd {
+      padding: var(--dss-spacing-1) var(--dss-spacing-2);
+      overflow-wrap: anywhere;
+    }
+
+    // O rótulo se distingue pelo PESO, não pela cor. `--dss-text-subtle`
+    // passa AA sobre a superfície padrão (4,74:1) e REPROVA sobre a ficha
+    // selecionada, onde o tinte sobe a luminância do fundo (4,10:1).
+    // Peso resolve os dois casos com uma regra só.
+    dt {
+      font-weight: var(--dss-font-weight-semibold);
+      color: var(--dss-text-body);
+    }
+
+    dd {
+      margin: 0;
+      text-align: end;
+    }
+  }
+
+  &__card-foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-block-start: auto;
+  }
+
+  &__empty {
+    padding: var(--dss-spacing-6);
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+  }
+}

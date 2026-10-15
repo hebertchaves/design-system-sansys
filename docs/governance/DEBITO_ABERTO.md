@@ -95,6 +95,30 @@
 
   Falta também a prop tri-estado com `"none"`. Não bloqueia o HC.
 
+  - 🔶 **Follow-up da (d) — o traço de marca à esquerda tem cinco donos e dois disparam por CONTEXTO** (out/2026,
+    levantado ao fechar o piloto WebComps). O dispositivo "borda esquerda espessa na cor da marca" aparece em
+    cinco componentes, e a diferença que importa é **quem pede**:
+
+    | Componente | Seletor | Dispara por |
+    |---|---|---|
+    | `DssCard` | `.dss-card[data-brand]` | pedido explícito (co-locado) — ✅ |
+    | `DssItem` | `.dss-item--active` | estado, não marca — ✅ |
+    | `DssBanner` | `border-left` da variante | severidade semântica — ✅ |
+    | `DssTabPanel` | `[data-brand] .dss-tab-panel.q-tab-panel` | **contexto** (descendente) — 🔶 |
+    | `DssExpansionItem` | `[data-brand="hub"].dss-expansion-item …` | co-locado, mas com **primitivo cru** por marca — 🔶 |
+
+    **`DssTabPanel`:** a regra é descendente, então TODO painel de aba dentro de uma página marcada ganha o traço,
+    tenha pedido ou não. É a mesma classe de erro que esta frente cometeu duas vezes e corrigiu — no `__head` do
+    `DssDataGrid` (duplicava o traço que o `DssSectionTitle` já desenha) e no `__card` do
+    `DssDataTableClaudeCode` (pintava um cartão que não pediu marca, atropelando a escolha co-locada do
+    `DssCard`). A correção é a mesma: ou exigir `data-brand` co-locado, ou deixar o traço para quem o pede.
+
+    **`DssExpansionItem`:** três blocos por marca com `--dss-hub-600`/`--dss-water-*`/`--dss-waste-*` crus, mais
+    três no dark. É dívida **B1** do placar desta frente — o eixo de identidade (`--dss-brand-primary` /
+    `--dss-brand-accent`) já existe e colapsaria os seis blocos em um.
+
+    Nenhum dos dois bloqueia o piloto; ambos são visíveis em tela e foram notados pelo dono do DS no sandbox.
+
 - 🟡 **(e) Cinzas crus → camada semântica** — **fatia mecânica FECHADA, resíduo triado.**
   Frente tocada na worktree isolada `work/dss-a11y-contraste` (commits `c261609`, `8fab0cf`,
   `f5f18da`, ago–set/2026). O placar saiu de **201 → 59** declarações fora de bloco dark, e
@@ -214,6 +238,51 @@
     **1,99:1** e `primary` **3,80:1** reprovam AA para texto normal; `negative` 5,13:1 passa. Confirma a
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
     abrir a lista quando a decisão vier.
+
+- 🔴 **(g) O fluxo normativo inicial só sabe falar de componente Fase 1/2 — e quase não se cria mais Fase 1/2** (out/2026).
+
+  **O sintoma, ouvido mais de uma vez e agora de duas fontes independentes.** O agente
+  externo (Lovable) relatou, sobre o `DssDataTable`, que teve de registrar o componente
+  **em 5 pontos manuais**, que a governança de gates é "pensada e polida para componentes
+  atômicos (Fase 1 e 2)" e que faltavam scaffold, padrão de linha expandida e catálogo de
+  padrões de composição. Confrontado, ele mesmo verificou que **as quatro coisas já
+  existem** — `generate_component_scaffold` no MCP, `DssExpansionItem`, o
+  `DSS_GUIA_COMPOSICAO_FASE3.md` com os 6 padrões, o `validate_composition` contra o
+  `ui-rules.schema.json` — e concluiu: *"não era falta de engenharia, era gap de
+  explicitação e orquestração operacional"*. Esta frente também não acionou nenhuma
+  dessas ferramentas por conta própria ao construir o `DssDataTableClaudeCode`.
+
+  **O diagnóstico é de ROTEIRO, não de ferramenta.** O Roteador do `CLAUDE.md` bifurca por
+  fase e manda ler cartões; o que ele NÃO faz é dizer **com qual comando começar**. Um
+  agente que lê o Roteador sabe quais invariantes respeitar e não sabe que existe um MCP
+  que emite os 17 arquivos da estrutura canônica em segundos. Ferramenta que não está no
+  caminho crítico do primeiro passo não é acionada — nem por humano, nem por agente.
+
+  **A assimetria de maturidade agrava.** A base (Fase 1/2) está praticamente fechada: o que
+  entra agora é **composto, pattern de tela e migração de legado**, e são justamente esses
+  três que não têm roteiro de partida próprio. O `DSS_ROTEIRO_FECHAMENTO_FASE3.md` cobre
+  o FECHAMENTO; não existe o equivalente para a ABERTURA.
+
+  **A atividade:** escrever um roteiro de criação **segmentado por tipo de entrega**, com
+  o passo zero explícito e executável em cada trilha:
+
+  | Trilha | Precisa de roteiro próprio porque… |
+  |---|---|
+  | Componente base (Fase 1/2) | é o único que já tem — serve de modelo de formato |
+  | Composto (Fase 3) | abre com `validate_composition` + `generate_component_scaffold`, não com leitura de cartão |
+  | Pattern de tela | não produz componente; produz página + decisão registrada. Hoje não tem lar nem registro |
+  | Migração de legado (WebComps) | começa por de-para e escopo negativo, antes de qualquer arquivo |
+  | Adequação de componente existente | já tem checklist, falta estar na mesma bifurcação |
+
+  Cada trilha deve nomear: comando de partida · ferramenta MCP aplicável · documento
+  normativo que governa · gates que fecham · o que **não** se aplica àquela trilha.
+  Entregar junto a correção do Roteador do `CLAUDE.md` para apontar as cinco trilhas.
+
+  **Dependência medida nesta frente:** registrar componente novo exige 5 pontos manuais
+  (`packages/core/components/index.ts` ×3 posições, `packages/core/index.ts`,
+  `DemoRenderer.vue`, `TestSuite.vue` ×3 posições, mais a página). O `TestSuite.vue` tem
+  ~2.000 linhas com `v-else-if` encadeado. Autodescoberta por `import.meta.glob` ou pelo
+  `dss.meta.json` elimina a classe inteira — é item do roteiro, não pré-requisito dele.
 
 - 🔴 **(f) Piloto WebComps → DSS: `jtech-data-table` tem DUAS leituras, nenhuma selada** (out/2026).
   Do repositório [WebComps-to-DSS](https://github.com/hebertchaves/WebComps-to-DSS) saiu o
@@ -1000,6 +1069,34 @@ controle e ainda trocam a caixa do Quasar por `DssCheckbox`:
 saídas possíveis — o `DssTable` emitir um nome default a partir do `rowKey`; ou uma prop
 `selectionLabel`; ou, no mínimo, a nota no README e um teste que reprove a ausência. Decisão
 pertence à rodada de adequação do `DssTable`.
+
+### 🟡 `DssTable`: rodapé de paginação — layout adequado, COR e ESCURO pendentes (out/2026)
+
+**Feito (sem composto):** o rodapé (`.q-table__bottom`) é DOM gerado pelo QTable, sem prop de
+classe (só `table-class`/`table-header-class`/`card-class`/`title-class`). Por isso continua sendo
+estilizado pela raiz (EXC-Gate-01) em vez de um `dss-table__bottom`. Isso foi suficiente para
+consertar o visual, e um composto Fase 3 **não é necessário**: gap entre rótulo e seletor;
+seletor compacto com borda centrado num alvo de 44px; ‹ › com 44×44 e ícone `--dss-icon-size-md`
+(eram 29px de altura com ícone de 12,5px); rótulos pt-BR (`rowsPerPageLabel`/`paginationLabel`).
+O `!important` está registrado como EXC-05.
+
+**Fica aberto:**
+- **Cor dos controles = `grey-8` do Quasar.** `types/table.types.ts` diz que `color` é
+  "bloqueado → governado por brand", mas nada o aplica: o QTable usa o default `grey-8`. Esse
+  `.text-grey-8` é `!important` **dentro de `@layer quasar`** e nenhum CSS DSS o vence (ver memória
+  *Quasar layered !important*). A mesma prop `color` pinta **checkbox de seleção e barra de
+  loading**. O comentário do EXC-Gate-02 supõe que eles usem `primary`, e não usam. A saída é
+  passar `color` explicitamente: `neutral` (exclusiva do DSS, = `--dss-text-primary`) ou
+  `primary` (reage à marca). É decisão de valor, porque muda checkbox e progresso junto.
+- 🔍 **Escuro:** na vista "Seções" do sandbox, ligar o modo escuro deixa a tabela **branca com
+  texto claro** (linhas ilegíveis) e os controles do rodapé continuam `grey-8`. O QTable não recebe
+  `dark` (bloqueado, "governado por `[data-theme]`"). Conferir no **Preview Frame** antes de
+  concluir se é defeito do componente ou só da vista.
+- **Knob do Preview:** `paginationLabel` é função, mas o contrato emitiu `controlHint: "text"`.
+  Digitar no knob passaria string onde o QTable espera função.
+- 🔍 **Ver o rodapé em pt-BR no sandbox exige restart do dev server:** o compilador SFC guardou
+  em cache os tipos importados, e as props novas não entram até reiniciar. Os testes unitários já
+  provam o comportamento.
 
 ### 🟡 Cabeçalho de tabela SÓLIDO da marca não existe no DSS (set/2026)
 

@@ -4,7 +4,6 @@ export default { name: 'DssBanner', inheritAttrs: false }
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
-import { QBanner } from 'quasar'
 import type { DssBannerProps, DssBannerEmits } from '../types/banner.types'
 import { useBannerClasses } from '../composables/useBannerClasses'
 import DssIcon from '../../DssIcon/DssIcon.vue'
@@ -38,18 +37,36 @@ function handleDismiss() {
 </script>
 
 <template>
-  <QBanner
+  <!--
+    SEM QBanner.
+
+    Até out/2026 a raiz deste componente ERA o `<QBanner>`: já no primeiro elo
+    da cadeia a UI saía da governança do DSS, e a estrutura interna
+    (`.q-banner__avatar`, `__content`, `__actions`) era do Quasar. Três custos
+    medidos nessa dependência:
+
+    1. O respiro das ações vinha de um override global ao seletor interno
+       (`themes/_quasar-overrides.scss`), aplicado a TODO banner. Com
+       `inline-actions` ele empurrava o botão 6px abaixo do eixo e inflava a
+       caixa em 12px — e não havia como condicionar, porque `inlineActions`
+       era só repassada ao QBanner.
+    2. Alinhamento e gap das três áreas só se governavam por seletor
+       descendente de terceiro, registrado como EXC-Gate-01.
+    3. A estrutura podia mudar entre versões do Quasar sem aviso — foi o que
+       aconteceu no DssPagination, onde um wrapper apareceu e matou o seletor.
+
+    O arranjo é um grid de três colunas: avatar · conteúdo · ações. Quando as
+    ações são empilhadas, elas descem para a segunda linha da coluna do
+    conteúdo. Nenhum componente de terceiro no caminho.
+  -->
+  <div
     v-bind="$attrs"
     :class="rootClasses"
-    :dense="dense"
-    :rounded="rounded"
-    :inline-actions="inlineActions"
-    :role="ariaRole"
-    :aria-live="ariaLive"
     class="dss-banner"
+    :role="ariaRole"
+    :aria-live="(ariaLive as 'off' | 'polite' | 'assertive' | undefined)"
   >
-    <!-- Área de ícone/avatar -->
-    <template v-if="hasAvatarContent" #avatar>
+    <div v-if="hasAvatarContent" class="dss-banner__avatar">
       <slot name="avatar">
         <DssIcon
           v-if="resolvedIcon"
@@ -59,13 +76,13 @@ function handleDismiss() {
           decorative
         />
       </slot>
-    </template>
+    </div>
 
-    <!-- Conteúdo principal -->
-    <slot />
+    <div class="dss-banner__content">
+      <slot />
+    </div>
 
-    <!-- Ações: botão fechar ou slot customizado -->
-    <template v-if="hasActionContent" #action>
+    <div v-if="hasActionContent" class="dss-banner__actions">
       <slot name="actions">
         <DssButton
           v-if="dismissible"
@@ -78,6 +95,6 @@ function handleDismiss() {
           @click="handleDismiss"
         />
       </slot>
-    </template>
-  </QBanner>
+    </div>
+  </div>
 </template>

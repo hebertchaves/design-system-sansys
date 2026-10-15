@@ -1,19 +1,30 @@
 // ==========================================================================
 //  DssDataTable - Claude Code · L4 Marca
 //
-//  EIXO DE IDENTIDADE, não de ação.
+//  NADA é pintado aqui, e é a decisão — não esquecimento.
 //
-//  O bloco é superfície de CONTEÚDO: os botões dentro dele seguem o peso
-//  semântico da ação, não o produto. O que a marca pinta aqui é um só traço
-//  de identidade na borda do cartão — e ele usa `--dss-brand-primary`, o tier
-//  de INDICADOR (piso 3:1), porque é marca d'água, não texto nem superfície
-//  de leitura. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.4.
+//  A primeira versão deste arquivo desenhava um traço de identidade na borda
+//  esquerda do cartão interno:
 //
-//  Nada é declarado sem ser consumido na linha seguinte: token local que
-//  ninguém lê é camada de marca inerte — ela parece atender à Constituição #5
-//  e não pinta nada.
-// ==========================================================================
-
-.dss-data-table-cc[data-brand] .dss-data-table-cc__card {
-  border-inline-start: var(--dss-spacing-1) solid var(--dss-brand-primary);
-}
+//    .dss-data-table-cc[data-brand] .dss-data-table-cc__card {
+//      border-inline-start: var(--dss-spacing-1) solid var(--dss-brand-primary);
+//    }
+//
+//  Três coisas erradas nessa regra, todas medidas:
+//
+//  1. É a SEGUNDA vez que a mesma classe de erro apareceu nesta frente — no
+//     DssDataGrid, um traço idêntico no `__head` duplicava o que o
+//     `DssSectionTitle` já desenha. Reimplementar o visual de um primitivo é
+//     o que o Cartão Composto proíbe (M1).
+//  2. O `DssCard` JÁ tem traço de marca próprio — `.dss-card[data-brand]`,
+//     com `--dss-brand-primary` em `--dss-border-width-thick`. Ele é
+//     CO-LOCADO de propósito: só pinta quando o atributo está no próprio
+//     cartão, isto é, quando alguém pediu marca NAQUELE cartão. Minha regra
+//     era descendente e atropelava essa escolha — pintava um cartão que não
+//     pediu nada.
+//  3. Com o cartão interno em `flat`, a aresta azul sozinha, sem as outras
+//     três bordas, lê como acidente de CSS, não como identidade.
+//
+//  Quem carrega a identidade neste bloco é o `DssSectionTitle` do cabeçalho,
+//  que serve a todos os blocos. Se um dia um cartão precisar do traço, o
+//  caminho é dar `data-brand` AO CARTÃO e deixar o `DssCard` decidir.

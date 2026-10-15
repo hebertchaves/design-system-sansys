@@ -1,0 +1,16 @@
+// ==========================================================================
+//  DssDataGrid · L3 Variantes
+//
+//  `columnsPerRow` é TETO de colunas, não largura fixa: a base já usa
+//  `auto-fill` com piso, e aqui só limitamos quanto a grade pode crescer.
+//  Fixar a contagem produziria card espremido em container estreito — que é
+//  o defeito do `col-6` fixo da origem.
+// ==========================================================================
+
+.dss-data-grid--cols-1 .dss-data-grid__items { max-inline-size: var(--dss-spacing-120); }
+.dss-data-grid--cols-2 .dss-data-grid__items { grid-template-columns: repeat(auto-fill, minmax(var(--dss-spacing-80), 1fr)); }
+.dss-data-grid--cols-4 .dss-data-grid__items { grid-template-columns: repeat(auto-fill, minmax(var(--dss-spacing-56), 1fr)); }
+
+.dss-data-grid--disabled {
+  color: var(--dss-text-disabled);
+}

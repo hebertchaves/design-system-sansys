@@ -97,7 +97,7 @@
         "property": "touch target",
         "token": "--dss-touch-target-md",
         "value": "44px",
-        "source": "Via `::before` (WCAG 2.5.5)"
+        "source": "2-composition/_base.scss"
       }
     ],
     "demoContent": "Label 'Chip'",
@@ -160,7 +160,9 @@
         "level": "A",
         "implementation": "Nome via label/aria-label; ação de remover via aria-label dedicado.",
         "verifiedBy": "aria",
-        "ariaAttrs": ["aria-label"]
+        "ariaAttrs": [
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.4.3",

@@ -167,14 +167,20 @@
         "level": "A",
         "implementation": "Ajuste do valor operável por teclado.",
         "verifiedBy": "test",
-        "test": ["ArrowRight incrementa o valor", "ArrowLeft decrementa o valor"]
+        "test": [
+          "ArrowRight incrementa o valor",
+          "ArrowLeft decrementa o valor"
+        ]
       },
       {
         "criterion": "4.1.2",
         "level": "A",
         "implementation": "Valor exposto via aria-valuenow/min/max; nome via aria-label.",
         "verifiedBy": "aria",
-        "ariaAttrs": ["aria-valuenow", "aria-label"]
+        "ariaAttrs": [
+          "aria-valuenow",
+          "aria-label"
+        ]
       },
       {
         "criterion": "1.4.3",

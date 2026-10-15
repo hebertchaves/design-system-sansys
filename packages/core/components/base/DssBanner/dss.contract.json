@@ -138,15 +138,33 @@
     "states": {
       "default": [
         {
+          "property": "box-sizing",
+          "token": null,
+          "value": "border-box",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "display",
           "token": null,
-          "value": "flex",
+          "value": "grid",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "auto minmax(0, 1fr) auto",
           "source": "2-composition/_base.scss"
         },
         {
           "property": "align-items",
           "token": null,
           "value": "flex-start",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "column-gap",
+          "token": "--dss-gap-3",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -210,21 +228,27 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "padding-right",
-          "token": "--dss-gap-3",
-          "value": null,
+          "property": "grid-column",
+          "token": null,
+          "value": "1",
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "padding-top",
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block-start",
           "token": "--dss-spacing-0_5",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "flex",
+          "property": "grid-column",
           "token": null,
-          "value": "1",
+          "value": "2",
           "source": "2-composition/_base.scss"
         },
         {
@@ -234,7 +258,31 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "padding-left",
+          "property": "grid-row",
+          "token": null,
+          "value": "2",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "flex-end",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block-start",
           "token": "--dss-gap-3",
           "value": null,
           "source": "2-composition/_base.scss"
@@ -249,6 +297,24 @@
           "property": "flex-shrink",
           "token": null,
           "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "grid-column",
+          "token": null,
+          "value": "3",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "grid-row",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block-start",
+          "token": "--dss-spacing-0",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -314,6 +380,12 @@
         {
           "property": "padding",
           "token": "--dss-padding-2",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
           "value": null,
           "source": "3-variants/_variant.scss"
         },
@@ -439,6 +511,12 @@
     ],
     "instances": [
       {
+        "name": "--dss-gap-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-font-family-sans",
         "usedIn": [
           "default"
@@ -495,19 +573,25 @@
         ]
       },
       {
-        "name": "--dss-gap-3",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-spacing-0_5",
         "usedIn": [
           "default"
         ]
       },
       {
+        "name": "--dss-gap-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-banner-icon-color",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
         "usedIn": [
           "default"
         ]
@@ -574,6 +658,12 @@
       },
       {
         "name": "--dss-padding-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
         "usedIn": [
           "default"
         ]

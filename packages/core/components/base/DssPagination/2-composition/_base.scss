@@ -1,77 +1,41 @@
-@use '../../../../utils/_mixins' as mixins;
+// ==========================================================================
+//  DssPagination · L2 Composição
+//
+//  Encolheu de 115 para ~40 linhas ao compor `DssButton` em vez de envolver o
+//  QPagination. O que sumiu junto: os dois `!important` (EXC-IMPORTANT-01) que
+//  existiam só para vencer o estilo INLINE que o QPagination escrevia em cada
+//  botão, e os overrides de seletor interno de terceiro (EXC-Gate-01) — altura,
+//  fonte, raio, transição e anel de foco agora vêm do próprio DssButton.
+// ==========================================================================
 
-// EXC-Gate-01: Quasar QPagination internal selectors — overridden with DSS tokens.
-// Justification: QPagination renders page buttons internally with no slot API.
-// These selectors are stable in the QPagination Quasar API and required for DSS theming.
 .dss-pagination {
   display: inline-flex;
   align-items: center;
+  // Separa TODOS os grupos — setas, numerais e reticências. Antes o gap morava
+  // no `.q-pagination__middle`, que agrupava só os numerais: o espaçamento
+  // medido era [0, 4, 0], com as setas coladas nas pontas.
+  gap: var(--dss-gap-1);
 
-  // EXC-Gate-01: Override Quasar primary color via CSS custom property.
-  // QPagination uses --q-color-primary for the active page button background.
-  // This is the only way to connect DSS brand tokens without :deep() or !important.
-  --q-color-primary: var(--dss-action-primary);
-
-  // EXC-Gate-01: Internal button spacing
-  .q-pagination__middle {
-    gap: var(--dss-gap-1);
+  // FRONTEIRA setas ↔ numerais (out/2026). Com o mesmo gap entre tudo, as
+  // setas pareciam só mais um numeral. A margem SOMA ao gap só na transição
+  // entre os dois grupos — 4px + 8px = 12px —, e o espaço entre os numerais
+  // e entre `first_page`/`chevron_left` continua em 4px.
+  // Seletor de irmão adjacente: vale sem setas, só com setas, ou com setas
+  // e limites, sem precisar de wrapper extra no DOM.
+  &__control + &__page,
+  &__control + &__ellipsis,
+  &__page + &__control,
+  &__ellipsis + &__control {
+    margin-inline-start: var(--dss-gap-2);
   }
 
-  // EXC-Gate-01: Individual page buttons
-  // border-radius: radius-sm (4px) — itens de paginação são pequenos e quadrados.
-  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.24
-  .q-pagination .q-btn {
-    border-radius: var(--dss-radius-sm);
-    min-width: var(--dss-compact-control-height-md);
-    min-height: var(--dss-compact-control-height-md);
-    font-size: var(--dss-font-size-md);
-    font-weight: var(--dss-font-weight-medium);
-
-    // A ALTURA VEM DO TOKEN — e o `!important` aqui é o ÚNICO jeito.
-    //
-    // EXC-IMPORTANT-01. O QPagination escreve ESTILO INLINE em cada botão:
-    //   style="padding: 3px 2px; min-width: 0px; min-height: 0px;"
-    // Inline vence qualquer folha de estilo. Por isso o token de altura estava
-    // declarado, resolvia para 28px e não governava NADA: era anulado por um
-    // `min-height: 0px` inline, e a caixa acabava em 36–43px, definida pelo
-    // `line-height: 1.715em` do QBtn mais o padding. Medido: forçar
-    // `min-height: 28px` pela folha não mexia um pixel.
-    //
-    // Contra estilo inline não existe especificidade que resolva — só
-    // `!important`. Verificado no navegador: com ele, a caixa cai para
-    // exatamente 28px; sem ele, fica em 40px. Não é o caso de `!important`
-    // "por precaução" que a higiene T1–T4 varreu; é o único mecanismo do CSS
-    // para o que precisa ser feito aqui.
-    //
-    // O padding vertical vai a zero e o `em` do Quasar dá lugar ao token
-    // pareado de line-height, para o conteúdo caber DENTRO do piso. O padding
-    // HORIZONTAL fica: é ele que acomoda "10"/"100" sem espremer.
-    padding-block: 0 !important;
-    line-height: var(--dss-line-height-md-tight);
-    min-height: var(--dss-compact-control-height-md) !important;
-
-    // O ícone das setas precisa CABER na caixa, senão ele é que define a altura
-    // e o token volta a não governar. O QIcon vem com 24px fixo: cabe em md
-    // (28px) e lg (32px), mas ESTOURA o xs (20px) — medido, a seta saía 24px
-    // enquanto os números saíam 20px, no mesmo componente.
-    .q-icon {
-      font-size: var(--dss-icon-size-md); // 24px
-    }
-    transition:
-      background-color var(--dss-duration-150) var(--dss-easing-standard),
-      color var(--dss-duration-150) var(--dss-easing-standard),
-      border-color var(--dss-duration-150) var(--dss-easing-standard);
-
-    &:focus-visible {
-      @include mixins.dss-focus-ring;
-    }
-  }
-
-  // EXC-Gate-01: Navigation arrow buttons (previous/next, first/last).
-  // QPagination root is .q-pagination — no .q-pagination__content wrapper exists.
-  // Direct QBtn children of .q-pagination are the direction/boundary navigation buttons.
-  .q-pagination > .q-btn {
-    color: var(--dss-text-primary);
+  &__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--dss-touch-target-md);
+    color: var(--dss-text-subtle);
+    user-select: none;
   }
 
   &--disabled {
@@ -79,37 +43,9 @@
     pointer-events: none;
   }
 
+  // `readonly` preserva a leitura do número da página, só corta a interação —
+  // por isso não leva a opacidade de desabilitado.
   &--readonly {
     pointer-events: none;
-  }
-
-  // Size variants — adjust button dimensions via compact-control tokens
-  &--xs .q-pagination .q-btn {
-    min-width: var(--dss-compact-control-height-xs);
-    min-height: var(--dss-compact-control-height-xs) !important; // EXC-IMPORTANT-01
-    font-size: var(--dss-font-size-xs);
-    line-height: var(--dss-line-height-xs-tight);
-
-    .q-icon {
-      font-size: var(--dss-icon-size-xs); // 16px
-    }
-  }
-
-  &--sm .q-pagination .q-btn {
-    min-width: var(--dss-compact-control-height-sm);
-    min-height: var(--dss-compact-control-height-sm) !important; // EXC-IMPORTANT-01
-    font-size: var(--dss-font-size-sm);
-    line-height: var(--dss-line-height-sm-tight);
-
-    .q-icon {
-      font-size: var(--dss-icon-size-sm); // 20px
-    }
-  }
-
-  &--lg .q-pagination .q-btn {
-    min-width: var(--dss-compact-control-height-lg);
-    min-height: var(--dss-compact-control-height-lg) !important; // EXC-IMPORTANT-01
-    font-size: var(--dss-font-size-lg);
-    line-height: var(--dss-line-height-lg-tight);
   }
 }

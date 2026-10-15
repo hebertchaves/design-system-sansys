@@ -183,12 +183,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "overflow-y",
-          "token": null,
-          "value": "auto",
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "list-style",
           "token": null,
           "value": "none",

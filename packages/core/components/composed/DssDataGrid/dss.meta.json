@@ -1,0 +1,137 @@
+{
+  "component": "DssDataGrid",
+  "cssClass": "dss-data-grid",
+  "phase": 3,
+  "level": 5,
+  "status": "candidate",
+  "dssVersion": "2.4",
+  "goldenReference": "DssCard",
+  "goldenContext": "DssDataTableClaudeCode",
+  "classification": "Visual",
+  "tagline": "Lista de registros em fichas, com campos rotulados, revelação de campos secundários e paginação local ou remota.",
+  "quasarBase": null,
+  "dependencies": [
+    "DssCard",
+    "DssSectionTitle",
+    "DssChip",
+    "DssButton",
+    "DssCheckbox",
+    "DssBanner",
+    "DssEmptyState",
+    "DssPagination"
+  ],
+  "tokens": [
+    "--dss-text-body",
+    "--dss-text-subtle",
+    "--dss-text-disabled",
+    "--dss-surface-default",
+    "--dss-surface-subtle",
+    "--dss-surface-selected",
+    "--dss-border-subtle",
+    "--dss-border-focus",
+    "--dss-brand-primary",
+    "--dss-font-family-sans",
+    "--dss-font-size-xs",
+    "--dss-font-size-sm",
+    "--dss-font-size-md",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-6",
+    "--dss-spacing-56",
+    "--dss-spacing-64",
+    "--dss-spacing-80",
+    "--dss-spacing-120"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "dark",
+      "reason": "Tema governado por data-theme no contexto."
+    },
+    {
+      "quasarProp": "color",
+      "reason": "Cores governadas por tokens semânticos; a marca entra por data-brand."
+    },
+    {
+      "legacyProp": "nmInterface",
+      "reason": "Rede pertence ao consumidor; o bloco apenas emite request."
+    },
+    {
+      "legacyProp": "extraParams",
+      "reason": "Parâmetro de requisição é do consumidor, não do componente."
+    },
+    {
+      "legacyProp": "defaultHttpOptions",
+      "reason": "Transporte HTTP não entra em componente de apresentação."
+    },
+    {
+      "legacyProp": "hideHeader",
+      "reason": "Ficha não tem cabeçalho de tabela para ocultar — o rótulo vive em cada dt."
+    },
+    {
+      "legacyProp": "isPaginated",
+      "reason": "Substituída por paginated; a origem desligava paginando com rowsPerPage 9999."
+    }
+  ],
+  "defaultPreview": {
+    "props": {
+      "rows": [
+        { "id": 1, "nome": "Ana Souza", "protocolo": "65665262", "situacao": "Pendente", "bairro": "Centro" },
+        { "id": 2, "nome": "Bruno Lima", "protocolo": "65665263", "situacao": "Em análise", "bairro": "Norte" }
+      ],
+      "fields": [
+        { "name": "nome", "label": "Solicitante" },
+        { "name": "protocolo", "label": "Protocolo" },
+        { "name": "situacao", "label": "Situação" },
+        { "name": "bairro", "label": "Bairro", "visibility": "hidden" }
+      ],
+      "rowKey": "id",
+      "title": "Solicitações",
+      "total": 24,
+      "columnsPerRow": 3
+    },
+    "demoSlots": null,
+    "visualProperties": []
+  },
+  "previewGroup": "contextuais",
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Cada registro é um item de lista com os campos em dt/dd — rótulo e valor vinculados programaticamente, sem reaproveitar marcação de tabela.",
+        "verifiedBy": "test",
+        "test": [
+          "usa lista, não tabela",
+          "vincula rótulo e valor de cada campo por dt/dd"
+        ]
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "A raiz comunica busy e disabled; o revelador de campos declara aria-expanded e aponta aria-controls para o bloco que controla; o checkbox recebe nome contextual com o título do card.",
+        "verifiedBy": "test",
+        "test": [
+          "comunica loading e disabled na raiz",
+          "guarda campo oculto atrás do revelador, com aria-expanded e aria-controls",
+          "dá título próprio ao card e nome contextual ao checkbox"
+        ]
+      },
+      {
+        "criterion": "4.1.3",
+        "level": "AA",
+        "implementation": "A contagem de registros é região viva aria-live=polite, porque filtrar e paginar mudam o conteúdo sem mover o foco.",
+        "verifiedBy": "test",
+        "test": "anuncia a contagem de registros em região viva"
+      }
+    ],
+    "aria": {
+      "role": "region"
+    },
+    "keyboard": [
+      { "key": "Tab", "action": "Percorrer ações do cabeçalho, seleção, revelador de cada ficha e paginação." },
+      { "key": "Espaço", "action": "Alternar seleção ou acionar o controle focado." }
+    ]
+  },
+  "auditHistory": []
+}

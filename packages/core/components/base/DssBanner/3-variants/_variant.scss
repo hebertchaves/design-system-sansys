@@ -78,11 +78,24 @@
 }
 
 /* ==========================================================================
-   DENSE — Padding reduzido (controlado via QBanner.props.dense)
-   EX-Structural-01: QBanner aplica a classe .q-banner--dense internamente;
-   usamos descendant selector para ajustar padding do wrapper DSS.
+   DENSE — Padding reduzido
+
+   EX-Structural-01 REMOVIDA (out/2026): a classe era `.q-banner--dense`,
+   escrita pelo QBanner. Sem o motor de terceiro, o modificador é do próprio
+   componente e não depende mais da nomenclatura interna de ninguém.
    ========================================================================== */
 
-.dss-banner.q-banner--dense {
+.dss-banner--dense {
   padding: var(--dss-padding-2) var(--dss-padding-4);
+}
+
+/* ==========================================================================
+   ROUNDED — Cantos arredondados
+
+   Também vinha do QBanner (`rounded-borders`). Agora usa o token de raio do
+   DSS, em vez da classe utilitária do Quasar.
+   ========================================================================== */
+
+.dss-banner--rounded {
+  border-radius: var(--dss-radius-md);
 }

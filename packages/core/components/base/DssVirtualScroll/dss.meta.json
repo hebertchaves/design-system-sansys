@@ -121,7 +121,7 @@
         "property": "spinner color",
         "token": "--dss-action-primary",
         "value": null,
-        "source": "CSS currentColor (padrão DssSpinner)"
+        "source": "4-output/_brands.scss"
       }
     ],
     "demoContent": "Lista virtualizada com 1000 itens",

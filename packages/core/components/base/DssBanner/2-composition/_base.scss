@@ -1,90 +1,90 @@
 /* ==========================================================================
-   DssBanner — LAYER 2: COMPOSITION (Base Styles)
+   DssBanner — LAYER 2: COMPOSITION (Base)
 
-   MOTOR: QBanner (EXC-Gate-01)
-   EXC-Gate-01: Descendant selectors .q-banner__* são obrigatórios para
-   controlar as subáreas do QBanner sem :deep() (gate de composição v2.4).
+   SEM MOTOR DE TERCEIRO. A estrutura é própria: um grid de três colunas
+   (avatar · conteúdo · ações). Todos os EXC-Gate-01 de seletor interno do
+   QBanner (`.q-banner__avatar`, `__content`, `__actions`) deixaram de existir,
+   e com eles a dependência de uma estrutura que podia mudar entre versões.
 
    REGRAS:
    ✅ Tokens genéricos DSS apenas
-   ✅ Estrutura e layout base
-   ✅ Sem valores hardcoded
    ❌ Cores (ficam em 3-variants/ e 4-output/)
-   ✅ Touch target: N/A — componente não-interativo
-   ========================================================================== */
-
-/* ==========================================================================
-   BANNER BASE — Estrutura e Tipografia
+   ✅ Touch target: N/A — a área interativa é o DssButton de fechar
    ========================================================================== */
 
 .dss-banner {
-  /* Layout base */
-  display: flex;
+  box-sizing: border-box;
+  display: grid;
+  // avatar (largura do conteúdo) · conteúdo (resto) · ações (largura do
+  // conteúdo). Empilhado, as ações descem para a linha de baixo da coluna
+  // do conteúdo — ver o modificador em 3-variants.
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: flex-start;
+  column-gap: var(--dss-gap-3);
   width: 100%;
 
-  /* Tipografia */
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-md);
   font-weight: var(--dss-font-weight-normal);
   line-height: var(--dss-line-height-normal);
 
-  /* Espaçamento interno */
   padding: var(--dss-padding-4);
 
   /* Borda esquerda — acento semântico (cor definida em 3-variants/) */
   border-left: var(--dss-border-width-heavy) solid transparent;
-
-  /* Fundo padrão (cor definida em 3-variants/) */
   background-color: var(--dss-surface-default);
-
-  /* Cor de texto principal — alta legibilidade em qualquer superfície */
   color: var(--dss-text-body);
 
-  /* Transição suave ao ser inserido na árvore */
   transition: opacity var(--dss-duration-250) var(--dss-easing-standard);
+
+  &__avatar {
+    grid-column: 1;
+    display: flex;
+    align-items: flex-start;
+    padding-block-start: var(--dss-spacing-0_5);
+  }
+
+  &__content {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  // AÇÕES EMPILHADAS (padrão): descem para a linha de baixo, alinhadas à
+  // direita da coluna do conteúdo. O respiro até o texto é `row-gap`, não a
+  // `margin-top` global que o tema aplicava a todo banner — era ela que, com
+  // `inline-actions`, empurrava o botão 6px abaixo do eixo e inflava a caixa.
+  &__actions {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--dss-gap-2);
+    padding-block-start: var(--dss-gap-3);
+  }
+
+  &__icon {
+    color: var(--dss-banner-icon-color, currentColor);
+  }
+
+  &__dismiss {
+    flex-shrink: 0;
+  }
 }
 
-/* ==========================================================================
-   EXC-Gate-01 — Overrides de subáreas do QBanner
-   Justificativa: QBanner renderiza .q-banner__avatar, .q-banner__content e
-   .q-banner__actions internamente; não há prop ou slot raiz para controlar
-   gap e alinhamento sem selectors descendentes.
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   AÇÕES NA MESMA LINHA (`inline-actions`)
 
-.dss-banner .q-banner__avatar {
-  display: flex;
-  align-items: flex-start;
-  padding-right: var(--dss-gap-3);
-  padding-top: var(--dss-spacing-0_5);
-}
+   Vão para a terceira coluna e ao eixo vertical. Medido out/2026 na correção:
+   altura 64 → 52px e desvio do botão de fechar 6px → 0.
+   -------------------------------------------------------------------------- */
 
-.dss-banner .q-banner__content {
-  flex: 1;
-  min-width: 0;
-}
+.dss-banner--inline-actions {
+  align-items: center;
 
-.dss-banner .q-banner__actions {
-  display: flex;
-  align-items: flex-start;
-  padding-left: var(--dss-gap-3);
-}
-
-/* ==========================================================================
-   ÍCONE DO BANNER
-   Cor do ícone é setada pelas variantes (herda via currentColor da classe pai)
-   ========================================================================== */
-
-.dss-banner__icon {
-  /* A cor do ícone é definida em 3-variants/ via custom property */
-  color: var(--dss-banner-icon-color, currentColor);
-}
-
-/* ==========================================================================
-   DISMISS BUTTON — Alinhamento do botão fechar
-   ========================================================================== */
-
-.dss-banner__dismiss {
-  /* Garante alinhamento correto sem margem extra */
-  flex-shrink: 0;
+  .dss-banner__actions {
+    grid-column: 3;
+    grid-row: 1;
+    padding-block-start: var(--dss-spacing-0);
+  }
 }

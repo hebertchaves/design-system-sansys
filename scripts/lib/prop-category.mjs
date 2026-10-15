@@ -193,6 +193,19 @@ export const EXCECOES = {
   'DssDataTableClaudeCode.statusColumn': 'Comportamento',
   'DssDataTableClaudeCode.pagination': 'Estado', 'DssDataTableClaudeCode.error': 'Estado',
   'DssDataTableClaudeCode.expandedKeys': 'Estado',
+
+  // DssDataGrid: ficha, não grade. `fields` descreve campos de ficha (a origem
+  // Jtech chamava assim), por isso não cai em nenhuma âncora de coluna.
+  'DssDataGrid.rows': 'Conteúdo', 'DssDataGrid.fields': 'Conteúdo',
+  'DssDataGrid.total': 'Conteúdo', 'DssDataGrid.countNoun': 'Conteúdo',
+  'DssDataGrid.filterLabel': 'Conteúdo', 'DssDataGrid.emptyTitle': 'Conteúdo',
+  'DssDataGrid.emptyDescription': 'Conteúdo', 'DssDataGrid.moreLabel': 'Conteúdo',
+  'DssDataGrid.lessLabel': 'Conteúdo',
+  'DssDataGrid.rowKey': 'Comportamento', 'DssDataGrid.titleField': 'Comportamento',
+  'DssDataGrid.selection': 'Comportamento', 'DssDataGrid.paginated': 'Comportamento',
+  'DssDataGrid.rowsPerPage': 'Comportamento', 'DssDataGrid.rowsNumber': 'Comportamento',
+  'DssDataGrid.columnsPerRow': 'Aparência',
+  'DssDataGrid.page': 'Estado', 'DssDataGrid.error': 'Estado',
   // ── Aparência ──────────────────────────────────────────────────────────────
   variant: 'Aparência', brand: 'Aparência', square: 'Aparência', align: 'Aparência',
   vertical: 'Aparência', horizontal: 'Aparência', size: 'Aparência', density: 'Aparência',

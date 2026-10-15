@@ -45,24 +45,38 @@
     margin-block-end: var(--dss-spacing-1);
   }
 
+  // SEM padding: a tabela vai de borda a borda do cartão.
+  //
+  // O `--dss-spacing-2` daqui criava um recuo de 8px em volta de uma grade
+  // que já tem o próprio padding de célula — medido, recuo de 8px em todos os
+  // lados e 16px a mais de altura. Numa ficha o padding faz sentido; numa
+  // tabela ele só desalinha a primeira coluna em relação ao cabeçalho do
+  // bloco, que está fora do cartão.
   &__card {
     display: flex;
     flex-direction: column;
-    padding: var(--dss-spacing-2);
     background: var(--dss-surface-default);
   }
 
-  // Colunas de controle (seleção, expansão): largura do alvo de toque, não
-  // do ícone — WCAG 2.5.5 vale para a célula inteira.
-  &__control-cell {
-    width: var(--dss-touch-target-md);
+  // Colunas de controle e de ações ABRAÇAM o conteúdo.
+  //
+  // `width: 1%` numa tabela não significa 1%: é o idioma para "a menor
+  // largura que couber", porque o algoritmo de layout distribui o excedente
+  // entre as colunas sem largura declarada. Antes a célula de controle fixava
+  // `width: var(--dss-touch-target-md)` — 44px cravados, que sobravam quando
+  // o checkbox era menor e faltavam quando havia dois controles. O alvo de
+  // toque continua garantido pelo `min-inline-size`, que é piso e não teto.
+  &__control-cell,
+  &__actions-cell {
+    width: 1%;
     white-space: nowrap;
     text-align: center;
+    min-inline-size: var(--dss-touch-target-md);
   }
 
-  &__actions-cell {
-    white-space: nowrap;
-    text-align: right;
+  // O grupo de ações da linha acompanha o centro da coluna.
+  &__row-actions {
+    justify-content: center;
   }
 
   &__cell--left { text-align: left; }
@@ -79,4 +93,20 @@
   &__empty {
     padding: var(--dss-spacing-6);
   }
+}
+
+// --------------------------------------------------------------------------
+//  CABEÇALHO DAS COLUNAS DE CONTROLE E DE AÇÕES
+//
+//  O modificador BEM (`.dss-data-table-cc__actions-cell`) tem especificidade
+//  (0,1,0) e PERDE para o `.q-table thead th` do Quasar, que é (0,1,2) e
+//  declara `text-align: left`. Medido: a célula centrava e o `th` não, com o
+//  rótulo e o conteúdo em cantos opostos da mesma coluna.
+//
+//  Não é caso de `!important` — basta um seletor descendente, que empata em
+//  elementos e ganha em classes (0,2,1).
+// --------------------------------------------------------------------------
+.dss-data-table-cc th.dss-data-table-cc__control-cell,
+.dss-data-table-cc th.dss-data-table-cc__actions-cell {
+  text-align: center;
 }

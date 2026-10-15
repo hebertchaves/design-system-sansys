@@ -7,9 +7,9 @@
    Filosofia DSS: Tokens = Provedores, Componentes = Consumidores
 
    NOTA ARQUITETURAL (Gate de Composição v2.4 — pré-formalizado):
-   O DssBtnToggle usa seletores CSS globais do tipo `.dss-btn-toggle > .q-btn-item`
+   O DssBtnToggle usa seletores CSS globais do tipo `.dss-btn-toggle > .dss-btn-toggle__option`
    para gerenciar border-radius nas extremidades e separadores visuais.
-   `.q-btn-item` é um elemento DOM interno do QBtnToggle (Quasar),
+   `.dss-btn-toggle__option` é um elemento DOM interno do QBtnToggle (Quasar),
    NÃO um subcomponente DSS filho. O Gate de Composição v2.4 aplica-se
    exclusivamente a componentes DSS filhos.
    Precedente: DssBtnGroup registra exceção equivalente para seletores
@@ -46,11 +46,11 @@
    (Constituição #3) — esta regra ganha sem `!important`.
 
    Gate de Composição v2.4 — mesmo EXC do bloco de border-radius abaixo:
-   `.q-btn-item` é seletor interno do QBtnToggle, registrado em
+   `.dss-btn-toggle__option` é seletor interno do QBtnToggle, registrado em
    dss.meta.json → gateExceptions.compositionGateV24.
    ========================================================================== */
 
-.dss-btn-toggle > .q-btn-item {
+.dss-btn-toggle > .dss-btn-toggle__option {
   text-transform: var(--dss-text-transform-control, none);
 
   /* ALTURA PELO TOKEN — antes vinha do Quasar, e oscilava.
@@ -72,28 +72,28 @@
 /* ==========================================================================
    GERENCIAMENTO DE BORDER-RADIUS DOS BOTÕES INTERNOS
 
-   O QBtnToggle renderiza cada opção como um elemento com classe .q-btn-item.
+   O QBtnToggle renderiza cada opção como um elemento com classe .dss-btn-toggle__option.
    O DssBtnToggle aplica border-radius apenas nas extremidades do grupo.
    Botões internos têm border-radius: 0 nas faces adjacentes.
 
-   Gate de Composição v2.4 — uso de .q-btn-item (seletor Quasar interno).
+   Gate de Composição v2.4 — uso de .dss-btn-toggle__option (seletor Quasar interno).
    Registrado em dss.meta.json → gateExceptions.compositionGateV24.
    ========================================================================== */
 
 /* Primeiro botão: remove corners da direita (face interna) */
-.dss-btn-toggle > .q-btn-item:first-child:not(:only-child) {
+.dss-btn-toggle > .dss-btn-toggle__option:first-child:not(:only-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 /* Último botão: remove corners da esquerda (face interna) */
-.dss-btn-toggle > .q-btn-item:last-child:not(:only-child) {
+.dss-btn-toggle > .dss-btn-toggle__option:last-child:not(:only-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
 /* Botões intermediários: sem border-radius */
-.dss-btn-toggle > .q-btn-item:not(:first-child):not(:last-child) {
+.dss-btn-toggle > .dss-btn-toggle__option:not(:first-child):not(:last-child) {
   border-radius: 0;
 }
 
@@ -103,21 +103,21 @@
    Botões intermediários continuam com border-radius: 0.
    ========================================================================== */
 
-.dss-btn-toggle--rounded > .q-btn-item:first-child:not(:only-child) {
+.dss-btn-toggle--rounded > .dss-btn-toggle__option:first-child:not(:only-child) {
   border-top-left-radius: var(--dss-radius-full);
   border-bottom-left-radius: var(--dss-radius-full);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.dss-btn-toggle--rounded > .q-btn-item:last-child:not(:only-child) {
+.dss-btn-toggle--rounded > .dss-btn-toggle__option:last-child:not(:only-child) {
   border-top-right-radius: var(--dss-radius-full);
   border-bottom-right-radius: var(--dss-radius-full);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.dss-btn-toggle--rounded > .q-btn-item:only-child {
+.dss-btn-toggle--rounded > .dss-btn-toggle__option:only-child {
   border-radius: var(--dss-radius-full);
 }
 
@@ -129,7 +129,7 @@
    não hardcoded visual. Padrão idêntico ao DssBtnGroup EXC-01 e DssCard EXC-03.
    ========================================================================== */
 
-.dss-btn-toggle--square > .q-btn-item {
+.dss-btn-toggle--square > .dss-btn-toggle__option {
   border-radius: 0; /* EXC-01 */
 }
 
@@ -142,7 +142,7 @@
   display: flex;
   width: 100%;
 
-  > .q-btn-item {
+  > .dss-btn-toggle__option {
     flex: 1;
   }
 }
@@ -155,7 +155,7 @@
 .dss-btn-toggle--stretch {
   align-self: stretch;
 
-  > .q-btn-item {
+  > .dss-btn-toggle__option {
     align-self: stretch;
     min-height: 0; /* Remove min-height do botão interno para esticar livremente */
   }

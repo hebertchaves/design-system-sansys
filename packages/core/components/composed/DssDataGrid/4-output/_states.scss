@@ -1,0 +1,51 @@
+// ==========================================================================
+//  DssDataGrid · L4 Estados
+// ==========================================================================
+
+.dss-data-grid {
+  // Card selecionado. A origem usava `transform: scale(0.95)` — deslocamento
+  // que some em prefers-reduced-motion e não existe para quem não enxerga.
+  // Aqui o sinal primário é o checkbox marcado; tinte e borda reforçam.
+  &__card--selected {
+    background-color: var(--dss-surface-selected);
+    // COR, não shorthand. `--dss-border-focus` vale `2px solid <cor>`: usado
+    // em `border-color` a declaração é inválida e a borda cai para o `color`
+    // herdado — saía quase preta. A borda da ficha selecionada acompanha o
+    // mesmo tom do tinte (que é `action-primary` a 12%), então os dois sinais
+    // falam a mesma língua.
+    border-color: var(--dss-action-primary);
+    box-shadow: var(--dss-shadow-sm);
+  }
+
+  // Separação dos pares por FILETE, não por fundo alternado.
+  //
+  // A origem zebrava com `background` em `.q-item:nth-child(odd)`, e a cópia
+  // disso aqui produzia faixas quase brancas sobre a ficha selecionada — que
+  // é tingida. Fundo claro sobre superfície tingida lê como remendo, e ainda
+  // some no alto contraste. O filete é imune à cor da superfície.
+  &__fields {
+    dt:not(:first-of-type),
+    dt:not(:first-of-type) + dd {
+      border-block-start: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+    }
+  }
+
+  &--disabled {
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    & * {
+      transition: none;
+    }
+  }
+
+  // Alto contraste: o tinte do card selecionado some (o sistema repinta os
+  // fundos) e a zebra também. A borda sobrevive e passa a ser o único sinal.
+  @media (forced-colors: active) {
+    .dss-data-grid__card--selected {
+      border: var(--dss-border-width-md) solid Highlight;
+    }
+  }
+}

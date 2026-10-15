@@ -1,10 +1,13 @@
-// Brand — override --q-color-primary (CSS var interna do QPagination p/ botões ativos).
-// Descendant: [data-brand] .dss-pagination (marca no ancestral) + self: .dss-pagination[data-brand].
+// ==========================================================================
+//  DssPagination · L4 Marca
 //
-// COLAPSADO: os 3 blocos por-marca eram IDÊNTICOS (--dss-action-primary já é
-// brand-aware) → um único [data-brand] (mesmo alcance, sem repetir 3×).
-
-[data-brand] .dss-pagination,
-.dss-pagination[data-brand] {
-  --q-color-primary: var(--dss-action-primary);
-}
+//  NADA é pintado aqui, e é a consequência correta de compor `DssButton`.
+//
+//  Antes este arquivo remapeava `--q-color-primary`, a custom property interna
+//  do QPagination, porque era o único caminho para a marca alcançar os botões
+//  de terceiro sem `:deep()` nem `!important`. Com a página atual sendo um
+//  `DssButton color="primary"`, a marca chega pelo mesmo mecanismo de todo o
+//  resto: o `data-brand` no nó raiz remapeia `--dss-action-primary` para a
+//  subárvore, e o botão consome.
+//
+//  Uma regra a menos que pode sair de sincronia com a marca.

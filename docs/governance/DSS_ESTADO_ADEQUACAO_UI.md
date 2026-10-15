@@ -8,7 +8,7 @@
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **39** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **40** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -53,8 +53,8 @@ parte pelo `validate:demo-seeds`.
 | Fase | Componentes | Adequados | Casca | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|---|
 | **Fase 1 — Atômicos** | 20 | **16** | 0 | 0 | 0 | 4 |
-| **Fase 2 — Compostos** | 68 | **23** | 0 | 0 | 0 | 45 |
-| **Total** | **88** | **39** | 0 | 0 | 49 |
+| **Fase 2 — Compostos** | 68 | **24** | 0 | 0 | 0 | 44 |
+| **Total** | **88** | **40** | 0 | 0 | 48 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
 _nenhum_.
@@ -86,7 +86,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssSpace` | Espaçador flexível | 18/03/2026 | — | — |
 | ⬜ | `DssSpinner` | Indicador de carregamento | 24/03/2026 | — | — |
 
-## Fase 2 — Componentes Compostos (23/68)
+## Fase 2 — Componentes Compostos (24/68)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
@@ -107,6 +107,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ✅ | `DssMenu` | Navegação / Overlays | 18/04/2026 | sim | sim |
 | ✅ | `DssPage` | Layout Global — conteúdo principal | 22/04/2026 | sim | sim |
 | ✅ | `DssPageContainer` | Layout Global — container com offset | 22/04/2026 | sim | sim |
+| ✅ | `DssPagination` | Navegação Estrutural | 08/05/2026 | sim | sim |
 | ✅ | `DssStepper` | Navegação por etapas | 20/04/2026 | sim | sim |
 | ✅ | `DssTable` | Tabelas e Dados | 22/05/2026 | sim | sim |
 | ✅ | `DssTabs` | Tabs | 02/04/2026 | sim | sim |
@@ -136,7 +137,6 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssOptionGroup` | Botões e Controles de Grupo | 27/03/2026 | — | — |
 | ⬜ | `DssPageScroller` | Layout Global | 26/04/2026 | — | — |
 | ⬜ | `DssPageSticky` | Layout Global — posicionamento fixo | 23/04/2026 | — | — |
-| ⬜ | `DssPagination` | Navegação Estrutural | 08/05/2026 | — | — |
 | ⬜ | `DssParallax` | Mídia e Visualização | 18/05/2026 | — | — |
 | ⬜ | `DssPopupEdit` | Overlays e Dialogs | 11/05/2026 | — | — |
 | ⬜ | `DssPopupProxy` | Overlays e Dialogs | 22/05/2026 | — | — |

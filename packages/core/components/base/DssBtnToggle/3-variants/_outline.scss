@@ -18,7 +18,7 @@
    ========================================================================== */
 
 .dss-btn-toggle--outline {
-  > .q-btn-item:not(:first-child) {
+  > .dss-btn-toggle__option:not(:first-child) {
     /* Colapsa borda dupla entre botões adjacentes */
     margin-left: calc(-1 * var(--dss-border-width-thin));
 

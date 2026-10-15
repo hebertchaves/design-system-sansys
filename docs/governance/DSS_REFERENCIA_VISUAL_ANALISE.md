@@ -535,7 +535,7 @@ O DSS sintetiza padrões de três referências:
 | **gap (controle + label)** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
 | **label font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
 | **label color** | `--dss-text-body` | — | 2-composition/_base.scss |
-| **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
+| **touch target** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssCheckbox -->
 
 ---
@@ -564,7 +564,7 @@ O DSS sintetiza padrões de três referências:
 | **gap** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
 | **selected background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **selected color** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
-| **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
+| **touch target** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssChip -->
 
 ---
@@ -1284,7 +1284,7 @@ O DSS sintetiza padrões de três referências:
 | **border-color (unchecked)** | `--dss-gray-500` | — | 2-composition/_base.scss |
 | **border-color (checked)** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **ponto interno (checked)** | `--dss-action-primary` | `10px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
-| **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
+| **touch target** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssRadio -->
 
 ---
@@ -1392,7 +1392,7 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | 200px | — | defaultPreview |
 | **scrollbar track color** | `--dss-gray-200` | — | .q-scrollarea__bar descendant |
-| **scrollbar thumb color** | `--dss-action-primary` | — | .q-scrollarea__thumb descendant |
+| **scrollbar thumb color** | `--dss-action-primary` | — | 4-output/_brands.scss |
 | **opacity** | 1 !important | — | EXC-Gate-02: sobrescreve inline style JS |
 <!-- END:VISUAL-TABLE:DssScrollArea -->
 
@@ -1749,7 +1749,7 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
-| **ícone background** | `--dss-action-primary` | — | Padrão step/timeline ativo |
+| **ícone background** | `--dss-action-primary` | — | 3-variants/_variant.scss |
 | **ícone color** | `--dss-text-inverse` | `branco` | Padrão ação primária |
 | **linha conectora** | `--dss-gray-300` | `1px solid` | Padrão linha temporal |
 | **título font-weight** | `--dss-font-weight-medium` | `500` | Hierarquia tipográfica |
@@ -1911,7 +1911,7 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | 200px | — | defaultPreview |
 | **item default height** | 48px | — | defaultPreview / itemSize |
-| **spinner color** | `--dss-action-primary` | — | CSS currentColor (padrão DssSpinner) |
+| **spinner color** | `--dss-action-primary` | — | 4-output/_brands.scss |
 <!-- END:VISUAL-TABLE:DssVirtualScroll -->
 
 ---
@@ -2206,6 +2206,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssContainer | layout | size:md, padding:md, gap:md, centered | — | — |
 | DssContextHeader | layout | identifier:652701-9, recordsCount:2, openCount:2, summary:[…], groups:[…] | — | Cabeçalho de atendimento com identidade, três grupos de informação e o trilho de sessão |
 | DssDataCard | contextuais | — | — | — |
+| DssDataGrid | contextuais | rows:[…], fields:[…], rowKey:id, title:Solicitações, total:24, columnsPerRow:3 | — | — |
 | DssDataTable | contextuais | rows:[…], columns:[…], rowKey:id, title:Solicitações, density:compact | — | — |
 | DssDataTableClaudeCode | contextuais | rows:[…], columns:[…], rowKey:id, title:Solicitações, total:12, statusColumn:situacao, statusMap:{…}, density:compact | — | — |
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
@@ -2281,5 +2282,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-10-14T19:37:45.600Z_
+_Gerado em: 2026-10-15T18:30:19.164Z_
 <!-- END:AUTO-GENERATED -->

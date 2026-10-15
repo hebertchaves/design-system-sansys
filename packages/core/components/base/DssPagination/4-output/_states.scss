@@ -1,57 +1,48 @@
-// Dark mode
-@media (prefers-color-scheme: dark) {
-  .dss-pagination {
-    --q-color-primary: var(--dss-action-primary);
+@use 'sass:list';
+@use '../../../../utils/index' as utils;
 
-    // EXC-Gate-01: Dark mode button text for inactive buttons
-    .q-pagination .q-btn {
-      color: var(--dss-text-primary);
+// ==========================================================================
+//  DssPagination · L4 Estados
+//
+//  Hover, foco, disabled e reduced-motion dos botões são do `DssButton` e não
+//  se repetem aqui — repetir seria reimplementar o primitivo. O que sobra é o
+//  que pertence à FAIXA de paginação.
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+//  PÁGINA ATUAL — degrau `-deep` da própria cor
+//
+//  Com a pele padrão PREENCHIDA, todos os botões recebem `.bg-primary` e a
+//  página atual não se distinguia de nenhum — o mesmo defeito que a versão
+//  sobre QPagination tinha, onde ativo e inativo só diferiam pela sombra.
+//
+//  A atual vai ao fim da rampa semântica, que é o degrau de "pressionado".
+//  O `.bg-*` do Quasar é `!important` em `@layer quasar`, então em vez de
+//  declarar `background` troca-se a ENTRADA `--q-<cor>` e o fundo recomputa —
+//  mesma técnica do `rampa-hover` e do DssBtnToggle. Brandeia sozinho, porque
+//  a rampa é remapeada por marca.
+//
+//  O `:hover` entra no mesmo seletor para a atual não CLAREAR ao passar o
+//  mouse, voltando a um degrau acima do próprio repouso.
+// --------------------------------------------------------------------------
+.dss-pagination__page[aria-current='true'] {
+  @each $nome, $par in utils.$cores-quasar {
+    &.bg-#{$nome},
+    &.bg-#{$nome}:not([disabled]):not(.disabled):hover {
+      #{list.nth($par, 1)}: var(#{list.nth($par, 2)}-deep);
     }
   }
 }
 
-// High contrast
-@media (prefers-contrast: more) {
-  .dss-pagination {
-    --q-color-primary: var(--dss-action-primary);
-
-    // EXC-Gate-01: High contrast — stronger border on inactive buttons
-    .q-pagination .q-btn {
-      border: var(--dss-border-width-thin) solid var(--dss-text-primary);
-    }
-
-    // EXC-Gate-01: High contrast — active button with strong outline
-    // aria-current="page" is the ARIA value QPagination sets on the active page button.
-    .q-pagination .q-btn[aria-current="page"],
-    .q-pagination .q-btn.bg-primary {
-      border: var(--dss-border-width-md) solid var(--dss-text-on-primary);
-    }
-  }
-}
-
-// Forced colors (Windows High Contrast)
-// NOTE: forced-color-adjust: none is PROHIBITED in DSS.
-// The browser-native forced-colors appearance is preserved intentionally.
+// Alto contraste: a reticência é decorativa e some; a borda dos botões é
+// responsabilidade do DssButton.
 @media (forced-colors: active) {
-  .dss-pagination {
-    // EXC-Gate-01: Forced colors — use system ButtonText for button borders
-    .q-pagination .q-btn {
-      border: var(--dss-border-width-thin) solid ButtonText;
-    }
+  .dss-pagination__ellipsis {
+    color: CanvasText;
   }
 }
 
-// Reduced motion
-@media (prefers-reduced-motion: reduce) {
-  .dss-pagination {
-    // EXC-Gate-01: Disable transitions on page buttons
-    .q-pagination .q-btn {
-      transition: none;
-    }
-  }
-}
-
-// Print — pagination is irrelevant in print context
+// Paginação não tem sentido em papel.
 @media print {
   .dss-pagination {
     display: none;

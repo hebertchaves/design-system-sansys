@@ -10,10 +10,10 @@
    família inteira reage igual — inclusive por marca, porque a rampa `-hover` é
    remapeada e a ponte `--q-*` recomputa no escopo da marca.
 
-   Seletor no FILHO, não na raiz: cada opção é um `.q-btn-item` filho direto do grupo.
+   Seletor no FILHO, não na raiz: cada opção é um `.dss-btn-toggle__option` filho direto do grupo.
    ========================================================================== */
 
-.dss-btn-toggle > .q-btn-item {
+.dss-btn-toggle > .dss-btn-toggle__option {
   &:not([disabled]):not(.disabled) {
     @include utils.rampa-hover;
     @include utils.sem-realce-quasar;
@@ -49,8 +49,8 @@
    `opacity: 0` de lá.
    ========================================================================== */
 
-.dss-btn-toggle--flat > .q-btn-item,
-.dss-btn-toggle--outline > .q-btn-item {
+.dss-btn-toggle--flat > .dss-btn-toggle__option,
+.dss-btn-toggle--outline > .dss-btn-toggle__option {
   &:not([disabled]):not(.disabled) {
     &:hover > .q-focus-helper,
     &:active > .q-focus-helper {
@@ -114,7 +114,7 @@
    na selecionada a devolvia ao degrau `-hover`, mais claro que o repouso dela.
    ========================================================================== */
 
-.dss-btn-toggle > .q-btn-item[aria-pressed='true'] {
+.dss-btn-toggle > .dss-btn-toggle__option[aria-pressed='true'] {
   @each $nome, $par in utils.$cores-quasar {
     &.bg-#{$nome},
     &.bg-#{$nome}:not([disabled]):not(.disabled):hover {
@@ -149,9 +149,9 @@
      Justificativa: Nenhum token DSS fornece white com alpha parcial.
      Padrão Material Design: dividers em dark = white 12% opacity.
      Padrão idêntico ao DssBtnGroup EXC-02 e DssCard EXC-01. */
-  &.dss-btn-toggle--flat > .q-btn-item:not(:last-child),
-  &.dss-btn-toggle--push > .q-btn-item:not(:last-child),
-  &.dss-btn-toggle--unelevated > .q-btn-item:not(:last-child) {
+  &.dss-btn-toggle--flat > .dss-btn-toggle__option:not(:last-child),
+  &.dss-btn-toggle--push > .dss-btn-toggle__option:not(:last-child),
+  &.dss-btn-toggle--unelevated > .dss-btn-toggle__option:not(:last-child) {
     border-right-color: rgba(255, 255, 255, 0.12); /* EXC-02 */
   }
 }
@@ -175,14 +175,14 @@
   }
 
   /* Separadores em forced-colors */
-  .dss-btn-toggle--flat > .q-btn-item:not(:last-child),
-  .dss-btn-toggle--push > .q-btn-item:not(:last-child),
-  .dss-btn-toggle--unelevated > .q-btn-item:not(:last-child) {
+  .dss-btn-toggle--flat > .dss-btn-toggle__option:not(:last-child),
+  .dss-btn-toggle--push > .dss-btn-toggle__option:not(:last-child),
+  .dss-btn-toggle--unelevated > .dss-btn-toggle__option:not(:last-child) {
     border-right-color: ButtonText;
   }
 
   /* Reset margin-left em outline — borda dupla é aceitável em forced-colors */
-  .dss-btn-toggle--outline > .q-btn-item:not(:first-child) {
+  .dss-btn-toggle--outline > .dss-btn-toggle__option:not(:first-child) {
     margin-left: 0;
   }
 }

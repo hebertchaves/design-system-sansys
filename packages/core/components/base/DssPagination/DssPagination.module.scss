@@ -1,3 +1,4 @@
-@use './2-composition/base' as base;
+// DssPagination — orquestrador. Cascata L2 → L3 → L4.
+@use './2-composition/base' as composition;
 @use './3-variants/index' as variants;
 @use './4-output/index' as output;

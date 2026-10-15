@@ -274,14 +274,39 @@ describe('DssBtnToggle', () => {
     // O efeito visual e CSS: nao observavel em jsdom. O que da para travar aqui
     // e que a prop do Quasar nao voltou — duas fontes de verdade e o bug de
     // origem.
+    // A asserção anterior era `QBtnToggle.props('noCaps') === false`: media o
+    // repasse ao motor de terceiro. Sem o QBtnToggle, o contrato é que a
+    // capitalização é governada pela folha do DSS e o rótulo chega íntegro.
     it('nao delega capitalizacao ao Quasar (governada por token DSS)', () => {
-      const wrapper = mount(DssBtnToggle, {
-        props: { options: defaultOptions }
-      })
-      const toggle = wrapper.findComponent({ name: 'QBtnToggle' })
-      expect(toggle.exists()).toBe(true)
-      expect(toggle.props('noCaps')).toBe(false)
+      const wrapper = mount(DssBtnToggle, { props: { options: defaultOptions } })
+      expect(wrapper.findComponent({ name: 'QBtnToggle' }).exists()).toBe(false)
       expect(wrapper.text()).toContain('Esquerda')
+    })
+
+    it('compõe DssButton — nenhum botão do Quasar na árvore', () => {
+      const wrapper = mount(DssBtnToggle, { props: { options: defaultOptions } })
+      const botoes = wrapper.findAllComponents({ name: 'DssButton' })
+      expect(botoes.length).toBe(defaultOptions.length)
+    })
+
+    it('a opção selecionada é preenchida e declara aria-pressed', async () => {
+      const wrapper = mount(DssBtnToggle, {
+        props: { options: defaultOptions, modelValue: defaultOptions[1].value },
+      })
+      const botoes = wrapper.findAllComponents({ name: 'DssButton' })
+      expect(botoes[1].props('variant')).toBe('unelevated')
+      expect(botoes[0].props('variant')).not.toBe('unelevated')
+      const marcados = wrapper.findAll('[aria-pressed="true"]')
+      expect(marcados.length).toBe(1)
+      expect(marcados[0].text()).toContain(String(defaultOptions[1].label))
+    })
+
+    it('acionar uma opção emite update:modelValue', async () => {
+      const wrapper = mount(DssBtnToggle, {
+        props: { options: defaultOptions, modelValue: defaultOptions[0].value },
+      })
+      await wrapper.findAll('button')[1].trigger('click')
+      expect(wrapper.emitted('update:modelValue')[0]).toEqual([defaultOptions[1].value])
     })
   })
 

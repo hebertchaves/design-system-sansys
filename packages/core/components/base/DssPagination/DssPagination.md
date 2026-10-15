@@ -112,7 +112,7 @@ Nenhum. Motor QPagination não expõe slot para botões individuais (EXC-01).
 - **aria-current="page"**: Gerenciado pelo QPagination no botão da página ativa (valor correto per ARIA spec para paginação).
 - **Foco visível**: `:focus-visible` com `dss-focus-ring` mixin em todos os botões.
 - **Teclado**: `Tab` para navegar entre botões, `Enter`/`Space` para ativar.
-- **Touch target**: Delegado ao QPagination/QBtn. Os botões internos atendem ao tamanho mínimo via `--dss-compact-control-height-md` (≥ 44px em `md`).
+- **Touch target**: Delegado ao `DssButton` (altura `--dss-touch-target-{size}`); a largura mínima dos numerais usa o mesmo token, então a caixa é quadrada — 44×44px em `md` (WCAG 2.5.5). `xs`/`sm` (32/36px) são densos e ficam abaixo de 44px, como no próprio DssButton.
 - **Contraste**: Mínimo 4.5:1 entre texto e fundo nos botões, garantido pelos tokens `--dss-action-primary` e `--dss-text-on-primary`.
 
 ---

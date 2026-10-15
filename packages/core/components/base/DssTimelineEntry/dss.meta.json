@@ -80,7 +80,7 @@
         "property": "ícone background",
         "token": "--dss-action-primary",
         "value": null,
-        "source": "Padrão step/timeline ativo"
+        "source": "3-variants/_variant.scss"
       },
       {
         "property": "ícone color",
