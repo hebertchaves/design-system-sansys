@@ -5,6 +5,9 @@
     "packages/*",
     "apps/*"
   ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "bootstrap": "npm install",
     "dev": "vite --config apps/docs-portal/vite.config.ts apps/docs-portal",

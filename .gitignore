@@ -45,3 +45,7 @@ storybook-static
 # estado assim que alguém roda o teste e não commita de volta.
 apps/sandbox/test-results/
 apps/sandbox/playwright-report/
+
+# Lockfile único = npm (package-lock.json). O Lovable recria o bun.lock;
+# a decisão é de jun/2026 (befb47c2) e a auditoria A2 já o apontava como risco.
+bun.lock

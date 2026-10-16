@@ -375,6 +375,10 @@ DSS/
 
 ## 🛠️ **Desenvolvimento**
 
+> **Primeira vez no repositório?** Siga o [`QUICK_START.md`](./QUICK_START.md): pré-requisitos
+> (Node 22 LTS, mínimo 20.19), npm como único gerenciador, Windows/WSL e a instalação dos gates
+> (`npm run setup:hooks`).
+
 ```bash
 # Instalar todas as dependências do monorepo (raiz)
 npm install
