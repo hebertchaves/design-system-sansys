@@ -1,0 +1,168 @@
+{
+  "component": "DssComposition",
+  "cssClass": "dss-composition",
+  "phase": 3,
+  "level": 5,
+  "status": "candidate",
+  "dssVersion": "2.4",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssDataTableClaudeCode",
+  "classification": "Action",
+  "tagline": "Sub-registros como campo de formulário: inclui e edita por modal, confirma exclusões e valida no DssForm.",
+  "quasarBase": null,
+  "dependencies": [
+    "DssDataTableClaudeCode",
+    "DssDialog",
+    "DssForm",
+    "DssButton",
+    "DssBanner"
+  ],
+  "tokens": [
+    "--dss-text-body",
+    "--dss-font-family-sans",
+    "--dss-font-size-lg",
+    "--dss-font-weight-semibold",
+    "--dss-line-height-tight",
+    "--dss-spacing-3",
+    "--dss-spacing-4"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "dark",
+      "reason": "Tema governado por data-theme no contexto."
+    },
+    {
+      "quasarProp": "color",
+      "reason": "Cores vêm das peças compostas; a marca entra por data-brand."
+    },
+    {
+      "legacyProp": "isPaginated",
+      "reason": "Paginação é do DssDataTableClaudeCode, sempre ligada (decisão B)."
+    },
+    {
+      "legacyProp": "modelForm",
+      "reason": "Formulário gerado por metadados não migra: vira o slot form, montado pelo consumidor."
+    },
+    {
+      "legacyProp": "allowCustomEditModal",
+      "reason": "Absorvida pelo slot form — todo modal é customizável."
+    },
+    {
+      "legacyProp": "dependenciasObrigatoria",
+      "reason": "Copiava campos do mestre via repositório; o consumidor já tem esses valores no escopo do slot."
+    },
+    {
+      "legacyProp": "dependenciasNaoObrigatoria",
+      "reason": "Idem — e nunca foi declarada no legado, embora fosse lida."
+    },
+    {
+      "legacyProp": "buttonHidden",
+      "reason": "Renomeada para readonly."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Expose-01",
+      "description": "defineExpose para validate e resetValidation",
+      "value": "defineExpose({ validate, resetValidation })",
+      "location": "1-structure/DssComposition.ts.vue",
+      "gatesViolated": [],
+      "justification": "Mesmo contrato dos campos DSS (useFieldValidation). O DssForm mestre chama sozinho; ficam expostos para uso imperativo, como em DssInput e DssCheckbox.",
+      "decisaoArquitetural": "Pendente — auditoria independente"
+    }
+  ],
+  "defaultPreview": {
+    "props": {
+      "modelValue": [
+        {
+          "id": 1,
+          "nome": "Ana Souza",
+          "telefone": "(11) 3333-1111"
+        },
+        {
+          "id": 2,
+          "nome": "Bruno Lima",
+          "telefone": "(11) 3333-2222"
+        }
+      ],
+      "columns": [
+        {
+          "name": "nome",
+          "label": "Nome",
+          "field": "nome",
+          "align": "left"
+        },
+        {
+          "name": "telefone",
+          "label": "Telefone",
+          "field": "telefone",
+          "align": "left"
+        }
+      ],
+      "rowKey": "id",
+      "label": "Contatos",
+      "required": true
+    },
+    "demoSlots": null,
+    "visualProperties": []
+  },
+  "previewGroup": "form-campos",
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Sozinha, a raiz é um grupo rotulado pelo label; dentro do DssCompositionGroup, é o tabpanel da própria aba. A tabela é a do DssDataTableClaudeCode, que preserva cabeçalhos e células.",
+        "verifiedBy": "test",
+        "test": [
+          "monta como grupo rotulado e compõe o DssDataTableClaudeCode",
+          "dentro do grupo, é o tabpanel da própria aba"
+        ]
+      },
+      {
+        "criterion": "3.3.1",
+        "level": "A",
+        "implementation": "Coleção inválida mostra a mensagem em DssBanner de erro (texto + ícone), marca aria-invalid na raiz e aponta a mensagem por aria-describedby. Não nasce em erro antes de validar.",
+        "verifiedBy": "test",
+        "test": [
+          "inválida: aria-invalid na raiz e descrição apontando a mensagem",
+          "não nasce pintada de erro antes de validar"
+        ]
+      },
+      {
+        "criterion": "3.3.4",
+        "level": "AA",
+        "implementation": "Excluir, ativar e inativar pedem confirmação; nada é emitido antes do \"sim\", e cancelar não emite nada.",
+        "verifiedBy": "test",
+        "test": [
+          "excluir pede confirmação e só emite depois do \"sim\"",
+          "cancelar a confirmação não emite nada"
+        ]
+      }
+    ],
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-invalid"
+      ],
+      "relationships": [
+        "aria-describedby"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Percorrer as ações da barra e das linhas (do DssDataTableClaudeCode)."
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "Acionar a ação focada."
+      },
+      {
+        "key": "Esc",
+        "action": "Fechar a confirmação (o modal do registro é persistente: sai por Cancelar)."
+      }
+    ]
+  },
+  "auditHistory": []
+}

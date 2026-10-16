@@ -121,6 +121,8 @@ import DssResponsive     from '@components/base/DssResponsive/DssResponsive.vue'
 import DssDataTable      from '@components/composed/DssDataTable/DssDataTable.vue'
 import DssDataTableClaudeCode from '@components/composed/DssDataTableClaudeCode/DssDataTableClaudeCode.vue'
 import DssDataGrid      from '@components/composed/DssDataGrid/DssDataGrid.vue'
+import DssComposition   from '@components/composed/DssComposition/DssComposition.vue'
+import DssCompositionGroup from '@components/composed/DssCompositionGroup/DssCompositionGroup.vue'
 
 /** Registry: nome do componente (string) → definição Vue */
 const REGISTRY = {
@@ -214,6 +216,8 @@ const REGISTRY = {
   DssDataTable,
   DssDataTableClaudeCode,
   DssDataGrid,
+  DssComposition,
+  DssCompositionGroup,
 }
 
 // ── Helpers de renderização ───────────────────────────────────────────────────

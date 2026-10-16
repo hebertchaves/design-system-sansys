@@ -1,0 +1,7 @@
+// ==========================================================================
+//  DssComposition · L4 Estados
+//
+//  Inválida: o sinal é o DssBanner de erro (texto + ícone + role do próprio
+//  banner) e o `aria-invalid` da raiz. Nenhuma borda vermelha em volta do
+//  bloco: cor sozinha não carrega o erro (WCAG 1.4.1), e o banner já carrega.
+// ==========================================================================

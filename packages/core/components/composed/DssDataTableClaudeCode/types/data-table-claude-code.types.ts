@@ -61,6 +61,11 @@ export interface DssDataTableCcStatus {
   label?: string
 }
 
+/** Lista fixa, ou função que decide as ações de cada linha. */
+export type DssDataTableCcRowActions =
+  | DssDataTableCcAction[]
+  | ((row: DssDataTableCcRow) => DssDataTableCcAction[])
+
 export interface DssDataTableCcProps {
   /**
    * As linhas a exibir — JÁ FILTRADAS pela página.
@@ -99,7 +104,12 @@ export interface DssDataTableCcProps {
   /** @default 'compact' */
   density?: DssTableDensity
   actions?: DssDataTableCcAction[]
-  rowActions?: DssDataTableCcAction[]
+  /**
+   * Ações por linha. Lista = as mesmas em todas as linhas. Função = o
+   * consumidor decide POR LINHA (ex.: registro novo → Excluir; gravado →
+   * Inativar). Devolver `[]` deixa a linha sem botões.
+   */
+  rowActions?: DssDataTableCcRowActions
   expandable?: boolean
   expandedKeys?: Array<string | number>
   /** Coluna cujo valor é uma situação e deve ser pintada como chip. */

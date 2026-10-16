@@ -2,7 +2,7 @@
 
 > **Contexto:** Contrato de Interface do container de abas que migra o `JtCompositions`.
 > Peça principal: `pre_prompt_dss_composition.md`. De-para e decisões:
-> `docs/specs/MIGRACAO_JTECH_COMPOSITION.md`.
+> `packages/core/components/composed/DssComposition/MIGRATION_JTECH_COMPOSITION.md`.
 
 ## 1️⃣ CLASSIFICAÇÃO E CONTEXTO
 - **Nome:** `DssCompositionGroup`

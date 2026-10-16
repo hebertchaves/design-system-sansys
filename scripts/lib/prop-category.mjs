@@ -206,6 +206,17 @@ export const EXCECOES = {
   'DssDataGrid.rowsPerPage': 'Comportamento', 'DssDataGrid.rowsNumber': 'Comportamento',
   'DssDataGrid.columnsPerRow': 'Aparência',
   'DssDataGrid.page': 'Estado', 'DssDataGrid.error': 'Estado',
+
+  // DssComposition: a coleção é um CAMPO — o valor (modelValue) e as colunas
+  // são conteúdo; ações e regras governam o comportamento do campo.
+  'DssComposition.columns': 'Conteúdo', 'DssComposition.requiredMessage': 'Conteúdo',
+  'DssComposition.addTitle': 'Conteúdo', 'DssComposition.editTitle': 'Conteúdo',
+  'DssComposition.saveLabel': 'Conteúdo', 'DssComposition.cancelLabel': 'Conteúdo',
+  'DssComposition.emptyTitle': 'Conteúdo', 'DssComposition.emptyDescription': 'Conteúdo',
+  'DssComposition.rowKey': 'Comportamento', 'DssComposition.actions': 'Comportamento',
+  'DssComposition.rowActions': 'Comportamento', 'DssComposition.selection': 'Comportamento',
+  'DssComposition.newRecord': 'Comportamento',
+  'DssComposition.selected': 'Estado', 'DssComposition.error': 'Estado',
   // ── Aparência ──────────────────────────────────────────────────────────────
   variant: 'Aparência', brand: 'Aparência', square: 'Aparência', align: 'Aparência',
   vertical: 'Aparência', horizontal: 'Aparência', size: 'Aparência', density: 'Aparência',

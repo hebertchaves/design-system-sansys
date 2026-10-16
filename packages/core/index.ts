@@ -106,7 +106,7 @@ export const metadata = {
     'DssVirtualScroll', 'DssInfiniteScroll', 'DssPullToRefresh', 'DssSlideItem',
     'DssParallax', 'DssVideo', 'DssBanner', 'DssEmptyState',
     // Compostos
-    'DssDialog', 'DssTable', 'DssDataTable', 'DssDataTableClaudeCode', 'DssDataGrid', 'DssCarousel', 'DssCarouselSlide',
+    'DssDialog', 'DssTable', 'DssDataTable', 'DssDataTableClaudeCode', 'DssDataGrid', 'DssComposition', 'DssCompositionGroup', 'DssCarousel', 'DssCarouselSlide',
     'DssBottomSheet', 'DssChatMessage', 'DssColorPicker', 'DssDatePicker',
     'DssMultiselectAutocomplete',
     'DssTimePicker', 'DssForm', 'DssPopupEdit', 'DssUploader',

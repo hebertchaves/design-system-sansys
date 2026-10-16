@@ -1,0 +1,37 @@
+// ==========================================================================
+//  DssComposition · L2 Composição
+//
+//  Só o CONTÊINER é deste componente. Tabela, ações, vazio, carregando e
+//  falha são do DssDataTableClaudeCode; a mensagem de erro é do DssBanner;
+//  os modais são do DssDialog. Nenhum `:deep()`: o espaço entre as peças sai
+//  do `gap` da raiz.
+// ==========================================================================
+
+.dss-composition {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-3);
+  width: 100%;
+  color: var(--dss-text-body);
+  font-family: var(--dss-font-family-sans);
+
+  // Título dos diálogos. É `h2` pela hierarquia (o diálogo é um documento
+  // próprio, sobreposto); o tamanho vem do token, não do padrão do navegador.
+  &__dialog-title {
+    margin: 0;
+    font-size: var(--dss-font-size-lg);
+    font-weight: var(--dss-font-weight-semibold);
+    line-height: var(--dss-line-height-tight);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-spacing-4);
+  }
+
+  &__confirm-message {
+    margin: 0;
+  }
+}

@@ -157,8 +157,9 @@
       },
       {
         "name": "rowActions",
-        "type": "DssDataTableCcAction[]",
+        "type": "DssDataTableCcRowActions",
         "controlHint": "text",
+        "description": "Ações por linha. Lista = as mesmas em todas as linhas. Função = o",
         "category": "Conteúdo",
         "categorySource": "excecao"
       },

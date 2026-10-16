@@ -2203,6 +2203,8 @@ Em caso de conflito entre fontes de informação visual:
 | DssChip | acoes | variant:filled, color:primary, size:md, label:Chip | minHeight:28px | Label 'Chip' |
 | DssCircularProgress | progresso | value:70, size:md, color:primary | minHeight:56px, minWidth:56px | Progresso circular 70% |
 | DssColorPicker | contextuais | formatModel:hex | — | — |
+| DssComposition | form-campos | modelValue:[…], columns:[…], rowKey:id, label:Contatos, required | — | — |
+| DssCompositionGroup | form-campos | ariaLabel:Coleções do cadastro | — | — |
 | DssContainer | layout | size:md, padding:md, gap:md, centered | — | — |
 | DssContextHeader | layout | identifier:652701-9, recordsCount:2, openCount:2, summary:[…], groups:[…] | — | Cabeçalho de atendimento com identidade, três grupos de informação e o trilho de sessão |
 | DssDataCard | contextuais | — | — | — |
@@ -2282,5 +2284,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-10-15T18:30:19.164Z_
+_Gerado em: 2026-10-16T13:22:03.950Z_
 <!-- END:AUTO-GENERATED -->

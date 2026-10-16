@@ -115,7 +115,7 @@
              o `th` saía `text-align: left` com as células centradas, e rótulo
              e conteúdo ficavam em cantos opostos. O slot de cabeçalho é o
              único lugar com controle sobre o `th`. -->
-        <template v-if="rowActions.length" #header-cell-__acoes="cabecalho">
+        <template v-if="temAcoesDeLinha" #header-cell-__acoes="cabecalho">
           <th class="dss-data-table-cc__actions-cell">{{ cabecalho.col?.label }}</th>
         </template>
 
@@ -156,7 +156,7 @@
               <template v-else>{{ valorCelula(col, scope.row) }}</template>
             </td>
             <td
-              v-if="rowActions.length || $slots['row-actions']"
+              v-if="temAcoesDeLinha || $slots['row-actions']"
               class="dss-data-table-cc__actions-cell"
             >
               <slot name="row-actions" :row="scope.row" :disabled="disabled || loading">
@@ -166,7 +166,7 @@
                   :aria-label="`Ações da linha ${String(identificador(scope.row))}`"
                 >
                   <DssButton
-                    v-for="action in rowActions"
+                    v-for="action in acoesDaLinha(scope.row)"
                     :key="action.name"
                     :icon="action.icon"
                     :label="action.label"
@@ -338,8 +338,21 @@ const contagem = computed(() => {
     : `${exibidas} de ${props.total} ${props.countNoun}`
 })
 
+/**
+ * Há coluna de ações? Com função, a resposta é "sim" — a decisão de quais
+ * botões aparecem é por linha, e uma linha pode receber `[]`.
+ * (Não usar `rowActions.length`: numa função, `.length` é a aridade.)
+ */
+const temAcoesDeLinha = computed(() =>
+  typeof props.rowActions === 'function' || props.rowActions.length > 0,
+)
+
+function acoesDaLinha(row: DssDataTableCcRow): DssDataTableCcAction[] {
+  return typeof props.rowActions === 'function' ? props.rowActions(row) : props.rowActions
+}
+
 const corpoProprio = computed(
-  () => props.expandable || props.rowActions.length > 0 || props.selection !== 'none',
+  () => props.expandable || temAcoesDeLinha.value || props.selection !== 'none',
 )
 
 const colunasEfetivas = computed<DssTableColumn[]>(() => {
@@ -350,7 +363,7 @@ const colunasEfetivas = computed<DssTableColumn[]>(() => {
   if (corpoProprio.value && props.selection !== 'none') {
     resultado.unshift({ name: '__selecionar', label: '', field: props.rowKey, align: 'center' })
   }
-  if (props.rowActions.length) {
+  if (temAcoesDeLinha.value) {
     // Centro, não direita. A coluna de ações não contém VALOR comparável — o
     // alinhamento à direita existe para alinhar vírgulas de números. Aqui ele
     // só descolava o rótulo do conteúdo, que ficava em cantos opostos.

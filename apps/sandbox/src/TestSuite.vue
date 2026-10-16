@@ -610,6 +610,15 @@
             </button>
 
             <button
+              @click="activeComponent = 'composition'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'composition' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">playlist_add</span></span>
+              <span class="nav-label">DssComposition</span>
+              <span class="nav-badge stress">piloto</span>
+            </button>
+
+            <button
               @click="activeComponent = 'pagination'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'pagination' }]"
             >
@@ -773,6 +782,10 @@
 
       <div v-else-if="activeComponent === 'data-grid'" class="component-view">
         <TestDataGrid />
+      </div>
+
+      <div v-else-if="activeComponent === 'composition'" class="component-view">
+        <TestComposition />
       </div>
 
       <div v-else-if="activeComponent === 'pagination'" class="component-view">
@@ -1012,6 +1025,7 @@ import TestTable from './TestTable.vue'
 import TestDataTable from './TestDataTable.vue'
 import TestDataTableClaudeCode from './TestDataTableClaudeCode.vue'
 import TestDataGrid from './TestDataGrid.vue'
+import TestComposition from './TestComposition.vue'
 import TestPagination from './TestPagination.vue'
 import TestContainer from './TestContainer.vue'
 import TestForm from './TestForm.vue'

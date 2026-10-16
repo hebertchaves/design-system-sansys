@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-15",
-  "total": 102,
+  "generated": "2026-10-16",
+  "total": 104,
   "sealed": 89,
   "components": [
     {
@@ -324,6 +324,34 @@
       "previewGroup": "contextuais",
       "goldenReference": "DssChip",
       "goldenContext": "DssDatePicker"
+    },
+    {
+      "component": "DssComposition",
+      "dir": "packages/core/components/composed/DssComposition",
+      "phase": 3,
+      "category": null,
+      "status": "candidate",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "form-campos",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssDataTableClaudeCode"
+    },
+    {
+      "component": "DssCompositionGroup",
+      "dir": "packages/core/components/composed/DssCompositionGroup",
+      "phase": 3,
+      "category": null,
+      "status": "candidate",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "form-campos",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssTabs"
     },
     {
       "component": "DssContainer",

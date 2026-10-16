@@ -174,6 +174,39 @@ describe('DssDataTableClaudeCode', () => {
     expect(wrapper.emitted('request')).toBeTruthy()
   })
 
+  // ─── rowActions por linha (decisão D da migração jtech-composition) ──────
+
+  it('sem rowActions não cria a coluna de ações', () => {
+    // Com Function no tipo da prop, a ausência precisa continuar sendo "lista
+    // vazia" — não "função" (o que daria coluna de ações a toda tabela).
+    const wrapper = factory()
+    expect(wrapper.find('.dss-data-table-cc__actions-cell').exists()).toBe(false)
+  })
+
+  it('rowActions como função decide os botões de cada linha', async () => {
+    const excluir = { name: 'remove', label: 'Excluir', icon: 'delete' }
+    const inativar = { name: 'inactivate', label: 'Inativar', icon: 'block' }
+    const wrapper = factory({ rowActions: (row) => (row.id === 1 ? [excluir] : [inativar]) })
+
+    const grupos = wrapper.findAll('[role="group"]')
+    expect(grupos).toHaveLength(2)
+    const rotulosDe = (grupo) => grupo.findAllComponents({ name: 'DssButton' }).map((b) => b.props('label'))
+    expect(rotulosDe(grupos[0])).toEqual(['Excluir'])
+    expect(rotulosDe(grupos[1])).toEqual(['Inativar'])
+
+    await grupos[1].findComponent({ name: 'DssButton' }).trigger('click')
+    const [payload] = wrapper.emitted('action').at(-1)
+    expect(payload.action).toBe(inativar)
+    expect(payload.row).toEqual(rows[1])
+  })
+
+  it('rowActions como função que devolve [] deixa a linha sem botões', () => {
+    const wrapper = factory({ rowActions: (row) => (row.id === 1 ? [] : [{ name: 'edit', label: 'Editar' }]) })
+    const grupos = wrapper.findAll('[role="group"]')
+    expect(grupos[0].findAllComponents({ name: 'DssButton' })).toHaveLength(0)
+    expect(grupos[1].findAllComponents({ name: 'DssButton' })).toHaveLength(1)
+  })
+
   it('preserva os slots de composição do cabeçalho', () => {
     const wrapper = factory({ ariaLabel: 'Solicitações operacionais' }, {
       'head-start': '<div class="legenda">Legenda</div>',

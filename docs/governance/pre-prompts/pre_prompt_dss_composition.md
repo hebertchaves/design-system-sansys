@@ -2,7 +2,7 @@
 
 > **Contexto:** Contrato de Interface do composto Fase 3 que migra o `JtComposition` do
 > [WebComps-to-DSS](https://github.com/hebertchaves/WebComps-to-DSS). De-para completo,
-> passo zero e decisões: `docs/specs/MIGRACAO_JTECH_COMPOSITION.md`.
+> passo zero e decisões: `packages/core/components/composed/DssComposition/MIGRATION_JTECH_COMPOSITION.md`.
 > Peça irmã: `pre_prompt_dss_composition_group.md` (o container de abas).
 
 ## 1️⃣ CLASSIFICAÇÃO E CONTEXTO

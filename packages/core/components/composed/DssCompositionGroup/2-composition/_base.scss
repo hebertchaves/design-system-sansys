@@ -1,0 +1,21 @@
+// ==========================================================================
+//  DssCompositionGroup · L2 Composição
+//
+//  Só o contêiner: abas em cima, painéis embaixo. As abas são do DssTabs; os
+//  painéis são as próprias DssComposition. Nenhum `:deep()`, nenhum
+//  `!important` em classe de vendor (o legado escondia as setas de rolagem das
+//  abas com `display: none !important`).
+// ==========================================================================
+
+.dss-composition-group {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-4);
+  width: 100%;
+
+  &__panels {
+    display: flex;
+    flex-direction: column;
+  }
+}

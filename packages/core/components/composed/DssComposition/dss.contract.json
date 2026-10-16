@@ -1,0 +1,549 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssComposition",
+  "version": "2.4",
+  "identity": {
+    "displayName": "Composition",
+    "tagline": "Sub-registros como campo de formulário: inclui e edita por modal, confirma exclusões e valida no DssForm.",
+    "category": "",
+    "classification": "Action",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssDataTableClaudeCode"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "DssCompositionRow[]",
+        "controlHint": "text",
+        "required": true,
+        "description": "As linhas — o VALOR do campo. Nunca é mutado: toda mudança sai como array novo.",
+        "category": "Conteúdo",
+        "categorySource": "vmodel"
+      },
+      {
+        "name": "columns",
+        "type": "DssTableColumn[]",
+        "controlHint": "text",
+        "required": true,
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "rowKey",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Chave de cada registro. Obrigatória e sem padrão: o legado gravava",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Rótulo do campo — título do bloco e da aba no `DssCompositionGroup`.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Identifica a coleção no grupo. Obrigatório dentro do `DssCompositionGroup`.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Exige ao menos um registro. Avaliado pelo `validate()` do `DssForm` mestre.",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "requiredMessage",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Inclua ao menos um registro.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "rules",
+        "type": "DssFieldRule<DssCompositionRow[]>[]",
+        "controlHint": "text",
+        "description": "Regras extras sobre a lista — mesma semântica dos campos DSS.",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "actions",
+        "type": "DssCompositionAction[]",
+        "controlHint": "text",
+        "default": "[Incluir]",
+        "description": "Ações da barra. @default [Incluir]",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "rowActions",
+        "type": "DssCompositionRowActions",
+        "controlHint": "text",
+        "default": "[Editar, Excluir]",
+        "description": "Ações de cada linha. @default [Editar, Excluir]",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "selection",
+        "type": "DssTableSelection",
+        "controlHint": "text",
+        "default": "none",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "selected",
+        "type": "DssCompositionRow[]",
+        "controlHint": "text",
+        "description": "Linhas selecionadas (v-model:selected).",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "newRecord",
+        "type": "() => DssCompositionRow",
+        "controlHint": "text",
+        "description": "Semente do registro em inclusão. Deve trazer a chave (`rowKey`): em",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "addTitle",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Incluir registro",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "editTitle",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Editar registro",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "saveLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Salvar",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "cancelLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Cancelar",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "override"
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "controlHint": "text",
+        "description": "Falha de carga — repassada ao DataTable, que oferece \"tentar novamente\".",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Inerte: sem ações e sem validação (paridade QField).",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Somente leitura: lista visível, sem ações. Substitui o `buttonHidden` do legado.",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "brand",
+        "type": "DssCompositionBrand | null",
+        "controlHint": "text",
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "emptyTitle",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Nenhum registro incluído",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "emptyDescription",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Os registros incluídos aparecem aqui.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "DssCompositionRow[]"
+      },
+      {
+        "name": "update:selected",
+        "payload": "DssCompositionRow[]"
+      },
+      {
+        "name": "activate",
+        "payload": "DssCompositionActionPayload"
+      },
+      {
+        "name": "inactivate",
+        "payload": "DssCompositionActionPayload"
+      },
+      {
+        "name": "detail",
+        "payload": "DssCompositionActionPayload"
+      },
+      {
+        "name": "action",
+        "payload": "DssCompositionActionPayload",
+        "description": "Ação sem `intent`: a composição não interpreta, entrega o dado."
+      },
+      {
+        "name": "form-close"
+      },
+      {
+        "name": "retry"
+      }
+    ],
+    "slots": [
+      {
+        "name": "form",
+        "scope": null,
+        "description": "O formulário do registro, montado pelo consumidor com campos DSS."
+      },
+      {
+        "name": "head-actions",
+        "scope": "selected, disabled",
+        "description": "Substitui a barra de ações do bloco."
+      },
+      {
+        "name": "empty",
+        "scope": "filtered",
+        "description": "Substitui o estado vazio."
+      }
+    ],
+    "exposedRefs": [
+      {
+        "name": "validate",
+        "type": "() => boolean | Promise<boolean>",
+        "description": ""
+      },
+      {
+        "name": "resetValidation",
+        "type": "() => void",
+        "description": ""
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "modelValue": [
+          {
+            "id": 1,
+            "nome": "Ana Souza",
+            "telefone": "(11) 3333-1111"
+          },
+          {
+            "id": 2,
+            "nome": "Bruno Lima",
+            "telefone": "(11) 3333-2222"
+          }
+        ],
+        "columns": [
+          {
+            "name": "nome",
+            "label": "Nome",
+            "field": "nome",
+            "align": "left"
+          },
+          {
+            "name": "telefone",
+            "label": "Telefone",
+            "field": "telefone",
+            "align": "left"
+          }
+        ],
+        "rowKey": "id",
+        "label": "Contatos",
+        "required": true
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "box-sizing",
+          "token": null,
+          "value": "border-box",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Sozinha, a raiz é um grupo rotulado pelo label; dentro do DssCompositionGroup, é o tabpanel da própria aba. A tabela é a do DssDataTableClaudeCode, que preserva cabeçalhos e células.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "monta como grupo rotulado e compõe o DssDataTableClaudeCode",
+          "dentro do grupo, é o tabpanel da própria aba"
+        ]
+      },
+      {
+        "criterion": "3.3.1",
+        "level": "A",
+        "implementation": "Coleção inválida mostra a mensagem em DssBanner de erro (texto + ícone), marca aria-invalid na raiz e aponta a mensagem por aria-describedby. Não nasce em erro antes de validar.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "inválida: aria-invalid na raiz e descrição apontando a mensagem",
+          "não nasce pintada de erro antes de validar"
+        ]
+      },
+      {
+        "criterion": "3.3.4",
+        "level": "AA",
+        "implementation": "Excluir, ativar e inativar pedem confirmação; nada é emitido antes do \"sim\", e cancelar não emite nada.",
+        "verifiedBy": "test",
+        "verified": true,
+        "test": [
+          "excluir pede confirmação e só emite depois do \"sim\"",
+          "cancelar a confirmação não emite nada"
+        ]
+      }
+    ],
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-invalid"
+      ],
+      "relationships": [
+        "aria-describedby"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "Percorrer as ações da barra e das linhas (do DssDataTableClaudeCode)."
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "Acionar a ação focada."
+      },
+      {
+        "key": "Esc",
+        "action": "Fechar a confirmação (o modal do registro é persistente: sai por Cancelar)."
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssComposition.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/composition.types.ts",
+    "docs": {
+      "normative": "DssComposition.md",
+      "api": "DSSCOMPOSITION_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssComposition.example.vue",
+    "tests": "DssComposition.test.js"
+  }
+}

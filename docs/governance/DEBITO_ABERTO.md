@@ -1098,6 +1098,20 @@ O `!important` está registrado como EXC-05.
   em cache os tipos importados, e as props novas não entram até reiniciar. Os testes unitários já
   provam o comportamento.
 
+### 🟡 Escuro + marca: três defeitos achados construindo `DssComposition` (out/2026)
+
+Medidos em Chromium na página `TestComposition.vue` (escuro, marca Hub). Nenhum é da
+composição. Remendar por dentro do composto seria M1, então ficam registrados aqui.
+
+| Peça | Medido | Efeito |
+|---|---|---|
+| `DssTable` | célula `#f5f5f5` sobre `#ffffff` (~1,1:1) | linhas ilegíveis no escuro. **Confirma** o 🔍 do item do rodapé acima: não é só a vista "Seções" |
+| `DssTabs` | aba inativa `#0a0a0a` sobre `#262626` (~1,2:1) | reprova WCAG 1.4.3; a aba ativa segue a marca corretamente |
+| `DssDataTableClaudeCode` | botão de linha com `text-primary` do Quasar (azul) | ignora a marca, enquanto o botão da barra segue a marca |
+
+Bloqueiam o fechamento da `DssComposition`/`DssCompositionGroup` no escuro (passo 10 da
+`MIGRATION_JTECH_COMPOSITION.md`).
+
 ### 🟡 Cabeçalho de tabela SÓLIDO da marca não existe no DSS (set/2026)
 
 As duas telas Sansys pintam o `<thead>` com a cor cheia da marca e texto branco. Nenhum dos
